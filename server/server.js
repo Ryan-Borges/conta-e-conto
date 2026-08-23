@@ -812,7 +812,103 @@ app.get(
     }  
 );
 
+// ==========================================
+// IMPORTAR QUESTÕES DE PORTUGUÊS
+// ROTA TEMPORÁRIA
+// ==========================================
 
+app.post(
+    "/api/questoes/portugues/importar",
+    async (req, res) => {
+
+        try {
+
+            const questoes =
+                req.body.questoes;
+
+            if (!Array.isArray(questoes)) {
+
+                return res.status(400).json({
+                    message:
+                        "Envie um array de questões."
+                });
+
+            }
+
+            let inseridas = 0;
+
+            for (const questao of questoes) {
+
+                const {
+                    nivel,
+                    frase,
+                    palavra,
+                    classe,
+                    alternativas,
+                    explicacao
+                } = questao;
+
+                if (
+                    !nivel ||
+                    !frase ||
+                    !palavra ||
+                    !classe ||
+                    !Array.isArray(alternativas) ||
+                    !explicacao
+                ) {
+                    continue;
+                }
+
+                await pool.query(
+                    `INSERT INTO questoes_portugues
+                    (
+                        nivel,
+                        frase,
+                        palavra,
+                        classe,
+                        alternativas,
+                        explicacao
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?)`,
+                    [
+                        nivel,
+                        frase,
+                        palavra,
+                        classe,
+                        JSON.stringify(alternativas),
+                        explicacao
+                    ]
+                );
+
+                inseridas++;
+
+            }
+
+            res.status(201).json({
+                message:
+                    "Importação concluída.",
+                inseridas:
+                    inseridas
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Erro ao importar questões:",
+                error
+            );
+
+            res.status(500).json({
+                message:
+                    "Erro interno do servidor."
+            });
+
+        }
+
+    }
+);
 
 // ==========================================
 // RANKING

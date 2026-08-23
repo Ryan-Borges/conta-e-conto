@@ -10,7 +10,8 @@
 
 const TEMPO_TOTAL = 20;
 
-const API_URL = "http://localhost:3000";
+const API_URL =
+    "https://conta-e-conto-api.onrender.com";
 
 
 // ======================================================
