@@ -1,0 +1,3072 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Conta & Conto</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     AUTENTICAÇÃO
+===================================================== -->
+
+<section
+    id="authScreen"
+    class="auth-screen"
+>
+
+
+    <!-- =================================================
+         LOGIN
+    ================================================== -->
+
+    <div
+        id="loginBox"
+        class="auth-box"
+    >
+
+        <h1>
+            Conta & Conto
+        </h1>
+
+        <p>
+            Entre para continuar jogando!
+        </p>
+
+
+        <input
+            type="text"
+            id="loginUsername"
+            placeholder="Usuário"
+            autocomplete="username"
+        >
+
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Senha"
+            autocomplete="current-password"
+        >
+
+
+        <button
+            type="button"
+            id="loginButton"
+        >
+            Entrar
+        </button>
+
+
+        <p
+            id="loginMessage"
+            class="auth-message"
+        ></p>
+
+
+        <p class="auth-switch">
+
+            Ainda não possui uma conta?
+
+            <button
+                type="button"
+                id="showRegisterButton"
+            >
+                Criar conta
+            </button>
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CADASTRO
+    ================================================== -->
+
+    <div
+        id="registerBox"
+        class="auth-box hidden"
+    >
+
+        <h1>
+            Criar conta
+        </h1>
+
+        <p>
+            Crie sua conta no Conta & Conto!
+        </p>
+
+
+        <input
+            type="text"
+            id="registerUsername"
+            placeholder="Usuário"
+            autocomplete="username"
+        >
+
+
+        <input
+            type="password"
+            id="registerPassword"
+            placeholder="Senha"
+            autocomplete="new-password"
+        >
+
+
+        <input
+            type="password"
+            id="registerPasswordConfirm"
+            placeholder="Confirmar senha"
+            autocomplete="new-password"
+        >
+
+
+        <button
+            type="button"
+            id="registerButton"
+        >
+            Cadastrar
+        </button>
+
+
+        <p
+            id="registerMessage"
+            class="auth-message"
+        ></p>
+
+
+        <p class="auth-switch">
+
+            Já possui uma conta?
+
+            <button
+                type="button"
+                id="showLoginButton"
+            >
+                Voltar para login
+            </button>
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     APLICAÇÃO
+===================================================== -->
+
+<div
+    id="app"
+    class="hidden"
+>
+
+
+    <!-- =================================================
+         CABEÇALHO
+    ================================================== -->
+
+    <header>
+
+        <div class="logo">
+
+            <h1>
+                Conta & Conto
+            </h1>
+
+        </div>
+
+        <button
+            id="menuToggle"
+            class="menu-toggle"
+            type="button"
+            aria-label="Abrir menu"
+>
+            ☰
+        </button>
+
+        <nav>
+
+            <a
+                href="#"
+                id="navHome"
+            >
+                Início
+            </a>
+
+
+            <a
+                href="#"
+                id="navMath"
+            >
+                Matemática
+            </a>
+
+
+            <a
+                href="#"
+                id="navPortuguese"
+            >
+                Português
+            </a>
+
+
+            <a href="#" id="navLearn">
+                Aprender
+            </a>
+ 
+
+            <a
+                href="#"
+                id="navRanking"
+            >
+                Ranking
+            </a>
+
+
+            <a
+                href="#"
+                id="navProfile"
+            >
+                Perfil
+            </a>
+
+
+            <a href="#" id="navAbout">
+                Sobre
+            </a>
+
+
+            <a
+                href="#"
+                id="logoutButton"
+            >
+                Sair
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =================================================
+         CONTEÚDO PRINCIPAL
+    ================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             MENU PRINCIPAL
+        ================================================== -->
+
+        <section
+            id="home"
+            class="home"
+        >
+
+            <h2>
+                Aprenda jogando!
+            </h2>
+
+
+            <p>
+                Teste seus conhecimentos e alcance
+                o maior número de acertos possível.
+            </p>
+
+
+            <div class="welcome-user">
+
+                Olá,
+
+                <strong id="welcomeUsername">
+                    jogador
+                </strong>
+
+                👋
+
+            </div>
+
+
+
+            <!-- =============================================
+                 MATEMÁTICA
+            ============================================== -->
+
+            <div class="subject-section">
+
+                <button
+                    type="button"
+                    id="mathButton"
+                    class="subject-button"
+                >
+                    🧮 Matemática
+                </button>
+
+
+                <div
+                    id="mathModes"
+                    class="subject-menu hidden"
+                >
+
+                    <h3>
+                        Matemática
+                    </h3>
+
+
+                    <div class="modes">
+
+
+                        <button
+                            type="button"
+                            class="mode-button math-mode"
+                            data-level="1"
+                        >
+
+                            <span>
+                                🌱
+                            </span>
+
+                            <strong>
+                                Tranquilo
+                            </strong>
+
+                            <small>
+                                Dificuldade 1
+                            </small>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mode-button math-mode"
+                            data-level="2"
+                        >
+
+                            <span>
+                                ⚡
+                            </span>
+
+                            <strong>
+                                Velocidade
+                            </strong>
+
+                            <small>
+                                Dificuldade 2
+                            </small>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mode-button math-mode"
+                            data-level="3"
+                        >
+
+                            <span>
+                                🔥
+                            </span>
+
+                            <strong>
+                                Brutal
+                            </strong>
+
+                            <small>
+                                Dificuldade 3
+                            </small>
+
+                        </button>
+
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="back-button"
+                        id="backFromMath"
+                    >
+                        ← Voltar
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 PORTUGUÊS
+            ============================================== -->
+
+            <div class="subject-section">
+
+                <button
+                    type="button"
+                    id="portugueseButton"
+                    class="subject-button"
+                >
+                    📖 Português
+                </button>
+
+
+                <div
+                    id="portugueseModes"
+                    class="subject-menu hidden"
+                >
+
+                    <h3>
+                        Português
+                    </h3>
+
+
+                    <div class="modes">
+
+
+                        <button
+                            type="button"
+                            class="mode-button portuguese-mode"
+                            data-level="1"
+                        >
+
+                            <span>
+                                🌱
+                            </span>
+
+                            <strong>
+                                Tranquilo
+                            </strong>
+
+                            <small>
+                                Dificuldade 1
+                            </small>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mode-button portuguese-mode"
+                            data-level="2"
+                        >
+
+                            <span>
+                                ⚡
+                            </span>
+
+                            <strong>
+                                Velocidade
+                            </strong>
+
+                            <small>
+                                Dificuldade 2
+                            </small>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="mode-button portuguese-mode"
+                            data-level="3"
+                        >
+
+                            <span>
+                                🔥
+                            </span>
+
+                            <strong>
+                                Brutal
+                            </strong>
+
+                            <small>
+                                Dificuldade 3
+                            </small>
+
+                        </button>
+
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="back-button"
+                        id="backFromPortuguese"
+                    >
+                        ← Voltar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             JOGO DE MATEMÁTICA
+        ================================================== -->
+
+        <section
+            id="game"
+            class="game hidden"
+        >
+
+
+            <div class="game-header">
+
+
+                <div class="info-card">
+
+                    <span>
+                        Nível
+                    </span>
+
+                    <strong id="level">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <span>
+                        Acertos
+                    </span>
+
+                    <strong id="score">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <span>
+                        Recorde
+                    </span>
+
+                    <strong id="record">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="question-area">
+
+
+                <p class="difficulty-text">
+
+                    Dificuldade
+
+                    <span id="difficulty">
+                        1
+                    </span>
+
+                </p>
+
+
+                <h2 id="question">
+                    0 + 0
+                </h2>
+
+
+                <!--
+                    CORRIGIDO:
+                    JS procura answerInput
+                -->
+
+                <input
+                    type="number"
+                    id="answerInput"
+                    inputmode="numeric"
+                    placeholder="Digite sua resposta"
+                    autocomplete="off"
+                >
+
+                <div
+    id="numericKeyboard"
+    class="numeric-keyboard"
+>
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="1"
+    >
+        1
+    </button>
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="2"
+    >
+        2
+    </button>
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="3"
+    >
+        3
+    </button>
+
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="4"
+    >
+        4
+    </button>
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="5"
+    >
+        5
+    </button>
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="6"
+    >
+        6
+    </button>
+
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="7"
+    >
+        7
+    </button>
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="8"
+    >
+        8
+    </button>
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="9"
+    >
+        9
+    </button>
+
+
+    <button
+        type="button"
+        id="numericDelete"
+        class="numeric-key numeric-action"
+    >
+        ⌫
+    </button>
+
+    <button
+        type="button"
+        class="numeric-key"
+        data-value="0"
+    >
+        0
+    </button>
+
+    <button
+        type="button"
+        id="numericConfirm"
+        class="numeric-key numeric-confirm"
+    >
+        ✓
+    </button>
+
+</div>
+
+                <!--
+                    CORRIGIDO:
+                    JS procura submitButton
+                -->
+
+                <button
+                    type="button"
+                    id="submitButton"
+                >
+                    Responder
+                </button>
+
+
+                <div class="timer-container">
+
+
+                    <div class="timer-info">
+
+                        <span>
+                            Tempo
+                        </span>
+
+                        <strong>
+
+                            <span id="timer">
+                                20
+                            </span>s
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="timer-bar-background">
+
+                        <div
+                            id="timerBar"
+                            class="timer-bar"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!--
+                CORRIGIDO:
+                JS procura backFromMath
+            -->
+
+            <button
+                type="button"
+                class="back-button"
+                id="backFromMath"
+            >
+                ← Voltar
+            </button>
+
+        </section>
+
+
+
+        <!-- =================================================
+             JOGO DE PORTUGUÊS
+        ================================================== -->
+
+        <section
+            id="portugueseGame"
+            class="game hidden"
+        >
+
+
+            <div class="game-header">
+
+
+                <div class="info-card">
+
+                    <span>
+                        Nível
+                    </span>
+
+                    <strong id="portugueseLevel">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <span>
+                        Acertos
+                    </span>
+
+                    <strong id="portugueseScore">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <span>
+                        Recorde
+                    </span>
+
+                    <strong id="portugueseRecord">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="question-area">
+
+
+                <p class="difficulty-text">
+
+                    Dificuldade
+
+                    <span id="portugueseDifficulty">
+                        1
+                    </span>
+
+                </p>
+
+
+                <!--
+                    CORRIGIDO:
+                    JS procura portugueseQuestion
+                -->
+
+                <p
+                    id="portugueseQuestion"
+                    class="sentence"
+                >
+                    Carregando...
+                </p>
+
+
+                <p class="word-label">
+
+                    Qual é a classe da palavra destacada?
+
+                </p>
+
+
+                <div
+                    id="portugueseOptions"
+                    class="options"
+                ></div>
+
+
+
+                <div class="timer-container">
+
+
+                    <div class="timer-info">
+
+                        <span>
+                            Tempo
+                        </span>
+
+                        <strong>
+
+                            <span id="portugueseTimer">
+                                20
+                            </span>s
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="timer-bar-background">
+
+                        <div
+                            id="portugueseTimerBar"
+                            class="timer-bar"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!--
+                CORRIGIDO:
+                JS procura backFromPortuguese
+            -->
+
+            <button
+                type="button"
+                class="back-button"
+                id="backFromPortuguese"
+            >
+                ← Voltar
+            </button>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RANKING
+        ================================================== -->
+
+        <section
+            id="ranking"
+            class="ranking hidden"
+        >
+
+            <h2>
+                🏆 Ranking
+            </h2>
+
+
+            <p>
+                O ranking considera apenas partidas
+                no modo 🔥 <strong>Brutal</strong>.
+            </p>
+
+
+            <div class="ranking-buttons">
+
+                <button
+                    type="button"
+                    id="mathRankingButton"
+                >
+                    🧮 Matemática
+                </button>
+
+
+                <button
+                    type="button"
+                    id="portugueseRankingButton"
+                >
+                    📖 Português
+                </button>
+
+            </div>
+
+
+            <h3 id="rankingTitle">
+                Matemática — 🔥 Brutal
+            </h3>
+
+
+            <div
+                id="rankingList"
+                class="ranking-list"
+            >
+                Selecione um jogo.
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PERFIL
+        ================================================== -->
+
+        <section
+            id="profile"
+            class="profile hidden"
+        >
+
+            <h2>
+                👤 Meu perfil
+            </h2>
+
+
+            <div class="profile-card">
+
+                <p>
+
+                    Usuário:
+
+                    <strong id="profileUsername">
+                        —
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    ID:
+
+                    <strong id="profileId">
+                        —
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    Cadastro:
+
+                    <strong id="profileDate">
+                        —
+                    </strong>
+
+                </p>
+                
+                <p>
+
+                    Recorde Brutal — Matemática:
+
+                    <strong id="profileMathRecord">
+                        0
+                        </strong>
+
+                </p>
+
+
+                <p>
+
+                    Recorde Brutal — Português:
+
+                    <strong id="profilePortugueseRecord">
+        0
+                    </strong>
+
+                </p>
+
+
+
+            </div>
+
+        </section>
+        
+        <section
+    id="learn"
+    class="learn hidden"
+>
+
+    <h2>
+        📚 Aprender
+    </h2>
+
+    <p class="section-description">
+        Aprenda estratégias que podem ajudar durante as partidas.
+    </p>
+
+
+    <div class="learning-grid">
+
+        <div class="learning-card">
+
+            <h3>
+                🧮 Matemática
+            </h3>
+
+            <p>
+                Técnicas de cálculo mental para resolver operações
+                com mais rapidez.
+            </p>
+
+            <button
+                id="learnMathButton"
+                type="button"
+            >
+                Estudar Matemática
+            </button>
+
+        </div>
+
+
+        <div class="learning-card">
+
+            <h3>
+                📖 Português
+            </h3>
+
+            <p>
+                Revise classes gramaticais e aprenda a identificá-las
+                nas frases.
+            </p>
+
+            <button
+                id="learnPortugueseButton"
+                type="button"
+            >
+                Estudar Português
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+        <section
+    id="learnMath"
+    class="learn-content hidden"
+>
+
+    <div class="learn-content-header">
+
+        <button
+            id="backFromLearnMath"
+            class="back-button"
+            type="button"
+        >
+            ← Voltar
+        </button>
+
+        <div>
+
+            <h2>
+                🧮 Matemática
+            </h2>
+
+            <p>
+                Estratégias para calcular com mais rapidez e segurança.
+            </p>
+
+        </div>
+
+    </div>
+
+
+   <div class="strategy-list">
+
+    <!-- ==========================================
+         ADIÇÃO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>➕ Adição</span>
+            <small>Estratégias para somar mentalmente</small>
+        </summary>
+
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    🎯 Complete a dezena
+                </h3>
+
+                <p>
+                    Quando um número está próximo de uma dezena,
+                    complete essa dezena primeiro.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        38 + 27
+                    </strong>
+
+                    <span>
+                        38 + 2 = 40
+                    </span>
+
+                    <span>
+                        27 - 2 = 25
+                    </span>
+
+                    <span class="strategy-answer">
+                        40 + 25 = 65
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    🧩 Decomponha o número
+                </h3>
+
+                <p>
+                    Separe dezenas e unidades para facilitar a conta.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        47 + 36
+                    </strong>
+
+                    <span>
+                        47 + 30 = 77
+                    </span>
+
+                    <span>
+                        77 + 6 = 83
+                    </span>
+
+                    <span class="strategy-answer">
+                        Resultado: 83
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    ⚖️ Compensação
+                </h3>
+
+                <p>
+                    Arredonde um dos números e depois compense
+                    o que foi acrescentado.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        56 + 29
+                    </strong>
+
+                    <span>
+                        56 + 30 = 86
+                    </span>
+
+                    <span>
+                        Acrescentamos 1 a mais
+                    </span>
+
+                    <span class="strategy-answer">
+                        86 - 1 = 85
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         SUBTRAÇÃO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>➖ Subtração</span>
+            <small>Arredondamento e compensação</small>
+        </summary>
+
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    🎯 Arredonde e volte
+                </h3>
+
+                <p>
+                    Se o número que será subtraído estiver próximo
+                    de uma dezena ou centena, arredonde-o primeiro.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        120 - 79
+                    </strong>
+
+                    <span>
+                        120 - 80 = 40
+                    </span>
+
+                    <span>
+                        Tiramos 1 a mais
+                    </span>
+
+                    <span class="strategy-answer">
+                        40 + 1 = 41
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    🧩 Subtraia por partes
+                </h3>
+
+                <p>
+                    Separe o segundo número em dezenas e unidades.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        94 - 37
+                    </strong>
+
+                    <span>
+                        94 - 30 = 64
+                    </span>
+
+                    <span>
+                        64 - 7 = 57
+                    </span>
+
+                    <span class="strategy-answer">
+                        Resultado: 57
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    📏 Pense na distância
+                </h3>
+
+                <p>
+                    Quando os números estão próximos, descubra
+                    quanto falta de um até o outro.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        103 - 97
+                    </strong>
+
+                    <span>
+                        De 97 até 100 faltam 3
+                    </span>
+
+                    <span>
+                        De 100 até 103 faltam 3
+                    </span>
+
+                    <span class="strategy-answer">
+                        3 + 3 = 6
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         MULTIPLICAÇÃO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>✖️ Multiplicação</span>
+            <small>Atalhos para multiplicações comuns</small>
+        </summary>
+
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    ✋ Multiplicar por 5
+                </h3>
+
+                <p>
+                    Multiplique o número por 10 e depois divida
+                    o resultado por 2.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        46 × 5
+                    </strong>
+
+                    <span>
+                        46 × 10 = 460
+                    </span>
+
+                    <span class="strategy-answer">
+                        460 ÷ 2 = 230
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    9️⃣ Multiplicar por 9
+                </h3>
+
+                <p>
+                    Multiplique por 10 e depois subtraia
+                    uma vez o próprio número.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        27 × 9
+                    </strong>
+
+                    <span>
+                        27 × 10 = 270
+                    </span>
+
+                    <span class="strategy-answer">
+                        270 - 27 = 243
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    1️⃣1️⃣ Multiplicar por 11
+                </h3>
+
+                <p>
+                    Para números pequenos, pense em multiplicar
+                    por 10 e somar o próprio número.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        34 × 11
+                    </strong>
+
+                    <span>
+                        34 × 10 = 340
+                    </span>
+
+                    <span class="strategy-answer">
+                        340 + 34 = 374
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    🔄 Dobrar e dividir pela metade
+                </h3>
+
+                <p>
+                    Em algumas multiplicações, você pode dobrar
+                    um fator e dividir o outro pela metade.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        25 × 16
+                    </strong>
+
+                    <span>
+                        50 × 8
+                    </span>
+
+                    <span>
+                        100 × 4
+                    </span>
+
+                    <span class="strategy-answer">
+                        Resultado: 400
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         DIVISÃO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>➗ Divisão</span>
+            <small>Transforme divisões difíceis em contas simples</small>
+        </summary>
+
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    ✋ Dividir por 5
+                </h3>
+
+                <p>
+                    Multiplique por 2 e depois divida por 10.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        145 ÷ 5
+                    </strong>
+
+                    <span>
+                        145 × 2 = 290
+                    </span>
+
+                    <span class="strategy-answer">
+                        290 ÷ 10 = 29
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    4️⃣ Dividir por 4
+                </h3>
+
+                <p>
+                    Dividir por 4 é o mesmo que dividir
+                    pela metade duas vezes.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        156 ÷ 4
+                    </strong>
+
+                    <span>
+                        156 ÷ 2 = 78
+                    </span>
+
+                    <span class="strategy-answer">
+                        78 ÷ 2 = 39
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    2️⃣5️⃣ Dividir por 25
+                </h3>
+
+                <p>
+                    Multiplique por 4 e depois divida por 100.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        325 ÷ 25
+                    </strong>
+
+                    <span>
+                        325 × 4 = 1300
+                    </span>
+
+                    <span class="strategy-answer">
+                        1300 ÷ 100 = 13
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    🧩 Decomponha o dividendo
+                </h3>
+
+                <p>
+                    Separe o número em partes que sejam
+                    facilmente divisíveis.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        84 ÷ 7
+                    </strong>
+
+                    <span>
+                        70 ÷ 7 = 10
+                    </span>
+
+                    <span>
+                        14 ÷ 7 = 2
+                    </span>
+
+                    <span class="strategy-answer">
+                        10 + 2 = 12
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         ESTRATÉGIAS GERAIS
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>🧠 Estratégias gerais</span>
+            <small>Como pensar mais rápido durante o jogo</small>
+        </summary>
+
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    🔢 Procure números redondos
+                </h3>
+
+                <p>
+                    Dezenas e centenas são mais fáceis de calcular.
+                    Sempre procure uma forma de chegar primeiro
+                    a 10, 20, 50, 100...
+                </p>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    🧩 Quebre contas grandes
+                </h3>
+
+                <p>
+                    Não tente resolver tudo de uma vez.
+                    Transforme uma operação grande em várias
+                    operações pequenas.
+                </p>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    ⚡ Escolha o caminho mais curto
+                </h3>
+
+                <p>
+                    Uma mesma conta pode ser resolvida de várias
+                    maneiras. No cálculo mental, procure a que
+                    exige menos passos.
+                </p>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    🎮 Treine reconhecimento
+                </h3>
+
+                <p>
+                    Quanto mais você reconhece padrões como
+                    dobro, metade e múltiplos de 5, 10 e 25,
+                    menos precisa calcular do zero.
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+</div>
+
+</section>
+
+
+<section
+    id="learnPortuguese"
+    class="learn-content hidden"
+>
+
+    <div class="learn-content-header">
+
+        <button
+            id="backFromLearnPortuguese"
+            class="back-button"
+            type="button"
+        >
+            ← Voltar
+        </button>
+
+        <div>
+
+            <h2>
+                📖 Português
+            </h2>
+
+            <p>
+                Revise as classes gramaticais usadas nas questões do jogo.
+            </p>
+
+        </div>
+
+    </div>
+
+
+<div class="strategy-list">
+
+    <!-- ==========================================
+         SUBSTANTIVO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>🏷️ Substantivo</span>
+            <small>Nomeia seres, objetos, lugares, sentimentos e ideias</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Substantivo é a palavra usada para dar nome
+                    a pessoas, animais, objetos, lugares,
+                    sentimentos, ações ou ideias.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        A menina comprou um livro.
+                    </strong>
+
+                    <span>
+                        menina → substantivo
+                    </span>
+
+                    <span class="strategy-answer">
+                        livro → substantivo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    💡 Como identificar?
+                </h3>
+
+                <p>
+                    Pergunte se a palavra está nomeando alguma coisa.
+                    Muitas vezes ela também pode aparecer acompanhada
+                    de artigos como "o", "a", "um" ou "uma".
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         ADJETIVO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>🎨 Adjetivo</span>
+            <small>Caracteriza ou atribui qualidade ao substantivo</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Adjetivo é a palavra que caracteriza um substantivo,
+                    indicando qualidade, estado, aparência ou característica.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        A casa antiga foi reformada.
+                    </strong>
+
+                    <span>
+                        casa → substantivo
+                    </span>
+
+                    <span class="strategy-answer">
+                        antiga → adjetivo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    💡 Como identificar?
+                </h3>
+
+                <p>
+                    Veja se a palavra está dizendo como alguém
+                    ou alguma coisa é.
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         ARTIGO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>📌 Artigo</span>
+            <small>Acompanha e determina o substantivo</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Artigo é a palavra que acompanha o substantivo
+                    e ajuda a indicar seu gênero e número.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        Os alunos chegaram cedo.
+                    </strong>
+
+                    <span class="strategy-answer">
+                        Os → artigo
+                    </span>
+
+                    <span>
+                        alunos → substantivo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    Principais artigos
+                </h3>
+
+                <p>
+                    Definidos: o, a, os, as.
+                    <br><br>
+                    Indefinidos: um, uma, uns, umas.
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         NUMERAL
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>🔢 Numeral</span>
+            <small>Indica quantidade, ordem, multiplicação ou fração</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Numeral é a palavra que indica quantidade,
+                    posição, multiplicação ou divisão.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        Comprei três cadernos.
+                    </strong>
+
+                    <span class="strategy-answer">
+                        três → numeral
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    Exemplos
+                </h3>
+
+                <p>
+                    três → quantidade
+                    <br>
+                    segundo → ordem
+                    <br>
+                    dobro → multiplicação
+                    <br>
+                    metade → fração
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         PRONOME
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>👤 Pronome</span>
+            <small>Substitui ou acompanha o substantivo</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Pronome é a palavra que substitui ou acompanha
+                    um substantivo, evitando repetições e indicando
+                    pessoas do discurso.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        Marina chegou. Ela estava cansada.
+                    </strong>
+
+                    <span class="strategy-answer">
+                        Ela → pronome
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    Alguns exemplos
+                </h3>
+
+                <p>
+                    eu, tu, ele, ela, nós, meu, sua,
+                    este, aquele, alguém, ninguém.
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         VERBO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>🏃 Verbo</span>
+            <small>Expressa ação, estado ou fenômeno</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Verbo é a palavra que pode indicar ação,
+                    estado, mudança de estado ou fenômeno da natureza.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        Pedro correu até a escola.
+                    </strong>
+
+                    <span class="strategy-answer">
+                        correu → verbo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    💡 Como identificar?
+                </h3>
+
+                <p>
+                    Verifique se a palavra pode variar em tempo:
+                    passado, presente ou futuro.
+                </p>
+
+                <div class="strategy-example">
+
+                    <span>
+                        corro
+                    </span>
+
+                    <span>
+                        corri
+                    </span>
+
+                    <span>
+                        correrei
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         ADVÉRBIO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>⚡ Advérbio</span>
+            <small>Modifica verbo, adjetivo ou outro advérbio</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Advérbio acrescenta uma circunstância,
+                    como tempo, lugar, modo, intensidade,
+                    afirmação ou negação.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        João chegou cedo.
+                    </strong>
+
+                    <span class="strategy-answer">
+                        cedo → advérbio de tempo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    Exemplos
+                </h3>
+
+                <p>
+                    ontem → tempo
+                    <br>
+                    aqui → lugar
+                    <br>
+                    rapidamente → modo
+                    <br>
+                    muito → intensidade
+                    <br>
+                    não → negação
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         PREPOSIÇÃO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>🔗 Preposição</span>
+            <small>Liga palavras e estabelece relações entre elas</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Preposição é uma palavra que liga dois termos
+                    e cria uma relação de sentido entre eles.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        O livro de Maria sumiu.
+                    </strong>
+
+                    <span class="strategy-answer">
+                        de → preposição
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    Algumas preposições
+                </h3>
+
+                <p>
+                    a, ante, após, até, com, contra, de,
+                    desde, em, entre, para, perante,
+                    por, sem, sob, sobre, trás.
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         CONJUNÇÃO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>🔀 Conjunção</span>
+            <small>Liga palavras ou orações</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Conjunção é a palavra usada para ligar
+                    palavras ou orações, estabelecendo relações
+                    de sentido entre elas.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        Estudei, mas estava cansado.
+                    </strong>
+
+                    <span class="strategy-answer">
+                        mas → conjunção
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    Exemplos comuns
+                </h3>
+
+                <p>
+                    e → adição
+                    <br>
+                    mas → oposição
+                    <br>
+                    porque → causa/explicação
+                    <br>
+                    ou → alternativa
+                    <br>
+                    portanto → conclusão
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+
+    <!-- ==========================================
+         INTERJEIÇÃO
+    =========================================== -->
+
+    <details class="strategy-group">
+
+        <summary>
+            <span>❗ Interjeição</span>
+            <small>Expressa emoções, sentimentos ou reações</small>
+        </summary>
+
+        <div class="strategy-content">
+
+            <div class="strategy-card">
+
+                <h3>
+                    O que é?
+                </h3>
+
+                <p>
+                    Interjeição é uma palavra ou expressão
+                    usada para manifestar emoção,
+                    sentimento ou reação.
+                </p>
+
+                <div class="strategy-example">
+
+                    <strong>
+                        Uau! Que lugar bonito!
+                    </strong>
+
+                    <span class="strategy-answer">
+                        Uau! → interjeição
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="strategy-card">
+
+                <h3>
+                    Exemplos
+                </h3>
+
+                <p>
+                    Uau! → admiração
+                    <br>
+                    Ai! → dor
+                    <br>
+                    Oba! → alegria
+                    <br>
+                    Ei! → chamamento
+                    <br>
+                    Psiu! → pedido de atenção
+                </p>
+
+            </div>
+
+        </div>
+
+    </details>
+
+</div>
+
+</section>
+
+       <section
+    id="about"
+    class="about hidden"
+>
+
+    <div class="about-header">
+
+        <h2>
+            ℹ️ Sobre o Conta & Conto
+        </h2>
+
+        <p>
+            Um projeto educacional que une tecnologia,
+            aprendizagem e competição.
+        </p>
+
+    </div>
+
+
+    <div class="about-content">
+
+        <!-- ==========================================
+             SOBRE O PROJETO
+        =========================================== -->
+
+        <div class="about-section">
+
+            <h3>
+                🎮 O projeto
+            </h3>
+
+            <p>
+                O <strong>Conta & Conto</strong> é um jogo educacional
+                desenvolvido com o objetivo de tornar o estudo de
+                Matemática e Língua Portuguesa mais dinâmico,
+                interativo e envolvente.
+            </p>
+
+            <p>
+                A proposta do jogo é combinar conhecimento,
+                raciocínio rápido e diferentes níveis de dificuldade,
+                permitindo que o jogador pratique conteúdos enquanto
+                busca melhorar seu próprio desempenho.
+            </p>
+
+        </div>
+
+
+        <!-- ==========================================
+             COMPETIÇÃO E APRENDIZAGEM
+        =========================================== -->
+
+        <div class="about-section">
+
+            <h3>
+                🏆 Competição como ferramenta de aprendizagem
+            </h3>
+
+            <p>
+                A competição está presente com frequência em diferentes
+                momentos da nossa vida, seja em jogos, esportes,
+                processos seletivos, desafios pessoais ou no ambiente
+                acadêmico.
+            </p>
+
+            <p>
+                Pensando nisso, o Conta & Conto utiliza a competição
+                como uma forma de incentivar o estudo. No
+                <strong>modo Brutal</strong>, os jogadores podem
+                registrar seus melhores resultados e comparar seu
+                desempenho por meio do ranking.
+            </p>
+
+            <p>
+                A intenção não é apenas competir com outras pessoas,
+                mas também estimular cada jogador a superar seus
+                próprios resultados, praticando conteúdos de maneira
+                constante e divertida.
+            </p>
+
+        </div>
+
+
+        <!-- ==========================================
+             PROJETO INTEGRADOR
+        =========================================== -->
+
+        <div class="about-section">
+
+            <h3>
+                🎓 Projeto Integrador — IFRN
+            </h3>
+
+            <p>
+                O Conta & Conto foi desenvolvido como
+                <strong>Projeto Integrador do IFRN</strong>,
+                com o objetivo de integrar conhecimentos adquiridos
+                ao longo do Curso Técnico Integrado em Informática.
+            </p>
+
+            <p>
+                O projeto faz parte do processo de conclusão do curso
+                e foi construído a partir da integração entre
+                diferentes disciplinas técnicas e de formação geral.
+            </p>
+
+        </div>
+
+
+        <!-- ==========================================
+             DISCIPLINAS
+        =========================================== -->
+
+        <div class="about-section">
+
+            <h3>
+                📚 Disciplinas envolvidas
+            </h3>
+
+
+            <div class="about-subjects">
+
+                <div class="about-subject anchor-subject">
+
+                    <span>
+                        ⚓
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Programação para Internet
+                        </strong>
+
+                        <p>
+                            Disciplina âncora do projeto, responsável
+                            por concentrar o desenvolvimento e a
+                            integração da aplicação web.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-subject">
+
+                    <span>🌐</span>
+
+                    <div>
+
+                        <strong>
+                            Autoria Web
+                        </strong>
+
+                        <p>
+                            Aplicada na construção e organização
+                            visual das interfaces utilizando
+                            tecnologias web.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-subject">
+
+                    <span>💻</span>
+
+                    <div>
+
+                        <strong>
+                            Programação com Acesso a Banco de Dados
+                        </strong>
+
+                        <p>
+                            Utilizada na integração entre a aplicação,
+                            o servidor e os dados armazenados.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-subject">
+
+                    <span>🗄️</span>
+
+                    <div>
+
+                        <strong>
+                            Banco de Dados
+                        </strong>
+
+                        <p>
+                            Responsável pela organização e persistência
+                            das contas, recordes, rankings e questões
+                            utilizadas no sistema.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-subject">
+
+                    <span>📖</span>
+
+                    <div>
+
+                        <strong>
+                            Língua Portuguesa
+                        </strong>
+
+                        <p>
+                            Responsável pelos conteúdos utilizados
+                            nos desafios de classes gramaticais e
+                            na área de aprendizagem.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-subject">
+
+                    <span>🧮</span>
+
+                    <div>
+
+                        <strong>
+                            Matemática
+                        </strong>
+
+                        <p>
+                            Responsável pelos desafios de cálculo,
+                            operações matemáticas e estratégias de
+                            cálculo mental apresentadas no jogo.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             TECNOLOGIAS
+        =========================================== -->
+
+        <div class="about-section">
+
+            <h3>
+                🛠️ Tecnologias utilizadas
+            </h3>
+
+            <p>
+                O projeto foi desenvolvido utilizando diferentes
+                tecnologias para construir tanto a interface quanto
+                o funcionamento do sistema e o armazenamento dos dados.
+            </p>
+
+
+            <div class="technology-list">
+
+                <span>
+                    HTML
+                </span>
+
+                <span>
+                    CSS
+                </span>
+
+                <span>
+                    JavaScript
+                </span>
+
+                <span>
+                    Node.js
+                </span>
+
+                <span>
+                    Express
+                </span>
+
+                <span>
+                    MySQL
+                </span>
+
+                <span>
+                    REST API
+                </span>
+
+                <span>
+                    JWT
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             FUNCIONALIDADES
+        =========================================== -->
+
+        <div class="about-section">
+
+            <h3>
+                ⚙️ Principais funcionalidades
+            </h3>
+
+
+            <div class="about-features">
+
+                <div>
+                    🔐 Cadastro e login de usuários
+                </div>
+
+                <div>
+                    🧮 Desafios de Matemática
+                </div>
+
+                <div>
+                    📖 Desafios de Português
+                </div>
+
+                <div>
+                    🎚️ Diferentes modos de dificuldade
+                </div>
+
+                <div>
+                    🔥 Modo Brutal
+                </div>
+
+                <div>
+                    🏆 Ranking de jogadores
+                </div>
+
+                <div>
+                    👤 Perfil individual
+                </div>
+
+                <div>
+                    📚 Área de aprendizagem
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             CRIADORES
+        =========================================== -->
+
+        <div class="about-section creators-section">
+
+            <h3>
+                👥 Criadores
+            </h3>
+
+            <p>
+                Projeto desenvolvido por:
+            </p>
+
+
+            <div class="creators-grid">
+
+                <div class="creator-card">
+
+                    <div class="creator-avatar">
+                        RB
+                    </div>
+
+                    <strong>
+                        Ryan Borges
+                    </strong>
+
+                </div>
+
+
+                <div class="creator-card">
+
+                    <div class="creator-avatar">
+                        FG
+                    </div>
+
+                    <strong>
+                        Filipe Gonçalves
+                    </strong>
+
+                </div>
+
+
+                <div class="creator-card">
+
+                    <div class="creator-avatar">
+                        KA
+                    </div>
+
+                    <strong>
+                        Kaio Alves
+                    </strong>
+
+                </div>
+
+
+                <div class="creator-card">
+
+                    <div class="creator-avatar">
+                        LM
+                    </div>
+
+                    <strong>
+                        Lucas Medeiros
+                    </strong>
+
+                </div>
+
+
+                <div class="creator-card">
+
+                    <div class="creator-avatar">
+                        MP
+                    </div>
+
+                    <strong>
+                        Maria Clara Paraguai
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             ENCERRAMENTO
+        =========================================== -->
+
+        <div class="about-final">
+
+            <h3>
+                💡 Aprender também pode ser um desafio
+            </h3>
+
+            <p>
+                O Conta & Conto parte da ideia de que estudar não
+                precisa ser apenas uma atividade passiva.
+                Aprender também pode envolver desafios,
+                estratégia, evolução e competição.
+            </p>
+
+            <p>
+                Cada nova tentativa é uma oportunidade de aprender,
+                melhorar e superar o resultado anterior.
+            </p>
+
+        </div>
+
+    </div>
+
+</section> 
+
+
+        <!-- =================================================
+             GAME OVER
+        ================================================== -->
+
+        <section
+            id="gameOver"
+            class="game-over hidden"
+        >
+
+            <h2>
+                Fim de jogo!
+            </h2>
+
+
+            <p id="gameOverMessage"></p>
+
+
+            <div class="answer-review">
+
+
+                <p class="review-title">
+                    Você errou esta questão:
+                </p>
+
+
+                <!-- QUESTÃO -->
+
+                <div class="failed-question">
+
+                    <p class="review-label">
+                        Questão
+                    </p>
+
+                    <strong id="failedQuestion">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <!-- PALAVRA -->
+
+                <div
+                    id="failedWordContainer"
+                    class="failed-question"
+                >
+
+                    <p class="review-label">
+                        Palavra analisada
+                    </p>
+
+                    <strong id="failedWord">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <!-- RESPOSTA CORRETA -->
+
+                <div class="failed-question">
+
+                    <p class="review-label">
+                        Resposta correta
+                    </p>
+
+                    <strong id="correctAnswer">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <!-- EXPLICAÇÃO -->
+
+                <div class="explanation">
+
+                    <p class="review-label">
+                        💡 Explicação
+                    </p>
+
+                    <p id="answerExplanation">
+                        —
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <p class="final-score">
+
+                Você conseguiu
+
+                <strong id="finalScore">
+                    0
+                </strong>
+
+                acertos.
+
+            </p>
+
+
+            <p class="final-record">
+
+                Seu recorde:
+
+                <strong id="finalRecord">
+                    0
+                </strong>
+
+            </p>
+
+
+
+            <div class="game-over-buttons">
+
+
+                <button
+                    type="button"
+                    id="restartButton"
+                >
+                    Jogar novamente
+                </button>
+
+
+                <button
+                    type="button"
+                    id="menuButton"
+                >
+                    Voltar ao menu
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         RODAPÉ
+    ================================================== -->
+
+    <footer>
+
+        <p>
+            Conta & Conto — Plataforma de aprendizagem gamificada
+        </p>
+
+    </footer>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="js/script.js"></script>
+
+
+</body>
+
+</html>
+

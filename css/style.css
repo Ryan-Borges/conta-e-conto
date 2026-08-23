@@ -1,0 +1,2498 @@
+/* ======================================================
+   CONTA & CONTO
+   CSS PRINCIPAL
+====================================================== */
+
+
+/* ======================================================
+   CONFIGURAÇÕES GERAIS
+====================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+    width: 100%;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background-color: #eef5ff;
+
+    color: #172033;
+}
+
+
+button,
+input {
+    font-family: inherit;
+}
+
+
+/* ======================================================
+   ESCONDER ELEMENTOS
+====================================================== */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ======================================================
+   APLICAÇÃO
+====================================================== */
+
+/*
+   IMPORTANTE:
+   #app contém:
+   header
+   main
+   footer
+
+   Ele precisa ser flex para o main ocupar
+   corretamente o espaço disponível.
+*/
+
+#app {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ======================================================
+   CABEÇALHO
+====================================================== */
+
+header {
+    width: 100%;
+
+    background-color: #1769d2;
+
+    color: white;
+
+    padding: 18px 50px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 30px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.12);
+}
+
+
+.logo h1 {
+    font-size: 28px;
+
+    white-space: nowrap;
+}
+
+
+nav {
+    display: flex;
+
+    gap: 25px;
+
+    align-items: center;
+}
+
+
+nav a {
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+
+nav a:hover {
+    opacity: 0.75;
+}
+
+
+/* ======================================================
+   CONTEÚDO PRINCIPAL
+====================================================== */
+
+main {
+    width: 100%;
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 50px 20px;
+}
+
+
+/* ======================================================
+   MENU INICIAL
+====================================================== */
+
+.home {
+    width: 700px;
+
+    max-width: 100%;
+
+    text-align: center;
+}
+
+
+.home h2 {
+    font-size: 42px;
+
+    color: #1557a8;
+
+    margin-bottom: 15px;
+}
+
+
+.home > p {
+    font-size: 18px;
+
+    line-height: 1.5;
+
+    margin-bottom: 18px;
+}
+
+
+/* ======================================================
+   BOAS-VINDAS
+====================================================== */
+
+.welcome-user {
+    display: inline-block;
+
+    margin-bottom: 35px;
+
+    padding: 10px 18px;
+
+    background-color: white;
+
+    border: 1px solid #d5e5fa;
+
+    border-radius: 30px;
+
+    font-size: 16px;
+
+    color: #526176;
+}
+
+
+.welcome-user strong {
+    color: #1769d2;
+}
+
+
+/* ======================================================
+   MATÉRIAS
+====================================================== */
+
+.subject-section {
+    width: 100%;
+
+    margin-bottom: 18px;
+}
+
+
+.subject-button {
+    width: 100%;
+
+    padding: 18px 25px;
+
+    background-color: #1769d2;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.subject-button:hover {
+    background-color: #1255aa;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px
+        rgba(23, 105, 210, 0.16);
+}
+
+
+/* ======================================================
+   SUBMENU DAS MATÉRIAS
+====================================================== */
+
+.subject-menu {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 25px;
+
+    background-color: white;
+
+    border: 1px solid #d5e5fa;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 8px 24px
+        rgba(23, 105, 210, 0.08);
+}
+
+
+.subject-menu h3 {
+    font-size: 25px;
+
+    color: #1557a8;
+
+    margin-bottom: 20px;
+}
+
+
+/* ======================================================
+   MODOS
+====================================================== */
+
+.modes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+.mode-button {
+    min-height: 145px;
+
+    background-color: white;
+
+    color: #172033;
+
+    border: 2px solid #d5e5fa;
+
+    border-radius: 15px;
+
+    padding: 25px 15px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    transition: 0.2s;
+}
+
+
+.mode-button span {
+    font-size: 35px;
+}
+
+
+.mode-button strong {
+    font-size: 20px;
+}
+
+
+.mode-button small {
+    color: #718096;
+}
+
+
+.mode-button:hover {
+    border-color: #1769d2;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(23, 105, 210, 0.15);
+}
+
+
+/* ======================================================
+   BOTÕES GERAIS
+====================================================== */
+
+button {
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 13px 25px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+/* ======================================================
+   BOTÃO VOLTAR
+====================================================== */
+
+.back-button {
+    margin-top: 22px;
+
+    background-color: #dfeafb;
+
+    color: #1557a8;
+
+    border: 1px solid #c6daf5;
+}
+
+
+.back-button:hover {
+    background-color: #cfe1f8;
+}
+
+
+/* ======================================================
+   JOGOS
+====================================================== */
+
+.game {
+    width: 700px;
+
+    max-width: 100%;
+}
+
+
+/* ======================================================
+   INFORMAÇÕES DO JOGO
+====================================================== */
+
+.game-header {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+.info-card {
+    background-color: white;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    border: 1px solid #d5e5fa;
+}
+
+
+.info-card span {
+    display: block;
+
+    font-size: 14px;
+
+    color: #718096;
+
+    margin-bottom: 5px;
+}
+
+
+.info-card strong {
+    font-size: 27px;
+
+    color: #1769d2;
+}
+
+
+/* ======================================================
+   ÁREA DA QUESTÃO
+====================================================== */
+
+.question-area {
+    width: 100%;
+
+    background-color: white;
+
+    padding: 45px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    border: 1px solid #d5e5fa;
+
+    box-shadow:
+        0 8px 25px
+        rgba(23, 105, 210, 0.08);
+}
+
+
+.difficulty-text {
+    color: #718096;
+
+    font-size: 15px;
+
+    margin-bottom: 10px;
+}
+
+
+#difficulty,
+#portugueseDifficulty {
+    color: #1769d2;
+
+    font-weight: bold;
+}
+
+
+.question-area h2 {
+    font-size: 65px;
+
+    color: #172033;
+
+    margin-bottom: 30px;
+}
+
+
+/* ======================================================
+   INPUT DE MATEMÁTICA
+====================================================== */
+
+.question-area input {
+    width: 280px;
+
+    max-width: 100%;
+
+    padding: 15px;
+
+    font-size: 22px;
+
+    text-align: center;
+
+    border: 2px solid #d5e5fa;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    margin-bottom: 18px;
+
+    transition: 0.2s;
+}
+
+
+.question-area input:focus {
+    border-color: #1769d2;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(23, 105, 210, 0.10);
+}
+
+
+/* ======================================================
+   BOTÕES PRINCIPAIS DO JOGO
+====================================================== */
+
+#submitButton,
+#restartButton,
+#menuButton {
+    background-color: #1769d2;
+
+    color: white;
+}
+
+
+#submitButton:hover,
+#restartButton:hover,
+#menuButton:hover {
+    background-color: #1255aa;
+}
+
+
+/* ======================================================
+   TIMER
+====================================================== */
+
+.timer-container {
+    margin-top: 35px;
+}
+
+
+.timer-info {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: #718096;
+}
+
+
+.timer-info strong {
+    color: #1769d2;
+}
+
+
+.timer-bar-background {
+    width: 100%;
+
+    height: 14px;
+
+    background-color: #e3ecf8;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.timer-bar {
+    width: 100%;
+
+    height: 100%;
+
+    background-color: #1769d2;
+
+    border-radius: 20px;
+
+    transition:
+        width 1s linear;
+}
+
+
+/* ======================================================
+   PORTUGUÊS
+====================================================== */
+
+.sentence {
+    max-width: 800px;
+
+    margin: 25px auto;
+
+    font-size: 28px;
+
+    line-height: 1.6;
+}
+
+
+.highlight {
+    color: #1769d2;
+
+    font-weight: bold;
+
+    text-decoration: underline;
+
+    text-decoration-thickness: 2px;
+
+    text-underline-offset: 4px;
+}
+
+
+.word-label {
+    color: #718096;
+
+    margin-bottom: 20px;
+}
+
+
+/* ======================================================
+   ALTERNATIVAS PORTUGUÊS
+====================================================== */
+
+.options {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    max-width: 550px;
+
+    margin: 20px auto;
+}
+
+
+.option-button {
+    padding: 14px;
+
+    background-color: #eef5ff;
+
+    color: #172033;
+
+    border: 2px solid #d5e5fa;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: 0.2s;
+}
+
+
+.option-button:hover {
+    border-color: #1769d2;
+
+    background-color: #e1efff;
+
+    transform: translateY(-2px);
+}
+
+
+/* ======================================================
+   GAME OVER
+====================================================== */
+
+.game-over {
+    width: 650px;
+
+    max-width: 100%;
+
+    background-color: white;
+
+    padding: 45px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    border: 1px solid #d5e5fa;
+
+    box-shadow:
+        0 8px 25px
+        rgba(23, 105, 210, 0.08);
+}
+
+
+.game-over h2 {
+    color: #1557a8;
+
+    font-size: 40px;
+
+    margin-bottom: 20px;
+}
+
+
+#gameOverMessage {
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+
+.final-score,
+.final-record {
+    font-size: 18px;
+
+    margin-bottom: 8px;
+}
+
+
+.final-score strong,
+.final-record strong {
+    color: #1769d2;
+}
+
+
+/* ======================================================
+   REVISÃO DA RESPOSTA
+====================================================== */
+
+.answer-review {
+    margin: 25px auto;
+
+    padding: 22px;
+
+    max-width: 550px;
+
+    background-color: #eef5ff;
+
+    border: 1px solid #d5e5fa;
+
+    border-radius: 15px;
+}
+
+
+.review-title {
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+
+.failed-question {
+    margin-bottom: 18px;
+}
+
+
+.review-label {
+    margin: 0 0 5px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #718096;
+
+    text-transform: uppercase;
+}
+
+
+.failed-question strong {
+    display: block;
+
+    font-size: 20px;
+
+    color: #1769d2;
+}
+
+
+.explanation {
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background-color: white;
+
+    border-radius: 10px;
+
+    border-left:
+        4px solid #1769d2;
+
+    text-align: left;
+}
+
+
+.explanation p:last-child {
+    margin: 5px 0 0;
+
+    line-height: 1.5;
+
+    font-size: 15px;
+
+    color: #526176;
+}
+
+
+/* ======================================================
+   BOTÕES GAME OVER
+====================================================== */
+
+.game-over-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+
+/* ======================================================
+   RANKING
+====================================================== */
+
+.ranking {
+    width: 700px;
+
+    max-width: 100%;
+
+    padding: 35px;
+
+    background-color: white;
+
+    border: 1px solid #d5e5fa;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px
+        rgba(23, 105, 210, 0.08);
+}
+
+
+.ranking h2 {
+    color: #1557a8;
+
+    font-size: 36px;
+
+    margin-bottom: 15px;
+}
+
+
+.ranking > p {
+    color: #718096;
+
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+
+.ranking-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 25px;
+}
+
+
+.ranking-buttons button {
+    background-color: #1769d2;
+
+    color: white;
+}
+
+
+.ranking-buttons button:hover {
+    background-color: #1255aa;
+}
+
+
+.ranking h3 {
+    color: #172033;
+
+    margin-bottom: 20px;
+}
+
+
+.ranking-list {
+    min-height: 100px;
+
+    padding: 20px;
+
+    background-color: #eef5ff;
+
+    border: 1px solid #d5e5fa;
+
+    border-radius: 12px;
+
+    color: #526176;
+}
+
+
+/* ======================================================
+   PERFIL
+====================================================== */
+
+.profile {
+    width: 550px;
+
+    max-width: 100%;
+
+    text-align: center;
+}
+
+
+.profile h2 {
+    color: #1557a8;
+
+    font-size: 36px;
+
+    margin-bottom: 25px;
+}
+
+
+.profile-card {
+    background-color: white;
+
+    padding: 30px;
+
+    border: 1px solid #d5e5fa;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(23, 105, 210, 0.08);
+
+    text-align: left;
+}
+
+
+.profile-card p {
+    padding: 15px 0;
+
+    border-bottom:
+        1px solid #e7eef8;
+
+    color: #718096;
+}
+
+
+.profile-card p:last-child {
+    border-bottom: none;
+}
+
+
+.profile-card strong {
+    color: #1769d2;
+
+    float: right;
+}
+
+
+/* ======================================================
+   AUTENTICAÇÃO
+====================================================== */
+
+.auth-screen {
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d47a1,
+            #1976d2
+        );
+}
+
+
+.auth-box {
+    width: 380px;
+
+    max-width: 100%;
+
+    padding: 40px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.25);
+
+    text-align: center;
+}
+
+
+.auth-box h1 {
+    color: #1565c0;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+}
+
+
+.auth-box > p:not(.auth-switch):not(.auth-message) {
+    color: #555;
+
+    margin-bottom: 10px;
+}
+
+
+.auth-box input {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 12px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+.auth-box input:focus {
+    border-color: #1976d2;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(25, 118, 210, 0.10);
+}
+
+
+.auth-box > button {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #1976d2;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.auth-box > button:hover {
+    background: #1565c0;
+}
+
+
+.auth-switch {
+    margin-top: 20px;
+
+    color: #555;
+
+    font-size: 14px;
+}
+
+
+.auth-switch button {
+    padding: 4px;
+
+    border: none;
+
+    background: none;
+
+    color: #1976d2;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.auth-switch button:hover {
+    text-decoration: underline;
+}
+
+
+.auth-message {
+    min-height: 20px;
+
+    margin-top: 10px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+/* ======================================================
+   RODAPÉ
+====================================================== */
+
+footer {
+    width: 100%;
+
+    text-align: center;
+
+    padding: 18px;
+
+    background-color: white;
+
+    border-top:
+        1px solid #d5e5fa;
+
+    color: #718096;
+
+    font-size: 14px;
+}
+
+
+/* ======================================================
+   RESPONSIVIDADE - TABLET
+====================================================== */
+
+@media (max-width: 800px) {
+
+    header {
+        padding:
+            18px 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+
+    nav {
+        gap: 15px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+
+    main {
+        padding:
+            35px 15px;
+    }
+
+
+    .home h2 {
+        font-size: 36px;
+    }
+
+
+    .modes {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .question-area {
+        padding:
+            35px 25px;
+    }
+
+
+    .question-area h2 {
+        font-size: 50px;
+    }
+
+}
+
+
+/* ======================================================
+   RESPONSIVIDADE - CELULAR
+====================================================== */
+
+@media (max-width: 600px) {
+
+    header {
+        padding:
+            15px;
+    }
+
+
+    .logo h1 {
+        font-size: 24px;
+    }
+
+
+    nav {
+        gap: 10px;
+    }
+
+
+    nav a {
+        font-size: 14px;
+    }
+
+
+    main {
+        padding:
+            25px 12px;
+    }
+
+
+    .home h2 {
+        font-size: 31px;
+    }
+
+
+    .home > p {
+        font-size: 16px;
+    }
+
+
+    .game-header {
+        gap: 8px;
+    }
+
+
+    .info-card {
+        padding:
+            12px 7px;
+    }
+
+
+    .info-card strong {
+        font-size: 22px;
+    }
+
+
+    .question-area {
+        padding:
+            25px 15px;
+    }
+
+
+    .question-area h2 {
+        font-size: 42px;
+    }
+
+
+    .sentence {
+        font-size: 22px;
+    }
+
+
+    .options {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .game-over {
+        padding:
+            30px 15px;
+    }
+
+
+    .game-over h2 {
+        font-size: 32px;
+    }
+
+
+    .ranking {
+        padding:
+            25px 15px;
+    }
+
+
+    .profile-card strong {
+        float: none;
+
+        display: block;
+
+        margin-top: 5px;
+    }
+
+
+    .auth-box {
+        padding:
+            30px 22px;
+    }
+
+}
+
+/* ======================================================
+   ÁREA APRENDER
+====================================================== */
+
+.learn {
+    width: min(1000px, 92%);
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+
+.learn > h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+
+.section-description {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 32px;
+    opacity: 0.8;
+}
+
+
+.learning-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+
+.learning-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    min-height: 220px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    box-shadow:
+        0 8px 24px
+        rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.learning-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0, 0, 0, 0.12);
+}
+
+
+.learning-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+}
+
+
+.learning-card p {
+    line-height: 1.6;
+    margin-bottom: 24px;
+    opacity: 0.85;
+}
+
+
+.learning-card button {
+    width: 100%;
+    padding: 13px 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+
+.learning-card button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+
+/* ======================================================
+   APRENDER - CELULAR
+====================================================== */
+
+@media (max-width: 700px) {
+
+    .learn {
+        width: 94%;
+        padding: 28px 12px;
+    }
+
+
+    .learning-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+
+    .learning-card {
+        min-height: auto;
+        padding: 22px;
+    }
+
+
+    .learn > h2 {
+        font-size: 1.7rem;
+    }
+
+}
+
+/* ======================================================
+   CONTEÚDOS DE APRENDIZAGEM
+====================================================== */
+
+.learn-content {
+    width: min(1000px, 92%);
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+
+.learn-content-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+
+.learn-content-header h2 {
+    font-size: 2rem;
+    margin-bottom: 6px;
+}
+
+
+.learn-content-header p {
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+
+.study-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+
+.study-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+
+    box-shadow:
+        0 8px 24px
+        rgba(0, 0, 0, 0.08);
+}
+
+
+.study-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+
+.study-card p {
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+
+@media (max-width: 700px) {
+
+    .learn-content {
+        width: 94%;
+        padding: 28px 12px;
+    }
+
+
+    .learn-content-header {
+        flex-direction: column;
+    }
+
+
+    .study-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ======================================================
+   ESTRATÉGIAS DE MATEMÁTICA
+====================================================== */
+
+.strategy-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+
+.strategy-group {
+    width: 100%;
+
+    background: white;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 24px
+        rgba(0, 0, 0, 0.07);
+
+    overflow: hidden;
+}
+
+
+.strategy-group summary {
+    padding: 20px 24px;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    user-select: none;
+}
+
+
+.strategy-group summary:hover {
+    background:
+        rgba(0, 0, 0, 0.025);
+}
+
+
+.strategy-group summary small {
+    font-size: 0.9rem;
+    font-weight: 400;
+    opacity: 0.65;
+}
+
+
+.strategy-content {
+    padding: 0 24px 24px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+.strategy-card {
+    padding: 20px;
+
+    border-radius: 12px;
+
+    background: #f7f9fc;
+
+    border:
+        1px solid
+        rgba(0, 0, 0, 0.06);
+}
+
+
+.strategy-card h3 {
+    margin-bottom: 10px;
+
+    font-size: 1.1rem;
+}
+
+
+.strategy-card p {
+    line-height: 1.6;
+
+    opacity: 0.82;
+}
+
+
+.strategy-example {
+    margin-top: 16px;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: white;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.strategy-example strong {
+    font-size: 1.1rem;
+
+    margin-bottom: 3px;
+}
+
+
+.strategy-answer {
+    font-weight: 700;
+
+    margin-top: 3px;
+}
+
+
+/* ======================================================
+   ESTRATÉGIAS - CELULAR
+====================================================== */
+
+@media (max-width: 700px) {
+
+    .strategy-group summary {
+        padding: 18px;
+    }
+
+
+    .strategy-content {
+        grid-template-columns: 1fr;
+
+        padding:
+            0 18px 18px;
+    }
+
+
+    .strategy-card {
+        padding: 18px;
+    }
+
+}
+
+/* ======================================================
+   SOBRE O PROJETO
+====================================================== */
+
+.about {
+    width: min(1050px, 92%);
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
+
+.about-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+
+.about-header h2 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+
+.about-header p {
+    opacity: 0.75;
+    font-size: 1rem;
+}
+
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+.about-section {
+    background: white;
+
+    padding: 28px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 24px
+        rgba(0, 0, 0, 0.07);
+}
+
+
+.about-section h3 {
+    margin-bottom: 16px;
+
+    font-size: 1.3rem;
+}
+
+
+.about-section > p {
+    line-height: 1.7;
+    margin-bottom: 12px;
+    opacity: 0.86;
+}
+
+
+.about-section > p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ======================================================
+   DISCIPLINAS DO PROJETO
+====================================================== */
+
+.about-subjects {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.about-subject {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+
+    padding: 18px;
+
+    background: #f7f9fc;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(0, 0, 0, 0.05);
+}
+
+
+.about-subject > span {
+    font-size: 1.5rem;
+}
+
+
+.about-subject strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+
+.about-subject p {
+    line-height: 1.5;
+    font-size: 0.92rem;
+    opacity: 0.75;
+}
+
+
+.anchor-subject {
+    grid-column: 1 / -1;
+}
+
+
+/* ======================================================
+   TECNOLOGIAS
+====================================================== */
+
+.technology-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.technology-list span {
+    padding: 9px 14px;
+
+    background: #f0f3f8;
+
+    border-radius: 999px;
+
+    font-weight: 700;
+
+    font-size: 0.9rem;
+}
+
+
+/* ======================================================
+   FUNCIONALIDADES
+====================================================== */
+
+.about-features {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+.about-features div {
+    background: #f7f9fc;
+
+    padding: 14px 16px;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+}
+
+
+/* ======================================================
+   CRIADORES
+====================================================== */
+
+.creators-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-top: 20px;
+}
+
+
+.creator-card {
+    min-height: 135px;
+
+    padding: 18px 12px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    text-align: center;
+
+    background: #f7f9fc;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        rgba(0, 0, 0, 0.05);
+}
+
+
+.creator-avatar {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e8edf5;
+
+    font-weight: 800;
+
+    font-size: 1rem;
+}
+
+
+/* ======================================================
+   ENCERRAMENTO DO SOBRE
+====================================================== */
+
+.about-final {
+    text-align: center;
+
+    padding: 34px 28px;
+
+    border-radius: 16px;
+
+    background: white;
+
+    box-shadow:
+        0 8px 24px
+        rgba(0, 0, 0, 0.07);
+}
+
+
+.about-final h3 {
+    margin-bottom: 14px;
+    font-size: 1.4rem;
+}
+
+
+.about-final p {
+    max-width: 760px;
+
+    margin:
+        0 auto 10px;
+
+    line-height: 1.7;
+
+    opacity: 0.82;
+}
+
+
+/* ======================================================
+   SOBRE - CELULAR
+====================================================== */
+
+@media (max-width: 800px) {
+
+    .creators-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .about {
+        width: 94%;
+        padding: 28px 12px 40px;
+    }
+
+
+    .about-section {
+        padding: 22px;
+    }
+
+
+    .about-subjects {
+        grid-template-columns: 1fr;
+    }
+
+
+    .anchor-subject {
+        grid-column: auto;
+    }
+
+
+    .about-features {
+        grid-template-columns: 1fr;
+    }
+
+
+    .creators-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .creator-card {
+        min-height: auto;
+
+        flex-direction: row;
+
+        justify-content: flex-start;
+
+        text-align: left;
+
+        padding: 15px;
+    }
+
+
+    .creator-avatar {
+        width: 45px;
+        height: 45px;
+
+        flex-shrink: 0;
+    }
+
+}
+
+/* ======================================================
+   TECLADO NUMÉRICO
+====================================================== */
+
+.numeric-keyboard {
+    width: min(320px, 100%);
+
+    margin:
+        18px auto 12px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+}
+
+
+.numeric-key {
+    min-height: 58px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: white;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+
+.numeric-key:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 6px 16px
+        rgba(0, 0, 0, 0.12);
+}
+
+
+.numeric-key:active {
+    transform:
+        scale(0.97);
+}
+
+
+.numeric-action {
+    font-size: 1.35rem;
+}
+
+
+.numeric-confirm {
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+
+/* ======================================================
+   TECLADO NUMÉRICO - CELULAR
+====================================================== */
+
+@media (max-width: 700px) {
+
+    .numeric-keyboard {
+        width: min(340px, 96%);
+        gap: 8px;
+    }
+
+
+    .numeric-key {
+        min-height: 60px;
+        font-size: 1.3rem;
+    }
+
+}
+
+/* ======================================================
+   MENU MOBILE
+====================================================== */
+
+.menu-toggle {
+    display: none;
+
+    background: transparent;
+    border: none;
+
+    font-size: 1.8rem;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+@media (max-width: 700px) {
+
+    header {
+        position: relative;
+    }
+
+
+    .menu-toggle {
+        display: block;
+
+        position: absolute;
+
+        top: 50%;
+        right: 18px;
+
+        transform: translateY(-50%);
+
+        color: white;
+    }
+
+
+    header nav {
+        display: none;
+
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 4px;
+
+        margin-top: 14px;
+    }
+
+
+    header nav.nav-open {
+        display: flex;
+    }
+
+
+    header nav a,
+    header nav button {
+        width: 100%;
+
+        text-align: center;
+
+        padding: 10px;
+
+        border-radius: 8px;
+    }
+
+}
+
+/* ======================================================
+   RANKING
+====================================================== */
+
+#ranking {
+    width: min(760px, 92%);
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+
+#ranking h2 {
+    text-align: center;
+
+    font-size: 2rem;
+
+    margin-bottom: 24px;
+}
+
+
+/* ======================================================
+   BOTÕES DE MATÉRIA DO RANKING
+====================================================== */
+
+#mathRankingButton,
+#portugueseRankingButton {
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-weight: 700;
+    font-size: 0.95rem;
+
+    cursor: pointer;
+
+    margin:
+        0 4px 24px;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+#mathRankingButton:hover,
+#portugueseRankingButton:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 5px 14px
+        rgba(0, 0, 0, 0.12);
+}
+
+
+/* ======================================================
+   TÍTULO DO RANKING ATUAL
+====================================================== */
+
+#rankingTitle {
+    text-align: center;
+
+    margin:
+        4px 0 20px;
+
+    font-size: 1.25rem;
+}
+
+
+/* ======================================================
+   LISTA DE JOGADORES
+====================================================== */
+
+#rankingList {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.ranking-item {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        55px 1fr auto;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding:
+        16px 20px;
+
+    background: white;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        rgba(0, 0, 0, 0.06);
+
+    box-shadow:
+        0 5px 16px
+        rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+.ranking-item:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, 0.1);
+}
+
+
+/* ======================================================
+   POSIÇÃO
+====================================================== */
+
+.ranking-position {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+
+/* ======================================================
+   JOGADOR
+====================================================== */
+
+.ranking-player {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.ranking-name {
+    font-size: 1.05rem;
+}
+
+
+.ranking-player small {
+    opacity: 0.55;
+
+    font-size: 0.78rem;
+}
+
+
+/* ======================================================
+   PONTUAÇÃO
+====================================================== */
+
+.ranking-score {
+    display: flex;
+    align-items: baseline;
+
+    gap: 5px;
+
+    font-size: 1.25rem;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+.ranking-score small {
+    font-size: 0.75rem;
+    font-weight: 500;
+
+    opacity: 0.6;
+}
+
+
+/* ======================================================
+   PÓDIO
+====================================================== */
+
+.ranking-first {
+    transform:
+        scale(1.02);
+
+    border-width: 2px;
+}
+
+
+.ranking-first:hover {
+    transform:
+        scale(1.02)
+        translateY(-2px);
+}
+
+
+.ranking-first .ranking-name {
+    font-size: 1.12rem;
+}
+
+
+.ranking-first .ranking-score {
+    font-size: 1.35rem;
+}
+
+
+.ranking-second,
+.ranking-third {
+    border-width: 1.5px;
+}
+
+
+/* ======================================================
+   RANKING - CELULAR
+====================================================== */
+
+@media (max-width: 700px) {
+
+    #ranking {
+        width: 94%;
+
+        padding:
+            28px 10px;
+    }
+
+
+    #ranking h2 {
+        font-size: 1.7rem;
+    }
+
+
+    .ranking-item {
+        grid-template-columns:
+            42px 1fr auto;
+
+        padding:
+            14px 12px;
+
+        gap: 10px;
+    }
+
+
+    .ranking-position {
+        font-size: 1.2rem;
+    }
+
+
+    .ranking-name {
+        font-size: 0.95rem;
+    }
+
+
+    .ranking-score {
+        font-size: 1.05rem;
+    }
+
+
+    .ranking-score small {
+        display: none;
+    }
+
+
+    .ranking-first {
+        transform: none;
+    }
+
+
+    .ranking-first:hover {
+        transform:
+            translateY(-2px);
+    }
+
+}
