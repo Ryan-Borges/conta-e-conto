@@ -9,7 +9,8 @@ const pool = require("./database");
 
 const app = express();
 
-const PORT = 3000;
+const PORT =
+    process.env.PORT || 3000;
 
 
 // ==========================================
@@ -896,10 +897,13 @@ app.get(
 // INICIAR SERVIDOR
 // ==========================================
 
-app.listen(PORT, () => {
+app.listen(
+    PORT,
+    () => {
 
-    console.log(
-        `API rodando em http://localhost:${PORT}`
-    );
+        console.log(
+            `Servidor rodando na porta ${PORT}`
+        );
 
-});
+    }
+);
