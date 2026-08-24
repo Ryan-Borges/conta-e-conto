@@ -63,18 +63,15 @@ const numericKeyboard =
         "numericKeyboard"
     );
 
-
 const numericKeys =
     document.querySelectorAll(
         ".numeric-key[data-value]"
     );
 
-
 const numericDelete =
     document.getElementById(
         "numericDelete"
     );
-
 
 const numericConfirm =
     document.getElementById(
@@ -101,6 +98,69 @@ const timerBar =
 
 const mathRecordElement =
     document.getElementById("record");
+
+const mathRecordLabel =
+    document.getElementById("mathRecordLabel");
+
+const mathGameOperationLabel =
+    document.getElementById(
+        "mathGameOperationLabel"
+    );
+
+const mathGameModeLabel =
+    document.getElementById(
+        "mathGameModeLabel"
+    );
+
+const mathOperationSelection =
+    document.getElementById(
+        "mathOperationSelection"
+    );
+
+const mathOperationModes =
+    document.getElementById(
+        "mathOperationModes"
+    );
+
+const mathSelectedOperationTitle =
+    document.getElementById(
+        "mathSelectedOperationTitle"
+    );
+
+const survivalButton =
+    document.getElementById(
+        "survivalButton"
+    );
+
+const survivalMenuRecord =
+    document.getElementById(
+        "survivalMenuRecord"
+    );
+
+const mathOperationButtons =
+    document.querySelectorAll(
+        ".math-operation-button"
+    );
+
+const mathOperationModeButtons =
+    document.querySelectorAll(
+        ".math-operation-mode"
+    );
+
+const backFromMathMenu =
+    document.getElementById(
+        "backFromMathMenu"
+    );
+
+const backFromMathOperationModes =
+    document.getElementById(
+        "backFromMathOperationModes"
+    );
+
+const mathGameBackButton =
+    document.getElementById(
+        "backFromMathGame"
+    );
 
 
 // ======================================================
@@ -394,11 +454,61 @@ const registerButton =
 // VARIÁVEIS - MATEMÁTICA
 // ======================================================
 
+const MATH_OPERATIONS = {
+
+    addition: {
+        label: "Soma",
+        emoji: "➕",
+        symbol: "+"
+    },
+
+    subtraction: {
+        label: "Subtração",
+        emoji: "➖",
+        symbol: "-"
+    },
+
+    multiplication: {
+        label: "Multiplicação",
+        emoji: "✖️",
+        symbol: "×"
+    },
+
+    division: {
+        label: "Divisão",
+        emoji: "➗",
+        symbol: "÷"
+    }
+
+};
+
+
+const MATH_MODES = {
+
+    tranquilo: {
+        label: "Tranquilo",
+        emoji: "🌱",
+        time: 20
+    },
+
+    velocidade: {
+        label: "Velocidade",
+        emoji: "⚡",
+        time: 20
+    },
+
+    brutal: {
+        label: "Brutal",
+        emoji: "🔥",
+        time: 20
+    }
+
+};
+
+
 let score = 0;
 
 let level = 1;
-
-let startingLevel = 1;
 
 let currentQuestion = "";
 
@@ -409,6 +519,162 @@ let currentOperation = "";
 let timer = TEMPO_TOTAL;
 
 let timerInterval = null;
+
+let mathQuestionTime = TEMPO_TOTAL;
+
+let mathGameType = "survival";
+
+let selectedMathOperation = null;
+
+let selectedMathMode = null;
+
+let currentMathRecordValue = 0;
+
+let mathAnswerLocked = false;
+
+const isTouchDevice =
+    window.matchMedia(
+        "(pointer: coarse)"
+    ).matches;
+
+
+
+// ======================================================
+// HISTÓRICO DE NAVEGAÇÃO DO APP
+// ======================================================
+
+function saveAppHistory(
+    view,
+    data = {},
+    replace = false
+) {
+
+    const state = {
+        view,
+        ...data
+    };
+
+    const url = `#${view}`;
+
+    if (replace) {
+
+        window.history.replaceState(
+            state,
+            "",
+            url
+        );
+
+    }
+
+    else {
+
+        window.history.pushState(
+            state,
+            "",
+            url
+        );
+
+    }
+
+}
+
+
+function restoreAppView(state) {
+
+    const view =
+        state?.view || "home";
+
+    switch (view) {
+
+        case "math-menu":
+            openMathModes(false);
+            break;
+
+        case "math-operation":
+            openMathModes(false);
+            showMathOperationModes(
+                state.operation,
+                false
+            );
+            break;
+
+        case "portuguese-menu":
+            openPortugueseModes(false);
+            break;
+
+        case "learn":
+            showLearn(false);
+            break;
+
+        case "learn-math":
+            showLearnMath(false);
+            break;
+
+        case "learn-portuguese":
+            showLearnPortuguese(false);
+            break;
+
+        case "ranking":
+            showRanking(false);
+            break;
+
+        case "profile":
+            showProfile(false);
+            break;
+
+        case "about":
+            showAbout(false);
+            break;
+
+        case "math-game":
+
+            if (
+                state.gameType === "operation"
+            ) {
+
+                startOperationGame(
+                    state.operation,
+                    state.mode,
+                    false
+                );
+
+            }
+
+            else {
+
+                startSurvivalGame(false);
+
+            }
+
+            break;
+
+        case "portuguese-game":
+            startPortugueseGame(
+                Number(state.level) || 1,
+                false
+            );
+            break;
+
+        case "home":
+        default:
+            showMenu(false);
+            break;
+
+    }
+
+}
+
+
+window.addEventListener(
+    "popstate",
+    event => {
+
+        restoreAppView(
+            event.state
+        );
+
+    }
+);
 
 
 // ======================================================
@@ -461,9 +727,17 @@ let portugueseRecordValue =
 
 function updateRecordsOnScreen() {
 
-    if (mathRecordElement) {
+    if (mathRecordElement && mathGameType === "survival") {
 
         mathRecordElement.textContent =
+            mathRecordValue;
+
+    }
+
+
+    if (survivalMenuRecord) {
+
+        survivalMenuRecord.textContent =
             mathRecordValue;
 
     }
@@ -746,7 +1020,7 @@ function hideMainSections() {
 // MENU PRINCIPAL
 // ======================================================
 
-function showMenu() {
+function showMenu(addToHistory = true) {
 
     clearInterval(timerInterval);
 
@@ -760,6 +1034,13 @@ function showMenu() {
 
     if (mathModes) {
         mathModes.classList.add("hidden");
+    }
+
+    resetMathMenuPanels();
+
+    if (survivalMenuRecord) {
+        survivalMenuRecord.textContent =
+            mathRecordValue;
     }
 
     if (portugueseModes) {
@@ -776,6 +1057,10 @@ function showMenu() {
 
     currentSubject = null;
 
+    if (addToHistory) {
+        saveAppHistory("home");
+    }
+
 }
 
 
@@ -783,31 +1068,98 @@ function showMenu() {
 // MENU MATEMÁTICA
 // ======================================================
 
-function openMathModes() {
+function resetMathMenuPanels() {
+
+    if (mathOperationSelection) {
+        mathOperationSelection.classList.remove(
+            "hidden"
+        );
+    }
+
+    if (mathOperationModes) {
+        mathOperationModes.classList.add(
+            "hidden"
+        );
+    }
+
+    selectedMathOperation = null;
+
+}
+
+
+function openMathModes(addToHistory = true) {
 
     hideMainSections();
-
 
     if (home) {
         home.classList.remove("hidden");
     }
 
-
     if (portugueseModes) {
-
         portugueseModes.classList.add(
             "hidden"
         );
-
     }
 
-
     if (mathModes) {
-
         mathModes.classList.remove(
             "hidden"
         );
+    }
 
+    resetMathMenuPanels();
+
+    if (survivalMenuRecord) {
+        survivalMenuRecord.textContent =
+            mathRecordValue;
+    }
+
+    if (addToHistory) {
+        saveAppHistory("math-menu");
+    }
+
+}
+
+
+function showMathOperationModes(
+    operationKey,
+    addToHistory = true
+) {
+
+    const operation =
+        MATH_OPERATIONS[
+            operationKey
+        ];
+
+    if (!operation) {
+        return;
+    }
+
+    selectedMathOperation =
+        operationKey;
+
+    if (mathOperationSelection) {
+        mathOperationSelection.classList.add(
+            "hidden"
+        );
+    }
+
+    if (mathOperationModes) {
+        mathOperationModes.classList.remove(
+            "hidden"
+        );
+    }
+
+    if (mathSelectedOperationTitle) {
+        mathSelectedOperationTitle.textContent =
+            `${operation.emoji} ${operation.label}`;
+    }
+
+    if (addToHistory) {
+        saveAppHistory(
+            "math-operation",
+            { operation: operationKey }
+        );
     }
 
 }
@@ -817,7 +1169,7 @@ function openMathModes() {
 // MENU PORTUGUÊS
 // ======================================================
 
-function openPortugueseModes() {
+function openPortugueseModes(addToHistory = true) {
 
     hideMainSections();
 
@@ -842,6 +1194,12 @@ function openPortugueseModes() {
             "hidden"
         );
 
+    }
+
+    if (addToHistory) {
+        saveAppHistory(
+            "portuguese-menu"
+        );
     }
 
 }
@@ -869,9 +1227,7 @@ if (mathButton) {
                 );
 
                 return;
-
             }
-
 
             openMathModes();
 
@@ -903,9 +1259,7 @@ if (portugueseButton) {
                 );
 
                 return;
-
             }
-
 
             openPortugueseModes();
 
@@ -916,30 +1270,18 @@ if (portugueseButton) {
 
 
 // ======================================================
-// MODOS MATEMÁTICA
+// ESCOLHA DA OPERAÇÃO - MATEMÁTICA
 // ======================================================
 
-const mathModeButtons =
-    document.querySelectorAll(
-        ".math-mode"
-    );
-
-
-mathModeButtons.forEach(
+mathOperationButtons.forEach(
     button => {
 
         button.addEventListener(
             "click",
             () => {
 
-                const selectedLevel =
-                    Number(
-                        button.dataset.level
-                    );
-
-
-                startGame(
-                    selectedLevel
+                showMathOperationModes(
+                    button.dataset.operation
                 );
 
             }
@@ -947,6 +1289,47 @@ mathModeButtons.forEach(
 
     }
 );
+
+
+// ======================================================
+// MODOS DAS OPERAÇÕES - MATEMÁTICA
+// ======================================================
+
+mathOperationModeButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                if (!selectedMathOperation) {
+                    return;
+                }
+
+                startOperationGame(
+                    selectedMathOperation,
+                    button.dataset.mode
+                );
+
+            }
+        );
+
+    }
+);
+
+
+// ======================================================
+// SOBREVIVÊNCIA - MATEMÁTICA
+// ======================================================
+
+if (survivalButton) {
+
+    survivalButton.addEventListener(
+        "click",
+        startSurvivalGame
+    );
+
+}
 
 
 // ======================================================
@@ -987,28 +1370,27 @@ portugueseModeButtons.forEach(
 // BOTÕES VOLTAR DOS SUBMENUS
 // ======================================================
 
-// Como o HTML possui IDs repetidos,
-// selecionamos especificamente pelo local.
+if (backFromMathMenu) {
 
-const mathMenuBackButton =
-    document.querySelector(
-        "#mathModes #backFromMath"
-    );
-
-
-if (mathMenuBackButton) {
-
-    mathMenuBackButton.addEventListener(
+    backFromMathMenu.addEventListener(
         "click",
         () => {
 
-            if (mathModes) {
+            window.history.back();
 
-                mathModes.classList.add(
-                    "hidden"
-                );
+        }
+    );
 
-            }
+}
+
+
+if (backFromMathOperationModes) {
+
+    backFromMathOperationModes.addEventListener(
+        "click",
+        () => {
+
+            window.history.back();
 
         }
     );
@@ -1028,13 +1410,7 @@ if (portugueseMenuBackButton) {
         "click",
         () => {
 
-            if (portugueseModes) {
-
-                portugueseModes.classList.add(
-                    "hidden"
-                );
-
-            }
+            window.history.back();
 
         }
     );
@@ -1043,40 +1419,209 @@ if (portugueseMenuBackButton) {
 
 
 // ======================================================
+// MATEMÁTICA - CONFIGURAÇÃO DO JOGO
+// ======================================================
+
+function getMathProgressLevel(
+    currentScore
+) {
+
+    if (currentScore < 5) return 1;
+    if (currentScore < 10) return 2;
+    if (currentScore < 15) return 3;
+    if (currentScore < 20) return 4;
+    if (currentScore < 25) return 5;
+    if (currentScore < 30) return 6;
+    if (currentScore < 40) return 7;
+    if (currentScore < 50) return 8;
+    if (currentScore < 60) return 9;
+
+    return 10;
+
+}
+
+
+function getOperationLocalRecordKey() {
+
+    if (
+        !selectedMathOperation ||
+        !selectedMathMode
+    ) {
+        return null;
+    }
+
+    return `mathRecord_${selectedMathOperation}_${selectedMathMode}`;
+
+}
+
+
+function loadCurrentMathRecord() {
+
+    if (mathGameType === "survival") {
+
+        currentMathRecordValue =
+            mathRecordValue;
+
+        return;
+
+    }
+
+    const key =
+        getOperationLocalRecordKey();
+
+    currentMathRecordValue =
+        key
+            ? Number(
+                localStorage.getItem(
+                    key
+                )
+            ) || 0
+            : 0;
+
+}
+
+
+function configureMathInputForDevice() {
+
+    if (!answerInput) {
+        return;
+    }
+
+    if (isTouchDevice) {
+
+        answerInput.readOnly =
+            true;
+
+        answerInput.setAttribute(
+            "inputmode",
+            "none"
+        );
+
+        answerInput.placeholder =
+            "Use o teclado abaixo";
+
+    }
+
+    else {
+
+        answerInput.readOnly =
+            false;
+
+        answerInput.setAttribute(
+            "inputmode",
+            "numeric"
+        );
+
+        answerInput.placeholder =
+            "Digite sua resposta";
+
+    }
+
+}
+
+
+function startSurvivalGame(addToHistory = true) {
+
+    mathGameType =
+        "survival";
+
+    selectedMathOperation =
+        null;
+
+    selectedMathMode =
+        null;
+
+    mathQuestionTime =
+        TEMPO_TOTAL;
+
+    startGame();
+
+    if (addToHistory) {
+        saveAppHistory(
+            "math-game",
+            { gameType: "survival" }
+        );
+    }
+
+}
+
+
+function startOperationGame(
+    operationKey,
+    modeKey,
+    addToHistory = true
+) {
+
+    if (
+        !MATH_OPERATIONS[operationKey] ||
+        !MATH_MODES[modeKey]
+    ) {
+        return;
+    }
+
+    mathGameType =
+        "operation";
+
+    selectedMathOperation =
+        operationKey;
+
+    selectedMathMode =
+        modeKey;
+
+    mathQuestionTime =
+        MATH_MODES[modeKey].time;
+
+    startGame();
+
+    if (addToHistory) {
+        saveAppHistory(
+            "math-game",
+            {
+                gameType: "operation",
+                operation: operationKey,
+                mode: modeKey
+            }
+        );
+    }
+
+}
+
+
+// ======================================================
 // MATEMÁTICA - INICIAR
 // ======================================================
 
-function startGame(selectedLevel) {
+function startGame() {
 
-    currentSubject = "math";
+    currentSubject =
+        "math";
 
     score = 0;
 
-    startingLevel =
-        selectedLevel;
+    level = 1;
 
-    level =
-        selectedLevel;
+    mathAnswerLocked =
+        false;
 
-
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
     clearInterval(
         portugueseTimerInterval
     );
 
+    loadCurrentMathRecord();
+
+    configureMathInputForDevice();
 
     hideMainSections();
 
-
     if (game) {
-
         game.classList.remove(
             "hidden"
         );
-
     }
-
 
     updateMathInterface();
 
@@ -1091,34 +1636,317 @@ function startGame(selectedLevel) {
 
 function updateMathInterface() {
 
-    if (scoreElement) {
+    level =
+        getMathProgressLevel(
+            score
+        );
 
+    if (scoreElement) {
         scoreElement.textContent =
             score;
-
     }
-
 
     if (levelElement) {
-
         levelElement.textContent =
             level;
-
     }
-
 
     if (difficultyElement) {
-
         difficultyElement.textContent =
             level;
+    }
+
+    if (mathRecordElement) {
+        mathRecordElement.textContent =
+            currentMathRecordValue;
+    }
+
+    if (mathRecordLabel) {
+        mathRecordLabel.textContent =
+            mathGameType === "survival"
+                ? "Recorde"
+                : "Melhor";
+    }
+
+    if (
+        mathGameType === "survival"
+    ) {
+
+        if (mathGameOperationLabel) {
+            mathGameOperationLabel.textContent =
+                "☠️ Sobrevivência";
+        }
+
+        if (mathGameModeLabel) {
+            mathGameModeLabel.textContent =
+                `${mathQuestionTime}s por conta • 4 operações • vale ranking`;
+        }
 
     }
 
+    else {
 
-    if (mathRecordElement) {
+        const operation =
+            MATH_OPERATIONS[
+                selectedMathOperation
+            ];
 
-        mathRecordElement.textContent =
-            mathRecordValue;
+        const mode =
+            MATH_MODES[
+                selectedMathMode
+            ];
+
+        if (
+            mathGameOperationLabel &&
+            operation
+        ) {
+            mathGameOperationLabel.textContent =
+                `${operation.emoji} ${operation.label}`;
+        }
+
+        if (
+            mathGameModeLabel &&
+            mode
+        ) {
+            mathGameModeLabel.textContent =
+                `${mode.emoji} ${mode.label} • ${mode.time}s por conta • sem ranking`;
+        }
+
+    }
+
+}
+
+
+// ======================================================
+// MATEMÁTICA - GERADORES POR OPERAÇÃO
+// ======================================================
+
+function getAdditionQuestion(
+    difficulty
+) {
+
+    const ranges = [
+        [1, 10],
+        [5, 20],
+        [10, 50],
+        [20, 100],
+        [50, 200],
+        [100, 500],
+        [200, 1000],
+        [500, 2000],
+        [1000, 5000],
+        [1500, 9999]
+    ];
+
+    const [min, max] =
+        ranges[
+            Math.min(
+                difficulty,
+                10
+            ) - 1
+        ];
+
+    const a =
+        randomNumber(
+            min,
+            max
+        );
+
+    const b =
+        randomNumber(
+            min,
+            max
+        );
+
+    return {
+        a,
+        b,
+        symbol: "+",
+        answer: a + b
+    };
+
+}
+
+
+function getSubtractionQuestion(
+    difficulty
+) {
+
+    const ranges = [
+        [1, 10],
+        [5, 20],
+        [10, 50],
+        [20, 100],
+        [50, 200],
+        [100, 500],
+        [200, 1000],
+        [500, 2000],
+        [1000, 5000],
+        [1500, 9999]
+    ];
+
+    const [min, max] =
+        ranges[
+            Math.min(
+                difficulty,
+                10
+            ) - 1
+        ];
+
+    let a =
+        randomNumber(
+            min,
+            max
+        );
+
+    let b =
+        randomNumber(
+            min,
+            max
+        );
+
+    if (a < b) {
+        [a, b] = [b, a];
+    }
+
+    return {
+        a,
+        b,
+        symbol: "-",
+        answer: a - b
+    };
+
+}
+
+
+function getMultiplicationQuestion(
+    difficulty
+) {
+
+    const ranges = [
+        [[2, 5], [2, 5]],
+        [[2, 10], [2, 10]],
+        [[4, 12], [2, 10]],
+        [[6, 15], [3, 12]],
+        [[8, 20], [4, 15]],
+        [[10, 25], [5, 20]],
+        [[12, 30], [6, 20]],
+        [[15, 35], [8, 25]],
+        [[20, 50], [10, 30]],
+        [[25, 75], [10, 40]]
+    ];
+
+    const [rangeA, rangeB] =
+        ranges[
+            Math.min(
+                difficulty,
+                10
+            ) - 1
+        ];
+
+    const a =
+        randomNumber(
+            rangeA[0],
+            rangeA[1]
+        );
+
+    const b =
+        randomNumber(
+            rangeB[0],
+            rangeB[1]
+        );
+
+    return {
+        a,
+        b,
+        symbol: "×",
+        answer: a * b
+    };
+
+}
+
+
+function getDivisionQuestion(
+    difficulty
+) {
+
+    const ranges = [
+        [[2, 5], [2, 5]],
+        [[2, 10], [2, 8]],
+        [[2, 10], [3, 12]],
+        [[2, 12], [4, 15]],
+        [[3, 12], [5, 20]],
+        [[4, 15], [6, 25]],
+        [[5, 18], [8, 30]],
+        [[6, 20], [10, 40]],
+        [[8, 25], [12, 50]],
+        [[10, 30], [15, 70]]
+    ];
+
+    const [divisorRange, resultRange] =
+        ranges[
+            Math.min(
+                difficulty,
+                10
+            ) - 1
+        ];
+
+    const divisor =
+        randomNumber(
+            divisorRange[0],
+            divisorRange[1]
+        );
+
+    const result =
+        randomNumber(
+            resultRange[0],
+            resultRange[1]
+        );
+
+    const dividend =
+        divisor * result;
+
+    return {
+        a: dividend,
+        b: divisor,
+        symbol: "÷",
+        answer: result
+    };
+
+}
+
+
+function generateQuestionForOperation(
+    operationKey,
+    difficulty
+) {
+
+    switch (operationKey) {
+
+        case "addition":
+            return getAdditionQuestion(
+                difficulty
+            );
+
+        case "subtraction":
+            return getSubtractionQuestion(
+                difficulty
+            );
+
+        case "multiplication":
+            return getMultiplicationQuestion(
+                difficulty
+            );
+
+        case "division":
+            return getDivisionQuestion(
+                difficulty
+            );
+
+        default:
+            return getAdditionQuestion(
+                difficulty
+            );
 
     }
 
@@ -1131,408 +1959,73 @@ function updateMathInterface() {
 
 function generateMathQuestion() {
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
+    mathAnswerLocked =
+        false;
 
-    let a;
+    level =
+        getMathProgressLevel(
+            score
+        );
 
-    let b;
+    let operationKey =
+        selectedMathOperation;
 
-    let operation;
+    if (
+        mathGameType ===
+        "survival"
+    ) {
 
-
-    const difficulty =
-        level;
-
-
-    // ------------------------------
-    // NÍVEL 1
-    // ------------------------------
-
-    if (difficulty === 1) {
-
-        a =
-            randomNumber(
-                1,
-                10
-            );
-
-
-        b =
-            randomNumber(
-                1,
-                10
-            );
-
-
-        const operations = [
-            "+",
-            "-"
+        const availableOperations = [
+            "addition",
+            "subtraction",
+            "multiplication",
+            "division"
         ];
 
-
-        operation =
-            operations[
+        operationKey =
+            availableOperations[
                 randomNumber(
                     0,
-                    operations.length - 1
+                    availableOperations.length - 1
                 )
             ];
 
     }
 
-
-    // ------------------------------
-    // NÍVEL 2
-    // ------------------------------
-
-    else if (difficulty === 2) {
-
-        a =
-            randomNumber(
-                2,
-                20
-            );
-
-
-        b =
-            randomNumber(
-                1,
-                12
-            );
-
-
-        const operations = [
-            "+",
-            "-",
-            "×"
-        ];
-
-
-        operation =
-            operations[
-                randomNumber(
-                    0,
-                    operations.length - 1
-                )
-            ];
-
-    }
-
-
-    // ------------------------------
-    // NÍVEL 3
-    // ------------------------------
-
-    else if (difficulty === 3) {
-
-        a =
-            randomNumber(
-                5,
-                30
-            );
-
-
-        b =
-            randomNumber(
-                2,
-                15
-            );
-
-
-        const operations = [
-            "+",
-            "-",
-            "×"
-        ];
-
-
-        operation =
-            operations[
-                randomNumber(
-                    0,
-                    operations.length - 1
-                )
-            ];
-
-    }
-
-
-    // ------------------------------
-    // NÍVEL 4
-    // ------------------------------
-
-    else if (difficulty === 4) {
-
-        a =
-            randomNumber(
-                10,
-                50
-            );
-
-
-        b =
-            randomNumber(
-                2,
-                20
-            );
-
-
-        const operations = [
-            "+",
-            "-",
-            "×",
-            "÷"
-        ];
-
-
-        operation =
-            operations[
-                randomNumber(
-                    0,
-                    operations.length - 1
-                )
-            ];
-
-    }
-
-
-    // ------------------------------
-    // NÍVEL 5
-    // ------------------------------
-
-    else if (difficulty === 5) {
-
-        a =
-            randomNumber(
-                20,
-                80
-            );
-
-
-        b =
-            randomNumber(
-                2,
-                30
-            );
-
-
-        const operations = [
-            "+",
-            "-",
-            "×",
-            "÷"
-        ];
-
-
-        operation =
-            operations[
-                randomNumber(
-                    0,
-                    operations.length - 1
-                )
-            ];
-
-    }
-
-
-    // ------------------------------
-    // NÍVEL 6
-    // ------------------------------
-
-    else if (difficulty === 6) {
-
-        a =
-            randomNumber(
-                30,
-                120
-            );
-
-
-        b =
-            randomNumber(
-                2,
-                40
-            );
-
-
-        const operations = [
-            "+",
-            "-",
-            "×",
-            "÷"
-        ];
-
-
-        operation =
-            operations[
-                randomNumber(
-                    0,
-                    operations.length - 1
-                )
-            ];
-
-    }
-
-
-    // ------------------------------
-    // NÍVEL 7+
-    // ------------------------------
-
-    else {
-
-        a =
-            randomNumber(
-                50,
-                200
-            );
-
-
-        b =
-            randomNumber(
-                2,
-                50
-            );
-
-
-        const operations = [
-            "+",
-            "-",
-            "×",
-            "÷"
-        ];
-
-
-        operation =
-            operations[
-                randomNumber(
-                    0,
-                    operations.length - 1
-                )
-            ];
-
-    }
-
-
-    // ==================================================
-    // DIVISÃO EXATA
-    // ==================================================
-
-    if (operation === "÷") {
-
-        const divisor =
-            randomNumber(
-                2,
-                Math.max(
-                    2,
-                    Math.min(
-                        b,
-                        20
-                    )
-                )
-            );
-
-
-        const result =
-            randomNumber(
-                2,
-                Math.max(
-                    5,
-                    Math.floor(
-                        a / 2
-                    )
-                )
-            );
-
-
-        b =
-            divisor;
-
-        a =
-            result * divisor;
-
-    }
-
-
-    // ==================================================
-    // RESPOSTA
-    // ==================================================
-
-    switch (operation) {
-
-        case "+":
-
-            currentAnswer =
-                a + b;
-
-            break;
-
-
-        case "-":
-
-            if (a < b) {
-
-                [
-                    a,
-                    b
-                ] =
-                [
-                    b,
-                    a
-                ];
-
-            }
-
-
-            currentAnswer =
-                a - b;
-
-            break;
-
-
-        case "×":
-
-            currentAnswer =
-                a * b;
-
-            break;
-
-
-        case "÷":
-
-            currentAnswer =
-                a / b;
-
-            break;
-
-    }
-
-
-    currentQuestion =
-        `${a} ${operation} ${b}`;
-
+    const question =
+        generateQuestionForOperation(
+            operationKey,
+            level
+        );
+
+    currentAnswer =
+        question.answer;
 
     currentOperation =
-        operation;
+        operationKey;
 
+    currentQuestion =
+        `${question.a} ${question.symbol} ${question.b}`;
 
     if (mathQuestionElement) {
-
         mathQuestionElement.textContent =
             currentQuestion;
-
     }
-
 
     if (answerInput) {
 
         answerInput.value =
             "";
 
-        answerInput.focus();
+        if (!isTouchDevice) {
+            answerInput.focus();
+        }
 
     }
-
 
     updateMathInterface();
 
@@ -1547,15 +2040,14 @@ function generateMathQuestion() {
 
 function startMathTimer() {
 
-    clearInterval(timerInterval);
-
+    clearInterval(
+        timerInterval
+    );
 
     timer =
-        TEMPO_TOTAL;
-
+        mathQuestionTime;
 
     updateMathTimer();
-
 
     timerInterval =
         setInterval(
@@ -1565,13 +2057,11 @@ function startMathTimer() {
 
                 updateMathTimer();
 
-
                 if (timer <= 0) {
 
                     clearInterval(
                         timerInterval
                     );
-
 
                     endMathGame(
                         "timeout"
@@ -1593,24 +2083,20 @@ function startMathTimer() {
 function updateMathTimer() {
 
     if (timerElement) {
-
         timerElement.textContent =
             timer;
-
     }
-
 
     if (timerBar) {
 
         const percentage =
             (
                 timer /
-                TEMPO_TOTAL
+                mathQuestionTime
             ) * 100;
 
-
         timerBar.style.width =
-            `${percentage}%`;
+            `${Math.max(0, percentage)}%`;
 
     }
 
@@ -1623,47 +2109,37 @@ function updateMathTimer() {
 
 function checkMathAnswer() {
 
-    if (!answerInput) {
-
+    if (
+        !answerInput ||
+        mathAnswerLocked
+    ) {
         return;
-
     }
-
 
     if (
         answerInput.value.trim() === ""
     ) {
-
         return;
-
     }
 
+    mathAnswerLocked =
+        true;
 
     const userAnswer =
         Number(
             answerInput.value
         );
 
-
     if (
         userAnswer ===
         currentAnswer
     ) {
 
-        clearInterval(timerInterval);
-
+        clearInterval(
+            timerInterval
+        );
 
         score++;
-
-
-        if (
-            score % 10 === 0
-        ) {
-
-            level++;
-
-        }
-
 
         updateMathInterface();
 
@@ -1696,9 +2172,7 @@ if (answerInput) {
                 event.key ===
                 "Enter"
             ) {
-
                 checkMathAnswer();
-
             }
 
         }
@@ -1720,6 +2194,7 @@ if (submitButton) {
 
 }
 
+
 numericKeys.forEach(
     key => {
 
@@ -1731,22 +2206,19 @@ numericKeys.forEach(
                     return;
                 }
 
-
-                const value =
+                answerInput.value +=
                     key.dataset.value;
 
-
-                answerInput.value +=
-                    value;
-
-
-                answerInput.focus();
+                if (!isTouchDevice) {
+                    answerInput.focus();
+                }
 
             }
         );
 
     }
 );
+
 
 if (numericDelete) {
 
@@ -1758,15 +2230,15 @@ if (numericDelete) {
                 return;
             }
 
-
             answerInput.value =
                 answerInput.value.slice(
                     0,
                     -1
                 );
 
-
-            answerInput.focus();
+            if (!isTouchDevice) {
+                answerInput.focus();
+            }
 
         }
     );
@@ -1778,24 +2250,15 @@ if (numericConfirm) {
 
     numericConfirm.addEventListener(
         "click",
-        () => {
-
-            checkMathAnswer();
-
-        }
+        checkMathAnswer
     );
 
 }
 
+
 // ======================================================
 // VOLTAR DO JOGO MATEMÁTICA
 // ======================================================
-
-const mathGameBackButton =
-    document.querySelector(
-        "#game #backFromMath"
-    );
-
 
 if (mathGameBackButton) {
 
@@ -1807,8 +2270,7 @@ if (mathGameBackButton) {
                 timerInterval
             );
 
-
-            showMenu();
+            window.history.back();
 
         }
     );
@@ -1822,122 +2284,120 @@ if (mathGameBackButton) {
 
 function endMathGame(reason) {
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
+    mathAnswerLocked =
+        true;
 
     if (
         score >
-        mathRecordValue
+        currentMathRecordValue
     ) {
 
-        mathRecordValue =
+        currentMathRecordValue =
             score;
 
-
-        localStorage.setItem(
-            "mathRecord",
-            mathRecordValue
-        );
-
-    }
-
-    // ======================================================
-    // ENVIAR RECORDE BRUTAL PARA A API
-    // ======================================================
-
-    if (startingLevel === 3) {
-
-    salvarRecordeAPI(
-        "matematica",
-        score
-    );
-
-    }
-
-    updateRecordsOnScreen();
-
-
-    if (gameOverMessage) {
-
         if (
-            reason ===
-            "timeout"
+            mathGameType ===
+            "survival"
         ) {
 
-            gameOverMessage.textContent =
-                "⏰ Tempo esgotado!";
+            mathRecordValue =
+                score;
+
+            localStorage.setItem(
+                "mathRecord",
+                mathRecordValue
+            );
 
         }
 
         else {
 
-            gameOverMessage.textContent =
-                "❌ Resposta incorreta!";
+            const key =
+                getOperationLocalRecordKey();
+
+            if (key) {
+                localStorage.setItem(
+                    key,
+                    currentMathRecordValue
+                );
+            }
 
         }
 
     }
 
+    // O banco continua usando "brutal" internamente
+    // para preservar todos os recordes já existentes.
+    if (
+        mathGameType ===
+        "survival"
+    ) {
+
+        salvarRecordeAPI(
+            "matematica",
+            score
+        );
+
+    }
+
+    updateRecordsOnScreen();
+
+    if (gameOverMessage) {
+
+        if (reason === "timeout") {
+            gameOverMessage.textContent =
+                "⏰ Tempo esgotado!";
+        }
+
+        else {
+            gameOverMessage.textContent =
+                "❌ Resposta incorreta!";
+        }
+
+    }
 
     if (failedQuestion) {
-
         failedQuestion.textContent =
             currentQuestion;
-
     }
-
 
     if (failedWordContainer) {
-
         failedWordContainer.style.display =
             "none";
-
     }
-
 
     if (correctAnswerElement) {
-
         correctAnswerElement.textContent =
             currentAnswer;
-
     }
-
 
     if (answerExplanation) {
-
         answerExplanation.textContent =
             `A resposta correta é ${currentAnswer}.`;
-
     }
-
 
     if (finalScoreElement) {
-
         finalScoreElement.textContent =
             score;
-
     }
-
 
     if (finalRecordElement) {
-
         finalRecordElement.textContent =
-            mathRecordValue;
-
+            currentMathRecordValue;
     }
 
-
     const labels =
-        gameOver ?
-            gameOver.querySelectorAll(
+        gameOver
+            ? gameOver.querySelectorAll(
                 ".review-label"
-            ) :
-            [];
+            )
+            : [];
 
-
-    if (
-        labels.length >= 4
-    ) {
+    if (labels.length >= 4) {
 
         labels[0].textContent =
             "Questão";
@@ -1950,16 +2410,12 @@ function endMathGame(reason) {
 
     }
 
-
     hideMainSections();
 
-
     if (gameOver) {
-
         gameOver.classList.remove(
             "hidden"
         );
-
     }
 
 }
@@ -2020,7 +2476,8 @@ async function loadPortugueseQuestions() {
 // ======================================================
 
 function startPortugueseGame(
-    selectedLevel
+    selectedLevel,
+    addToHistory = true
 ) {
 
     currentSubject =
@@ -2078,6 +2535,13 @@ function startPortugueseGame(
     updatePortugueseInterface();
 
     generatePortugueseQuestion();
+
+    if (addToHistory) {
+        saveAppHistory(
+            "portuguese-game",
+            { level: selectedLevel }
+        );
+    }
 
 }
 
@@ -2481,8 +2945,7 @@ if (portugueseGameBackButton) {
                 portugueseTimerInterval
             );
 
-
-            showMenu();
+            window.history.back();
 
         }
     );
@@ -2518,7 +2981,7 @@ function endPortugueseGame(reason) {
     }
 
     // ======================================================
-    // ENVIAR RECORDE BRUTAL PARA A API
+    // ENVIAR RECORDE COMPETITIVO PARA A API
     // ======================================================
 
     if (
@@ -2675,9 +3138,26 @@ if (restartButton) {
                 "math"
             ) {
 
-                startGame(
-                    startingLevel
-                );
+                if (
+                    mathGameType ===
+                    "survival"
+                ) {
+
+                    startSurvivalGame(
+                        false
+                    );
+
+                }
+
+                else {
+
+                    startOperationGame(
+                        selectedMathOperation,
+                        selectedMathMode,
+                        false
+                    );
+
+                }
 
             }
 
@@ -2687,7 +3167,8 @@ if (restartButton) {
             ) {
 
                 startPortugueseGame(
-                    portugueseStartingLevel
+                    portugueseStartingLevel,
+                    false
                 );
 
             }
@@ -2859,7 +3340,7 @@ if (backFromLearnMath) {
         "click",
         () => {
 
-            showLearn();
+            window.history.back();
 
         }
     );
@@ -2873,7 +3354,7 @@ if (backFromLearnPortuguese) {
         "click",
         () => {
 
-            showLearn();
+            window.history.back();
 
         }
     );
@@ -3012,7 +3493,7 @@ data.ranking.forEach(
                 </strong>
 
                 <small>
-                    Modo Brutal
+                    ${jogo === "matematica" ? "Sobrevivência" : "Modo Brutal"}
                 </small>
 
             </div>
@@ -3050,7 +3531,7 @@ data.ranking.forEach(
 
 }
 
-function showLearn() {
+function showLearn(addToHistory = true) {
 
     hideMainSections();
 
@@ -3063,9 +3544,13 @@ function showLearn() {
 
     }
 
+    if (addToHistory) {
+        saveAppHistory("learn");
+    }
+
 }
 
-function showLearnMath() {
+function showLearnMath(addToHistory = true) {
 
     hideMainSections();
 
@@ -3078,10 +3563,16 @@ function showLearnMath() {
 
     }
 
+    if (addToHistory) {
+        saveAppHistory(
+            "learn-math"
+        );
+    }
+
 }
 
 
-function showLearnPortuguese() {
+function showLearnPortuguese(addToHistory = true) {
 
     hideMainSections();
 
@@ -3094,9 +3585,15 @@ function showLearnPortuguese() {
 
     }
 
+    if (addToHistory) {
+        saveAppHistory(
+            "learn-portuguese"
+        );
+    }
+
 }
 
-function showAbout() {
+function showAbout(addToHistory = true) {
 
     hideMainSections();
 
@@ -3109,10 +3606,14 @@ function showAbout() {
 
     }
 
+    if (addToHistory) {
+        saveAppHistory("about");
+    }
+
 }
 
 
-function showRanking() {
+function showRanking(addToHistory = true) {
 
     hideMainSections();
 
@@ -3129,7 +3630,7 @@ function showRanking() {
     if (rankingTitle) {
 
         rankingTitle.textContent =
-            "🧮 Matemática • 🔥 Brutal";
+            "🧮 Matemática • ☠️ Sobrevivência";
 
     }
 
@@ -3137,6 +3638,10 @@ function showRanking() {
     carregarRanking(
         "matematica"
     );
+
+    if (addToHistory) {
+        saveAppHistory("ranking");
+    }
 
 }
 
@@ -3166,7 +3671,7 @@ if (mathRankingButton) {
             if (rankingTitle) {
 
                 rankingTitle.textContent =
-                    "🧮 Matemática • 🔥 Brutal";
+                    "🧮 Matemática • ☠️ Sobrevivência";
 
             }
 
@@ -3209,7 +3714,7 @@ if (portugueseRankingButton) {
 // PERFIL
 // ======================================================
 
-async function showProfile() {
+async function showProfile(addToHistory = true) {
 
     hideMainSections();
 
@@ -3220,6 +3725,10 @@ async function showProfile() {
             "hidden"
         );
 
+    }
+
+    if (addToHistory) {
+        saveAppHistory("profile");
     }
 
 
@@ -3653,7 +4162,13 @@ function mostrarMenuPrincipal() {
 
     carregarMeusRecordes();
 
-    showMenu();
+    showMenu(false);
+
+    saveAppHistory(
+        "home",
+        {},
+        true
+    );
 
 }
 

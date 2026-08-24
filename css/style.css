@@ -2496,3 +2496,222 @@ footer {
     }
 
 }
+
+/* ======================================================
+   MATEMÁTICA - NOVA SELEÇÃO DE OPERAÇÕES
+====================================================== */
+
+.math-selection-intro {
+    max-width: 620px;
+    margin: -6px auto 22px;
+    color: #718096;
+    line-height: 1.55;
+}
+
+
+.math-operation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+
+.math-operation-button {
+    min-height: 165px;
+    padding: 22px 18px;
+    background: #f8fbff;
+    color: #172033;
+    border: 2px solid #d5e5fa;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+}
+
+
+.math-operation-button:hover {
+    border-color: #1769d2;
+    background: #eef6ff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(23, 105, 210, 0.12);
+}
+
+
+.math-operation-icon {
+    font-size: 38px;
+    line-height: 1;
+}
+
+
+.math-operation-button strong {
+    font-size: 20px;
+}
+
+
+.math-operation-button small {
+    max-width: 220px;
+    color: #718096;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+
+.survival-button {
+    width: 100%;
+    margin-top: 6px;
+    padding: 22px;
+    background: linear-gradient(135deg, #fff7f8, #fff);
+    color: #172033;
+    border: 2px solid #e9a9b5;
+    border-radius: 18px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+
+
+.survival-button:hover {
+    border-color: #d85b72;
+    transform: translateY(-3px);
+    box-shadow: 0 9px 24px rgba(180, 55, 80, 0.13);
+}
+
+
+.survival-icon {
+    font-size: 40px;
+}
+
+
+.survival-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.survival-text strong {
+    font-size: 21px;
+    color: #8e3044;
+}
+
+
+.survival-text small {
+    color: #718096;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+
+.survival-record {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #fff0f3;
+    color: #8e3044;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+
+.math-operation-kicker {
+    margin-bottom: 5px;
+    color: #718096;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+}
+
+
+.math-operation-modes-grid {
+    margin-top: 10px;
+}
+
+
+/* ======================================================
+   MATEMÁTICA - CONTEXTO DA PARTIDA
+====================================================== */
+
+.math-game-context {
+    margin-bottom: 18px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.math-game-context strong {
+    color: #1557a8;
+    font-size: 24px;
+}
+
+
+.math-game-context span {
+    color: #718096;
+    font-size: 14px;
+}
+
+
+/* ======================================================
+   MATEMÁTICA - MOBILE
+====================================================== */
+
+@media (max-width: 700px) {
+
+    .math-operation-grid {
+        gap: 10px;
+    }
+
+    .math-operation-button {
+        min-height: 145px;
+        padding: 17px 10px;
+    }
+
+    .math-operation-icon {
+        font-size: 31px;
+    }
+
+    .math-operation-button strong {
+        font-size: 16px;
+    }
+
+    .math-operation-button small {
+        font-size: 12px;
+    }
+
+    .survival-button {
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        padding: 18px;
+    }
+
+    .survival-record {
+        grid-column: 1 / -1;
+        justify-self: center;
+    }
+
+    .math-game-context strong {
+        font-size: 20px;
+    }
+
+}
+
+
+@media (max-width: 390px) {
+
+    .math-operation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .math-operation-button {
+        min-height: 120px;
+    }
+
+}
+

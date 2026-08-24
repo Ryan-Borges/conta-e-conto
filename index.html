@@ -332,92 +332,175 @@
                     class="subject-menu hidden"
                 >
 
-                    <h3>
-                        Matemática
-                    </h3>
+                    <!-- =====================================
+                         ESCOLHA DA OPERAÇÃO
+                    ====================================== -->
+
+                    <div id="mathOperationSelection">
+
+                        <h3>
+                            Matemática
+                        </h3>
+
+                        <p class="math-selection-intro">
+                            Escolha uma operação para treinar ou tente a
+                            Sobrevivência com as quatro operações misturadas.
+                        </p>
 
 
-                    <div class="modes">
+                        <div class="math-operation-grid">
+
+                            <button
+                                type="button"
+                                class="math-operation-button"
+                                data-operation="addition"
+                            >
+                                <span class="math-operation-icon">➕</span>
+                                <strong>Soma</strong>
+                                <small>Treine adições com dificuldade crescente.</small>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="math-operation-button"
+                                data-operation="subtraction"
+                            >
+                                <span class="math-operation-icon">➖</span>
+                                <strong>Subtração</strong>
+                                <small>Resolva subtrações cada vez mais desafiadoras.</small>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="math-operation-button"
+                                data-operation="multiplication"
+                            >
+                                <span class="math-operation-icon">✖️</span>
+                                <strong>Multiplicação</strong>
+                                <small>Da tabuada a multiplicações maiores.</small>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="math-operation-button"
+                                data-operation="division"
+                            >
+                                <span class="math-operation-icon">➗</span>
+                                <strong>Divisão</strong>
+                                <small>Divisões sempre exatas e progressivas.</small>
+                            </button>
+
+                        </div>
 
 
                         <button
                             type="button"
-                            class="mode-button math-mode"
-                            data-level="1"
+                            id="survivalButton"
+                            class="survival-button"
                         >
+                            <span class="survival-icon">☠️</span>
 
-                            <span>
-                                🌱
+                            <span class="survival-text">
+                                <strong>Sobrevivência</strong>
+                                <small>
+                                    As quatro operações misturadas. Começa fácil,
+                                    fica cada vez mais difícil e vale para o ranking.
+                                </small>
                             </span>
 
-                            <strong>
-                                Tranquilo
-                            </strong>
-
-                            <small>
-                                Dificuldade 1
-                            </small>
-
+                            <span class="survival-record">
+                                Recorde: <strong id="survivalMenuRecord">0</strong>
+                            </span>
                         </button>
 
 
                         <button
                             type="button"
-                            class="mode-button math-mode"
-                            data-level="2"
+                            class="back-button"
+                            id="backFromMathMenu"
                         >
-
-                            <span>
-                                ⚡
-                            </span>
-
-                            <strong>
-                                Velocidade
-                            </strong>
-
-                            <small>
-                                Dificuldade 2
-                            </small>
-
+                            ← Voltar
                         </button>
-
-
-                        <button
-                            type="button"
-                            class="mode-button math-mode"
-                            data-level="3"
-                        >
-
-                            <span>
-                                🔥
-                            </span>
-
-                            <strong>
-                                Brutal
-                            </strong>
-
-                            <small>
-                                Dificuldade 3
-                            </small>
-
-                        </button>
-
 
                     </div>
 
 
-                    <button
-                        type="button"
-                        class="back-button"
-                        id="backFromMath"
+                    <!-- =====================================
+                         ESCOLHA DO MODO DA OPERAÇÃO
+                    ====================================== -->
+
+                    <div
+                        id="mathOperationModes"
+                        class="hidden"
                     >
-                        ← Voltar
-                    </button>
+
+                        <p class="math-operation-kicker">
+                            Operação escolhida
+                        </p>
+
+                        <h3 id="mathSelectedOperationTitle">
+                            ➕ Soma
+                        </h3>
+
+                        <p class="math-selection-intro">
+                            Todos os modos começam no nível 1 e ficam mais difíceis
+                            conforme você acerta. Se perder, a próxima tentativa começa do zero.
+                        </p>
+
+
+                        <div class="modes math-operation-modes-grid">
+
+                            <button
+                                type="button"
+                                class="mode-button math-operation-mode"
+                                data-mode="tranquilo"
+                            >
+                                <span>🌱</span>
+                                <strong>Tranquilo</strong>
+                                <small>30s por conta</small>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="mode-button math-operation-mode"
+                                data-mode="velocidade"
+                            >
+                                <span>⚡</span>
+                                <strong>Velocidade</strong>
+                                <small>15s por conta</small>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="mode-button math-operation-mode"
+                                data-mode="brutal"
+                            >
+                                <span>🔥</span>
+                                <strong>Brutal</strong>
+                                <small>8s por conta</small>
+                            </button>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="back-button"
+                            id="backFromMathOperationModes"
+                        >
+                            ← Escolher outra operação
+                        </button>
+
+                    </div>
 
                 </div>
 
             </div>
-
 
 
             <!-- =============================================
@@ -539,9 +622,20 @@
             class="game hidden"
         >
 
+            <div class="math-game-context">
+
+                <strong id="mathGameOperationLabel">
+                    ☠️ Sobrevivência
+                </strong>
+
+                <span id="mathGameModeLabel">
+                    4 operações • dificuldade crescente
+                </span>
+
+            </div>
+
 
             <div class="game-header">
-
 
                 <div class="info-card">
 
@@ -571,7 +665,7 @@
 
                 <div class="info-card">
 
-                    <span>
+                    <span id="mathRecordLabel">
                         Recorde
                     </span>
 
@@ -584,18 +678,13 @@
             </div>
 
 
-
             <div class="question-area">
 
-
                 <p class="difficulty-text">
-
                     Dificuldade
-
                     <span id="difficulty">
                         1
                     </span>
-
                 </p>
 
 
@@ -603,11 +692,6 @@
                     0 + 0
                 </h2>
 
-
-                <!--
-                    CORRIGIDO:
-                    JS procura answerInput
-                -->
 
                 <input
                     type="number"
@@ -617,116 +701,42 @@
                     autocomplete="off"
                 >
 
+
                 <div
-    id="numericKeyboard"
-    class="numeric-keyboard"
->
+                    id="numericKeyboard"
+                    class="numeric-keyboard"
+                >
 
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="1"
-    >
-        1
-    </button>
+                    <button type="button" class="numeric-key" data-value="1">1</button>
+                    <button type="button" class="numeric-key" data-value="2">2</button>
+                    <button type="button" class="numeric-key" data-value="3">3</button>
+                    <button type="button" class="numeric-key" data-value="4">4</button>
+                    <button type="button" class="numeric-key" data-value="5">5</button>
+                    <button type="button" class="numeric-key" data-value="6">6</button>
+                    <button type="button" class="numeric-key" data-value="7">7</button>
+                    <button type="button" class="numeric-key" data-value="8">8</button>
+                    <button type="button" class="numeric-key" data-value="9">9</button>
 
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="2"
-    >
-        2
-    </button>
+                    <button
+                        type="button"
+                        id="numericDelete"
+                        class="numeric-key numeric-action"
+                    >
+                        ⌫
+                    </button>
 
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="3"
-    >
-        3
-    </button>
+                    <button type="button" class="numeric-key" data-value="0">0</button>
 
+                    <button
+                        type="button"
+                        id="numericConfirm"
+                        class="numeric-key numeric-confirm"
+                    >
+                        ✓
+                    </button>
 
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="4"
-    >
-        4
-    </button>
+                </div>
 
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="5"
-    >
-        5
-    </button>
-
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="6"
-    >
-        6
-    </button>
-
-
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="7"
-    >
-        7
-    </button>
-
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="8"
-    >
-        8
-    </button>
-
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="9"
-    >
-        9
-    </button>
-
-
-    <button
-        type="button"
-        id="numericDelete"
-        class="numeric-key numeric-action"
-    >
-        ⌫
-    </button>
-
-    <button
-        type="button"
-        class="numeric-key"
-        data-value="0"
-    >
-        0
-    </button>
-
-    <button
-        type="button"
-        id="numericConfirm"
-        class="numeric-key numeric-confirm"
-    >
-        ✓
-    </button>
-
-</div>
-
-                <!--
-                    CORRIGIDO:
-                    JS procura submitButton
-                -->
 
                 <button
                     type="button"
@@ -738,7 +748,6 @@
 
                 <div class="timer-container">
 
-
                     <div class="timer-info">
 
                         <span>
@@ -746,11 +755,7 @@
                         </span>
 
                         <strong>
-
-                            <span id="timer">
-                                20
-                            </span>s
-
+                            <span id="timer">20</span>s
                         </strong>
 
                     </div>
@@ -770,21 +775,15 @@
             </div>
 
 
-            <!--
-                CORRIGIDO:
-                JS procura backFromMath
-            -->
-
             <button
                 type="button"
                 class="back-button"
-                id="backFromMath"
+                id="backFromMathGame"
             >
                 ← Voltar
             </button>
 
         </section>
-
 
 
         <!-- =================================================
@@ -949,8 +948,9 @@
 
 
             <p>
-                O ranking considera apenas partidas
-                no modo 🔥 <strong>Brutal</strong>.
+                Na Matemática, o ranking considera apenas o modo
+                ☠️ <strong>Sobrevivência</strong>. Em Português, considera
+                apenas partidas no modo 🔥 <strong>Brutal</strong>.
             </p>
 
 
@@ -975,7 +975,7 @@
 
 
             <h3 id="rankingTitle">
-                Matemática — 🔥 Brutal
+                Matemática — ☠️ Sobrevivência
             </h3>
 
 
@@ -1040,7 +1040,7 @@
                 
                 <p>
 
-                    Recorde Brutal — Matemática:
+                    Recorde — Sobrevivência (Matemática):
 
                     <strong id="profileMathRecord">
                         0
@@ -2494,10 +2494,12 @@
 
             <p>
                 Pensando nisso, o Conta & Conto utiliza a competição
-                como uma forma de incentivar o estudo. No
-                <strong>modo Brutal</strong>, os jogadores podem
-                registrar seus melhores resultados e comparar seu
-                desempenho por meio do ranking.
+                como uma forma de incentivar o estudo. Na Matemática,
+                o modo <strong>Sobrevivência</strong> mistura as quatro
+                operações e aumenta progressivamente a dificuldade.
+                Em Português, o <strong>modo Brutal</strong> mantém o
+                desafio competitivo. Os melhores resultados aparecem
+                nos rankings de cada matéria.
             </p>
 
             <p>
@@ -2766,7 +2768,11 @@
                 </div>
 
                 <div>
-                    🔥 Modo Brutal
+                    ☠️ Sobrevivência em Matemática
+                </div>
+
+                <div>
+                    🔥 Modo Brutal em Português
                 </div>
 
                 <div>
