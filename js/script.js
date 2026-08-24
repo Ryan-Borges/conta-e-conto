@@ -1721,8 +1721,26 @@ function updateMathInterface() {
 // MATEMÁTICA - GERADORES POR OPERAÇÃO
 // ======================================================
 
+function shouldUseThreeTerms(
+    currentScore
+) {
+
+    if (currentScore >= 50) {
+        return Math.random() < 0.70;
+    }
+
+    if (currentScore >= 30) {
+        return Math.random() < 0.35;
+    }
+
+    return false;
+
+}
+
+
 function getAdditionQuestion(
-    difficulty
+    difficulty,
+    currentScore = 0
 ) {
 
     const ranges = [
@@ -1758,18 +1776,40 @@ function getAdditionQuestion(
             max
         );
 
+    if (
+        shouldUseThreeTerms(
+            currentScore
+        )
+    ) {
+
+        const c =
+            randomNumber(
+                min,
+                max
+            );
+
+        return {
+            expression:
+                `${a} + ${b} + ${c}`,
+            answer:
+                a + b + c
+        };
+
+    }
+
     return {
-        a,
-        b,
-        symbol: "+",
-        answer: a + b
+        expression:
+            `${a} + ${b}`,
+        answer:
+            a + b
     };
 
 }
 
 
 function getSubtractionQuestion(
-    difficulty
+    difficulty,
+    currentScore = 0
 ) {
 
     const ranges = [
@@ -1793,6 +1833,42 @@ function getSubtractionQuestion(
             ) - 1
         ];
 
+    if (
+        shouldUseThreeTerms(
+            currentScore
+        )
+    ) {
+
+        const b =
+            randomNumber(
+                min,
+                max
+            );
+
+        const c =
+            randomNumber(
+                min,
+                max
+            );
+
+        const result =
+            randomNumber(
+                min,
+                max
+            );
+
+        const a =
+            result + b + c;
+
+        return {
+            expression:
+                `${a} - ${b} - ${c}`,
+            answer:
+                result
+        };
+
+    }
+
     let a =
         randomNumber(
             min,
@@ -1810,10 +1886,10 @@ function getSubtractionQuestion(
     }
 
     return {
-        a,
-        b,
-        symbol: "-",
-        answer: a - b
+        expression:
+            `${a} - ${b}`,
+        answer:
+            a - b
     };
 
 }
@@ -1857,10 +1933,10 @@ function getMultiplicationQuestion(
         );
 
     return {
-        a,
-        b,
-        symbol: "×",
-        answer: a * b
+        expression:
+            `${a} × ${b}`,
+        answer:
+            a * b
     };
 
 }
@@ -1907,10 +1983,10 @@ function getDivisionQuestion(
         divisor * result;
 
     return {
-        a: dividend,
-        b: divisor,
-        symbol: "÷",
-        answer: result
+        expression:
+            `${dividend} ÷ ${divisor}`,
+        answer:
+            result
     };
 
 }
@@ -1918,19 +1994,22 @@ function getDivisionQuestion(
 
 function generateQuestionForOperation(
     operationKey,
-    difficulty
+    difficulty,
+    currentScore = 0
 ) {
 
     switch (operationKey) {
 
         case "addition":
             return getAdditionQuestion(
-                difficulty
+                difficulty,
+                currentScore
             );
 
         case "subtraction":
             return getSubtractionQuestion(
-                difficulty
+                difficulty,
+                currentScore
             );
 
         case "multiplication":
@@ -1945,7 +2024,8 @@ function generateQuestionForOperation(
 
         default:
             return getAdditionQuestion(
-                difficulty
+                difficulty,
+                currentScore
             );
 
     }
@@ -1999,7 +2079,8 @@ function generateMathQuestion() {
     const question =
         generateQuestionForOperation(
             operationKey,
-            level
+            level,
+            score
         );
 
     currentAnswer =
@@ -2009,7 +2090,7 @@ function generateMathQuestion() {
         operationKey;
 
     currentQuestion =
-        `${question.a} ${question.symbol} ${question.b}`;
+        question.expression;
 
     if (mathQuestionElement) {
         mathQuestionElement.textContent =
