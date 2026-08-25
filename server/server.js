@@ -976,7 +976,7 @@ app.get(
 
                  ORDER BY records.recorde DESC
 
-                 LIMIT 10`,
+                 LIMIT 100`,
 
                 [jogo]
 
