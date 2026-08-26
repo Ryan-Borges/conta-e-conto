@@ -12,6 +12,18 @@
 
     <title>Conta & Conto</title>
 
+    <script>
+        try {
+            const savedTheme = localStorage.getItem("contaContoTheme");
+            if (savedTheme === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        }
+        catch (error) {
+            console.warn("Não foi possível carregar o tema salvo.");
+        }
+    </script>
+
     <link
         rel="stylesheet"
         href="css/style.css"
@@ -54,7 +66,7 @@
         <input
             type="text"
             id="loginUsername"
-            placeholder="Usuário"
+            placeholder="Usuário ou e-mail"
             autocomplete="username"
         >
 
@@ -79,6 +91,14 @@
             id="loginMessage"
             class="auth-message"
         ></p>
+
+        <button
+            type="button"
+            id="showForgotPasswordButton"
+            class="auth-link-button"
+        >
+            Esqueceu a senha?
+        </button>
 
 
         <p class="auth-switch">
@@ -125,6 +145,18 @@
 
 
         <input
+            type="email"
+            id="registerEmail"
+            placeholder="E-mail (recomendado para recuperar senha)"
+            autocomplete="email"
+        >
+
+        <small class="auth-helper">
+            O e-mail é opcional, mas necessário para recuperar sua senha.
+        </small>
+
+
+        <input
             type="password"
             id="registerPassword"
             placeholder="Senha"
@@ -167,6 +199,101 @@
 
         </p>
 
+    </div>
+
+
+    <!-- =================================================
+         RECUPERAÇÃO DE SENHA
+    ================================================== -->
+
+    <div
+        id="forgotPasswordBox"
+        class="auth-box hidden"
+    >
+        <h1>Recuperar senha</h1>
+
+        <p>
+            Informe seu usuário ou o e-mail cadastrado.
+        </p>
+
+        <input
+            type="text"
+            id="forgotPasswordIdentifier"
+            placeholder="Usuário ou e-mail"
+            autocomplete="username"
+        >
+
+        <button
+            type="button"
+            id="forgotPasswordButton"
+        >
+            Enviar link de recuperação
+        </button>
+
+        <p
+            id="forgotPasswordMessage"
+            class="auth-message"
+        ></p>
+
+        <p class="auth-switch">
+            <button
+                type="button"
+                id="backToLoginFromForgot"
+            >
+                ← Voltar para login
+            </button>
+        </p>
+    </div>
+
+
+    <!-- =================================================
+         DEFINIR NOVA SENHA
+    ================================================== -->
+
+    <div
+        id="resetPasswordBox"
+        class="auth-box hidden"
+    >
+        <h1>Nova senha</h1>
+
+        <p>
+            Escolha uma nova senha para sua conta.
+        </p>
+
+        <input
+            type="password"
+            id="resetPassword"
+            placeholder="Nova senha"
+            autocomplete="new-password"
+        >
+
+        <input
+            type="password"
+            id="resetPasswordConfirm"
+            placeholder="Confirmar nova senha"
+            autocomplete="new-password"
+        >
+
+        <button
+            type="button"
+            id="resetPasswordButton"
+        >
+            Atualizar senha
+        </button>
+
+        <p
+            id="resetPasswordMessage"
+            class="auth-message"
+        ></p>
+
+        <p class="auth-switch">
+            <button
+                type="button"
+                id="backToLoginFromReset"
+            >
+                ← Voltar para login
+            </button>
+        </p>
     </div>
 
 </section>
@@ -253,9 +380,24 @@
             </a>
 
 
+            <a href="#" id="navContact">
+                Fale conosco
+            </a>
+
+
             <a href="#" id="navAbout">
                 Sobre
             </a>
+
+
+            <button
+                type="button"
+                id="themeToggle"
+                class="theme-toggle"
+                aria-label="Alternar tema"
+            >
+                🌙 Escuro
+            </button>
 
 
             <a
@@ -276,6 +418,12 @@
     ================================================== -->
 
     <main>
+
+        <div
+            id="performanceFeedback"
+            class="performance-feedback"
+            aria-live="polite"
+        ></div>
 
 
         <!-- =================================================
@@ -795,6 +943,16 @@
             class="game hidden"
         >
 
+            <div class="math-game-context">
+                <strong>
+                    📖 Português
+                </strong>
+
+                <span id="portugueseGameModeLabel">
+                    🌱 Tranquilo
+                </span>
+            </div>
+
 
             <div class="game-header">
 
@@ -996,75 +1154,215 @@
 
         <section
             id="profile"
-            class="profile hidden"
+            class="profile profile-v2 hidden"
         >
 
-            <h2>
-                👤 Meu perfil
-            </h2>
+            <div class="profile-hero">
 
+                <div
+                    id="profileAvatarSlot"
+                    class="profile-avatar-placeholder"
+                    aria-label="Avatar do usuário"
+                >
+                    👤
+                </div>
 
-            <div class="profile-card">
+                <div class="profile-hero-text">
+                    <p class="profile-kicker">
+                        Meu perfil
+                    </p>
 
-                <p>
+                    <h2 id="profileUsernameHeading">
+                        Jogador
+                    </h2>
 
-                    Usuário:
-
-                    <strong id="profileUsername">
-                        —
-                    </strong>
-
-                </p>
-
-
-                <p>
-
-                    ID:
-
-                    <strong id="profileId">
-                        —
-                    </strong>
-
-                </p>
-
-
-                <p>
-
-                    Cadastro:
-
-                    <strong id="profileDate">
-                        —
-                    </strong>
-
-                </p>
-                
-                <p>
-
-                    Recorde — Sobrevivência (Matemática):
-
-                    <strong id="profileMathRecord">
-                        0
+                    <p>
+                        Membro desde
+                        <strong id="profileDate">
+                            —
                         </strong>
+                    </p>
+                </div>
 
-                </p>
+            </div>
 
+
+            <div class="profile-stats-grid">
+
+                <article class="profile-stat-card">
+                    <span>☠️ Matemática — Sobrevivência</span>
+                    <strong id="profileMathRecord">0</strong>
+                    <small>recorde</small>
+
+                    <p>
+                        Posição:
+                        <b id="profileMathPosition">—</b>
+                    </p>
+                </article>
+
+
+                <article class="profile-stat-card">
+                    <span>🔥 Português — Brutal</span>
+                    <strong id="profilePortugueseRecord">0</strong>
+                    <small>recorde</small>
+
+                    <p>
+                        Posição:
+                        <b id="profilePortuguesePosition">—</b>
+                    </p>
+                </article>
+
+            </div>
+
+
+            <div class="profile-details-card">
+
+                <div class="profile-detail-row">
+                    <span>Usuário</span>
+                    <strong id="profileUsername">—</strong>
+                </div>
+
+                <div class="profile-detail-row">
+                    <span>E-mail</span>
+                    <strong id="profileEmail">Não cadastrado</strong>
+                </div>
+
+                <div class="profile-detail-row">
+                    <span>ID</span>
+                    <strong id="profileId">—</strong>
+                </div>
+
+            </div>
+
+
+            <div class="profile-actions">
+
+                <button
+                    type="button"
+                    id="editUsernameButton"
+                >
+                    ✏️ Alterar nome
+                </button>
+
+                <button
+                    type="button"
+                    id="editEmailButton"
+                    class="secondary-button"
+                >
+                    ✉️ Adicionar/alterar e-mail
+                </button>
+
+            </div>
+
+
+            <div
+                id="editUsernamePanel"
+                class="profile-edit-panel hidden"
+            >
+
+                <h3>Alterar nome de usuário</h3>
 
                 <p>
-
-                    Recorde Brutal — Português:
-
-                    <strong id="profilePortugueseRecord">
-        0
-                    </strong>
-
+                    Confirme sua identidade para alterar o nome exibido no perfil e no ranking.
                 </p>
 
+                <input
+                    type="text"
+                    id="newUsername"
+                    placeholder="Novo nome de usuário"
+                    autocomplete="off"
+                >
 
+                <input
+                    type="text"
+                    id="usernameConfirmation"
+                    placeholder="Seu usuário atual ou e-mail"
+                    autocomplete="username"
+                >
+
+                <input
+                    type="password"
+                    id="usernameCurrentPassword"
+                    placeholder="Senha atual"
+                    autocomplete="current-password"
+                >
+
+                <p
+                    id="editUsernameMessage"
+                    class="profile-form-message"
+                ></p>
+
+                <div class="profile-panel-actions">
+                    <button
+                        type="button"
+                        id="saveUsernameButton"
+                    >
+                        Salvar novo nome
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelUsernameButton"
+                        class="secondary-button"
+                    >
+                        Cancelar
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div
+                id="editEmailPanel"
+                class="profile-edit-panel hidden"
+            >
+
+                <h3>Adicionar ou alterar e-mail</h3>
+
+                <p>
+                    Seu e-mail será usado para recuperação de senha.
+                </p>
+
+                <input
+                    type="email"
+                    id="newEmail"
+                    placeholder="Seu e-mail"
+                    autocomplete="email"
+                >
+
+                <input
+                    type="password"
+                    id="emailCurrentPassword"
+                    placeholder="Senha atual"
+                    autocomplete="current-password"
+                >
+
+                <p
+                    id="editEmailMessage"
+                    class="profile-form-message"
+                ></p>
+
+                <div class="profile-panel-actions">
+                    <button
+                        type="button"
+                        id="saveEmailButton"
+                    >
+                        Salvar e-mail
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelEmailButton"
+                        class="secondary-button"
+                    >
+                        Cancelar
+                    </button>
+                </div>
 
             </div>
 
         </section>
-        
+
         <section
     id="learn"
     class="learn hidden"
@@ -2428,6 +2726,104 @@
 </section>
 
        <section
+    id="contact"
+    class="contact hidden"
+>
+
+    <div class="contact-header">
+        <h2>💬 Fale conosco</h2>
+
+        <p>
+            Encontrou um problema, tem uma sugestão ou quer falar com a equipe?
+            Envie uma mensagem para o Conta & Conto.
+        </p>
+    </div>
+
+
+    <div class="contact-card">
+
+        <form id="contactForm">
+
+            <label for="contactName">
+                Nome
+            </label>
+
+            <input
+                type="text"
+                id="contactName"
+                maxlength="80"
+                placeholder="Como podemos te chamar?"
+                required
+            >
+
+
+            <label for="contactEmail">
+                E-mail para resposta
+            </label>
+
+            <input
+                type="email"
+                id="contactEmail"
+                maxlength="150"
+                placeholder="seuemail@exemplo.com"
+                required
+            >
+
+
+            <label for="contactSubject">
+                Assunto
+            </label>
+
+            <input
+                type="text"
+                id="contactSubject"
+                maxlength="120"
+                placeholder="Sobre o que você quer falar?"
+                required
+            >
+
+
+            <label for="contactMessage">
+                Mensagem
+            </label>
+
+            <textarea
+                id="contactMessage"
+                maxlength="2000"
+                rows="7"
+                placeholder="Escreva sua mensagem..."
+                required
+            ></textarea>
+
+
+            <button
+                type="submit"
+                id="contactSubmitButton"
+            >
+                Enviar mensagem
+            </button>
+
+
+            <p
+                id="contactFormMessage"
+                class="contact-form-message"
+                aria-live="polite"
+            ></p>
+
+        </form>
+
+
+        <div class="contact-email-note">
+            <strong>E-mail oficial</strong>
+            <span>contaeconto.contato@gmail.com</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+       <section
     id="about"
     class="about hidden"
 >
@@ -2787,6 +3183,14 @@
                     📚 Área de aprendizagem
                 </div>
 
+                <div>
+                    🌙 Tema claro e escuro
+                </div>
+
+                <div>
+                    💬 Fale conosco
+                </div>
+
             </div>
 
         </div>
@@ -2922,6 +3326,13 @@
 
 
             <p id="gameOverMessage"></p>
+
+            <div
+                id="newRecordBanner"
+                class="new-record-banner hidden"
+            >
+                🏆 Novo recorde!
+            </div>
 
 
             <div class="answer-review">

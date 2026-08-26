@@ -210,6 +210,11 @@ const portugueseRecordElement =
         "portugueseRecord"
     );
 
+const portugueseGameModeLabel =
+    document.getElementById(
+        "portugueseGameModeLabel"
+    );
+
 
 // ======================================================
 // GAME OVER
@@ -266,6 +271,16 @@ const restartButton =
 const menuButton =
     document.getElementById(
         "menuButton"
+    );
+
+const performanceFeedback =
+    document.getElementById(
+        "performanceFeedback"
+    );
+
+const newRecordBanner =
+    document.getElementById(
+        "newRecordBanner"
     );
 
 
@@ -330,6 +345,101 @@ const profilePortugueseRecord =
         "profilePortugueseRecord"
     );
 
+const profileUsernameHeading =
+    document.getElementById(
+        "profileUsernameHeading"
+    );
+
+const profileEmail =
+    document.getElementById(
+        "profileEmail"
+    );
+
+const profileMathPosition =
+    document.getElementById(
+        "profileMathPosition"
+    );
+
+const profilePortuguesePosition =
+    document.getElementById(
+        "profilePortuguesePosition"
+    );
+
+const editUsernameButton =
+    document.getElementById(
+        "editUsernameButton"
+    );
+
+const editEmailButton =
+    document.getElementById(
+        "editEmailButton"
+    );
+
+const editUsernamePanel =
+    document.getElementById(
+        "editUsernamePanel"
+    );
+
+const editEmailPanel =
+    document.getElementById(
+        "editEmailPanel"
+    );
+
+const newUsernameInput =
+    document.getElementById(
+        "newUsername"
+    );
+
+const usernameConfirmationInput =
+    document.getElementById(
+        "usernameConfirmation"
+    );
+
+const usernameCurrentPasswordInput =
+    document.getElementById(
+        "usernameCurrentPassword"
+    );
+
+const editUsernameMessage =
+    document.getElementById(
+        "editUsernameMessage"
+    );
+
+const saveUsernameButton =
+    document.getElementById(
+        "saveUsernameButton"
+    );
+
+const cancelUsernameButton =
+    document.getElementById(
+        "cancelUsernameButton"
+    );
+
+const newEmailInput =
+    document.getElementById(
+        "newEmail"
+    );
+
+const emailCurrentPasswordInput =
+    document.getElementById(
+        "emailCurrentPassword"
+    );
+
+const editEmailMessage =
+    document.getElementById(
+        "editEmailMessage"
+    );
+
+const saveEmailButton =
+    document.getElementById(
+        "saveEmailButton"
+    );
+
+const cancelEmailButton =
+    document.getElementById(
+        "cancelEmailButton"
+    );
+
 const learnSection =
     document.getElementById("learn");
 
@@ -369,6 +479,41 @@ const learnPortugueseSection =
 
 const aboutSection =
     document.getElementById("about");
+
+const contactSection =
+    document.getElementById(
+        "contact"
+    );
+
+const contactForm =
+    document.getElementById(
+        "contactForm"
+    );
+
+const contactNameInput =
+    document.getElementById(
+        "contactName"
+    );
+
+const contactEmailInput =
+    document.getElementById(
+        "contactEmail"
+    );
+
+const contactSubjectInput =
+    document.getElementById(
+        "contactSubject"
+    );
+
+const contactMessageInput =
+    document.getElementById(
+        "contactMessage"
+    );
+
+const contactFormMessage =
+    document.getElementById(
+        "contactFormMessage"
+    );
 
 // ======================================================
 // NAVEGAÇÃO
@@ -411,6 +556,16 @@ const navProfile =
 const navAbout =
     document.getElementById("navAbout");
 
+const navContact =
+    document.getElementById(
+        "navContact"
+    );
+
+const themeToggle =
+    document.getElementById(
+        "themeToggle"
+    );
+
 const logoutButton =
     document.getElementById(
         "logoutButton"
@@ -447,6 +602,66 @@ const showLoginButton =
 const registerButton =
     document.getElementById(
         "registerButton"
+    );
+
+const showForgotPasswordButton =
+    document.getElementById(
+        "showForgotPasswordButton"
+    );
+
+const forgotPasswordBox =
+    document.getElementById(
+        "forgotPasswordBox"
+    );
+
+const forgotPasswordIdentifier =
+    document.getElementById(
+        "forgotPasswordIdentifier"
+    );
+
+const forgotPasswordButton =
+    document.getElementById(
+        "forgotPasswordButton"
+    );
+
+const forgotPasswordMessage =
+    document.getElementById(
+        "forgotPasswordMessage"
+    );
+
+const backToLoginFromForgot =
+    document.getElementById(
+        "backToLoginFromForgot"
+    );
+
+const resetPasswordBox =
+    document.getElementById(
+        "resetPasswordBox"
+    );
+
+const resetPasswordInput =
+    document.getElementById(
+        "resetPassword"
+    );
+
+const resetPasswordConfirmInput =
+    document.getElementById(
+        "resetPasswordConfirm"
+    );
+
+const resetPasswordButton =
+    document.getElementById(
+        "resetPasswordButton"
+    );
+
+const resetPasswordMessage =
+    document.getElementById(
+        "resetPasswordMessage"
+    );
+
+const backToLoginFromReset =
+    document.getElementById(
+        "backToLoginFromReset"
     );
 
 
@@ -531,6 +746,15 @@ let selectedMathMode = null;
 let currentMathRecordValue = 0;
 
 let mathAnswerLocked = false;
+
+let mathQuestionStartedAt =
+    0;
+
+let portugueseQuestionStartedAt =
+    0;
+
+let feedbackTimeout =
+    null;
 
 const isTouchDevice =
     window.matchMedia(
@@ -624,6 +848,10 @@ function restoreAppView(state) {
 
         case "about":
             showAbout(false);
+            break;
+
+        case "contact":
+            showContact(false);
             break;
 
         case "math-game":
@@ -777,6 +1005,387 @@ function shuffleArray(array) {
     );
 
 }
+
+
+// ======================================================
+// TEMA CLARO / ESCURO
+// ======================================================
+
+function aplicarTema(
+    tema
+) {
+
+    const temaFinal =
+        tema === "dark"
+            ? "dark"
+            : "light";
+
+
+    if (
+        temaFinal === "dark"
+    ) {
+
+        document.documentElement
+            .setAttribute(
+                "data-theme",
+                "dark"
+            );
+
+    }
+
+    else {
+
+        document.documentElement
+            .removeAttribute(
+                "data-theme"
+            );
+
+    }
+
+
+    try {
+
+        localStorage.setItem(
+            "contaContoTheme",
+            temaFinal
+        );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Não foi possível salvar o tema."
+        );
+
+    }
+
+
+    if (themeToggle) {
+
+        themeToggle.textContent =
+            temaFinal === "dark"
+                ? "☀️ Claro"
+                : "🌙 Escuro";
+
+    }
+
+}
+
+
+function carregarTemaSalvo() {
+
+    let tema =
+        "light";
+
+
+    try {
+
+        tema =
+            localStorage.getItem(
+                "contaContoTheme"
+            ) || "light";
+
+    }
+
+    catch (error) {
+
+        tema =
+            "light";
+
+    }
+
+
+    aplicarTema(
+        tema
+    );
+
+}
+
+
+if (themeToggle) {
+
+    themeToggle.addEventListener(
+        "click",
+        () => {
+
+            const escuro =
+                document
+                    .documentElement
+                    .getAttribute(
+                        "data-theme"
+                    ) === "dark";
+
+
+            aplicarTema(
+                escuro
+                    ? "light"
+                    : "dark"
+            );
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// FEEDBACK RÁPIDO DURANTE AS PARTIDAS
+// ======================================================
+
+function animarElemento(
+    elemento,
+    classe = "score-pop"
+) {
+
+    if (!elemento) {
+        return;
+    }
+
+
+    elemento.classList.remove(
+        classe
+    );
+
+    void elemento.offsetWidth;
+
+    elemento.classList.add(
+        classe
+    );
+
+
+    window.setTimeout(
+        () => {
+
+            elemento.classList.remove(
+                classe
+            );
+
+        },
+        500
+    );
+
+}
+
+
+function mostrarFeedbackRapido(
+    tempoSegundos,
+    sequencia,
+    elementoPontuacao
+) {
+
+    if (!performanceFeedback) {
+        return;
+    }
+
+
+    let mensagem =
+        "✅ Boa!";
+
+
+    const marcos = {
+        5:
+            "🔥 Pegando ritmo!",
+        10:
+            "💪 10 seguidas!",
+        20:
+            "🚀 Imparável!",
+        30:
+            "👑 Sequência incrível!",
+        50:
+            "🏆 50 seguidas!"
+    };
+
+
+    if (
+        marcos[sequencia]
+    ) {
+
+        mensagem =
+            marcos[sequencia];
+
+    }
+
+    else if (
+        tempoSegundos <= 3
+    ) {
+
+        mensagem =
+            "⚡ Relâmpago!";
+
+    }
+
+    else if (
+        tempoSegundos <= 6
+    ) {
+
+        mensagem =
+            "🚀 Muito rápido!";
+
+    }
+
+    else if (
+        tempoSegundos <= 10
+    ) {
+
+        mensagem =
+            "🎯 Na mosca!";
+
+    }
+
+    else {
+
+        const mensagens = [
+            "✨ Mandou bem!",
+            "🧠 Boa!",
+            "💥 Acertou em cheio!",
+            "👏 Perfeito!"
+        ];
+
+        mensagem =
+            mensagens[
+                randomNumber(
+                    0,
+                    mensagens.length - 1
+                )
+            ];
+
+    }
+
+
+    performanceFeedback
+        .textContent =
+            mensagem;
+
+    performanceFeedback
+        .classList
+        .remove(
+            "feedback-show"
+        );
+
+    void performanceFeedback
+        .offsetWidth;
+
+    performanceFeedback
+        .classList
+        .add(
+            "feedback-show"
+        );
+
+
+    clearTimeout(
+        feedbackTimeout
+    );
+
+
+    feedbackTimeout =
+        window.setTimeout(
+            () => {
+
+                performanceFeedback
+                    .classList
+                    .remove(
+                        "feedback-show"
+                    );
+
+            },
+            850
+        );
+
+
+    animarElemento(
+        elementoPontuacao
+    );
+
+}
+
+
+// ======================================================
+// UTILIDADES DE CONTA
+// ======================================================
+
+function getUsuarioSalvo() {
+
+    try {
+
+        const usuario =
+            localStorage.getItem(
+                "usuario"
+            );
+
+        return usuario
+            ? JSON.parse(usuario)
+            : null;
+
+    }
+
+    catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function atualizarUsuarioSalvo(
+    atualizacoes
+) {
+
+    const atual =
+        getUsuarioSalvo() ||
+        {};
+
+
+    const novoUsuario = {
+        ...atual,
+        ...atualizacoes
+    };
+
+
+    localStorage.setItem(
+        "usuario",
+        JSON.stringify(
+            novoUsuario
+        )
+    );
+
+
+    return novoUsuario;
+
+}
+
+
+function definirMensagem(
+    elemento,
+    mensagem,
+    tipo = ""
+) {
+
+    if (!elemento) {
+        return;
+    }
+
+
+    elemento.textContent =
+        mensagem || "";
+
+    elemento.classList.remove(
+        "success",
+        "error"
+    );
+
+
+    if (tipo) {
+
+        elemento.classList.add(
+            tipo
+        );
+
+    }
+
+}
+
 
 async function salvarRecordeAPI(jogo, recorde) {
 
@@ -1007,6 +1616,12 @@ function hideMainSections() {
 
     if (aboutSection) {
         aboutSection.classList.add("hidden");
+    }
+
+    if (contactSection) {
+        contactSection.classList.add(
+            "hidden"
+        );
     }
 
     if (gameOver) {
@@ -2110,6 +2725,9 @@ function generateMathQuestion() {
 
     updateMathInterface();
 
+    mathQuestionStartedAt =
+    performance.now();
+
     startMathTimer();
 
 }
@@ -2220,9 +2838,21 @@ function checkMathAnswer() {
             timerInterval
         );
 
+        const tempoResposta =
+            (
+                performance.now() -
+                mathQuestionStartedAt
+            ) / 1000;
+
         score++;
 
         updateMathInterface();
+
+        mostrarFeedbackRapido(
+            tempoResposta,
+            score,
+        scoreElement
+        );
 
         generateMathQuestion();
 
@@ -2372,9 +3002,12 @@ function endMathGame(reason) {
     mathAnswerLocked =
         true;
 
-    if (
+    const novoRecorde =
         score >
-        currentMathRecordValue
+        currentMathRecordValue;
+
+    if (
+        novoRecorde
     ) {
 
         currentMathRecordValue =
@@ -2469,6 +3102,22 @@ function endMathGame(reason) {
     if (finalRecordElement) {
         finalRecordElement.textContent =
             currentMathRecordValue;
+    }
+
+    if (newRecordBanner) {
+
+        newRecordBanner.classList.toggle(
+            "hidden",
+            !novoRecorde
+        );
+
+        if (novoRecorde) {
+
+            newRecordBanner.textContent =
+                "🏆 Novo recorde!";
+
+        }
+
     }
 
     const labels =
@@ -2575,6 +3224,25 @@ function startPortugueseGame(
 
     portugueseLevel =
         selectedLevel;
+
+
+    if (portugueseGameModeLabel) {
+
+        const modos = {
+            1:
+                "🌱 Tranquilo",
+            2:
+                "⚡ Velocidade",
+            3:
+                "🔥 Brutal • vale ranking"
+        };
+
+        portugueseGameModeLabel
+            .textContent =
+                modos[selectedLevel] ||
+                "📖 Português";
+
+    }
 
 
     portugueseUsedQuestionIds =
@@ -2749,6 +3417,9 @@ function generatePortugueseQuestion() {
     updatePortugueseInterface();
 
     showPortugueseQuestion();
+
+    portugueseQuestionStartedAt =
+        performance.now();
 
     startPortugueseTimer();
 
@@ -2972,8 +3643,19 @@ function checkPortugueseAnswer(
         portugueseCurrentQuestion.classe
     ) {
 
+        const tempoResposta =
+            (
+            performance.now() -
+            portugueseQuestionStartedAt
+            ) / 1000;
+
         portugueseScore++;
 
+        mostrarFeedbackRapido(
+            tempoResposta,
+            portugueseScore,
+            portugueseScoreElement
+        );
 
         if (
             portugueseScore %
@@ -2981,8 +3663,8 @@ function checkPortugueseAnswer(
             portugueseLevel < 8
         ) {
 
-            portugueseLevel++;
 
+            portugueseLevel++;
             portugueseUsedQuestionIds =
                 [];
 
@@ -3045,9 +3727,13 @@ function endPortugueseGame(reason) {
     );
 
 
-    if (
+    const novoRecorde =
         portugueseScore >
-        portugueseRecordValue
+        portugueseRecordValue;
+
+
+    if (
+        novoRecorde
     ) {
 
         portugueseRecordValue =
@@ -3159,6 +3845,23 @@ function endPortugueseGame(reason) {
 
         finalRecordElement.textContent =
             portugueseRecordValue;
+
+    }
+
+
+    if (newRecordBanner) {
+
+        newRecordBanner.classList.toggle(
+            "hidden",
+            !novoRecorde
+        );
+
+        if (novoRecorde) {
+
+            newRecordBanner.textContent =
+                "🏆 Novo recorde!";
+
+        }
 
     }
 
@@ -3449,13 +4152,11 @@ if (backFromLearnPortuguese) {
 async function carregarRanking(jogo) {
 
     if (!rankingList) {
-
         return;
-
     }
 
 
-    rankingList.innerHTML =
+    rankingList.textContent =
         "Carregando ranking...";
 
 
@@ -3466,14 +4167,14 @@ async function carregarRanking(jogo) {
                 `${API_URL}/api/ranking/${jogo}`
             );
 
-
         const data =
             await response.json();
 
 
         if (!response.ok) {
 
-            rankingList.innerHTML =
+            rankingList.textContent =
+                data.message ||
                 "Não foi possível carregar o ranking.";
 
             return;
@@ -3486,7 +4187,7 @@ async function carregarRanking(jogo) {
             data.ranking.length === 0
         ) {
 
-            rankingList.innerHTML =
+            rankingList.textContent =
                 "Ainda não há jogadores no ranking.";
 
             return;
@@ -3494,106 +4195,261 @@ async function carregarRanking(jogo) {
         }
 
 
-        rankingList.innerHTML =
-            "";
+        rankingList.replaceChildren();
 
-data.ranking.forEach(
-    (player, index) => {
 
-        const item =
-            document.createElement(
-                "div"
+        const usuarioAtual =
+            getUsuarioSalvo();
+
+
+        const meuResultado =
+            usuarioAtual
+                ? data.ranking.find(
+                    player =>
+                        Number(
+                            player.usuario_id
+                        ) ===
+                        Number(
+                            usuarioAtual.id
+                        )
+                )
+                : null;
+
+
+        if (meuResultado) {
+
+            const resumo =
+                document.createElement(
+                    "div"
+                );
+
+            resumo.classList.add(
+                "ranking-you-summary"
             );
 
 
-        item.classList.add(
-            "ranking-item"
+            const label =
+                document.createElement(
+                    "span"
+                );
+
+            label.textContent =
+                "Sua posição";
+
+
+            const valor =
+                document.createElement(
+                    "strong"
+                );
+
+            valor.textContent =
+                `${meuResultado.posicao}º • ${meuResultado.recorde} acertos`;
+
+
+            resumo.append(
+                label,
+                valor
+            );
+
+            rankingList.appendChild(
+                resumo
+            );
+
+        }
+
+
+        data.ranking.forEach(
+            (player, index) => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.classList.add(
+                    "ranking-item"
+                );
+
+
+                if (index === 0) {
+
+                    item.classList.add(
+                        "ranking-first"
+                    );
+
+                }
+
+                else if (index === 1) {
+
+                    item.classList.add(
+                        "ranking-second"
+                    );
+
+                }
+
+                else if (index === 2) {
+
+                    item.classList.add(
+                        "ranking-third"
+                    );
+
+                }
+
+
+                if (
+                    usuarioAtual &&
+                    Number(
+                        player.usuario_id
+                    ) ===
+                    Number(
+                        usuarioAtual.id
+                    )
+                ) {
+
+                    item.classList.add(
+                        "ranking-me"
+                    );
+
+                }
+
+
+                let position =
+                    `${player.posicao || index + 1}º`;
+
+
+                if (index === 0) {
+                    position = "🥇";
+                }
+
+                else if (index === 1) {
+                    position = "🥈";
+                }
+
+                else if (index === 2) {
+                    position = "🥉";
+                }
+
+
+                const positionElement =
+                    document.createElement(
+                        "span"
+                    );
+
+                positionElement
+                    .className =
+                        "ranking-position";
+
+                positionElement
+                    .textContent =
+                        position;
+
+
+                const playerElement =
+                    document.createElement(
+                        "div"
+                    );
+
+                playerElement
+                    .className =
+                        "ranking-player";
+
+
+                const name =
+                    document.createElement(
+                        "strong"
+                    );
+
+                name.className =
+                    "ranking-name";
+
+                name.textContent =
+                    player.username;
+
+
+                if (
+                    item.classList.contains(
+                        "ranking-me"
+                    )
+                ) {
+
+                    const voce =
+                        document.createElement(
+                            "span"
+                        );
+
+                    voce.className =
+                        "ranking-you-badge";
+
+                    voce.textContent =
+                        "Você";
+
+                    name.append(
+                        " ",
+                        voce
+                    );
+
+                }
+
+
+                const mode =
+                    document.createElement(
+                        "small"
+                    );
+
+                mode.textContent =
+                    jogo === "matematica"
+                        ? "Sobrevivência"
+                        : "Modo Brutal";
+
+
+                playerElement.append(
+                    name,
+                    mode
+                );
+
+
+                const score =
+                    document.createElement(
+                        "span"
+                    );
+
+                score.className =
+                    "ranking-score";
+
+                score.append(
+                    document.createTextNode(
+                        `${player.recorde} `
+                    )
+                );
+
+
+                const scoreLabel =
+                    document.createElement(
+                        "small"
+                    );
+
+                scoreLabel.textContent =
+                    "acertos";
+
+                score.append(
+                    scoreLabel
+                );
+
+
+                item.append(
+                    positionElement,
+                    playerElement,
+                    score
+                );
+
+
+                rankingList.appendChild(
+                    item
+                );
+
+            }
         );
-
-
-        // Destacar o pódio
-        if (index === 0) {
-
-            item.classList.add(
-                "ranking-first"
-            );
-
-        }
-
-        else if (index === 1) {
-
-            item.classList.add(
-                "ranking-second"
-            );
-
-        }
-
-        else if (index === 2) {
-
-            item.classList.add(
-                "ranking-third"
-            );
-
-        }
-
-
-        let position =
-            `${index + 1}º`;
-
-
-        if (index === 0) {
-
-            position = "🥇";
-
-        }
-
-        else if (index === 1) {
-
-            position = "🥈";
-
-        }
-
-        else if (index === 2) {
-
-            position = "🥉";
-
-        }
-
-
-        item.innerHTML = `
-
-            <span class="ranking-position">
-                ${position}
-            </span>
-
-
-            <div class="ranking-player">
-
-                <strong class="ranking-name">
-                    ${player.username}
-                </strong>
-
-                <small>
-                    ${jogo === "matematica" ? "Sobrevivência" : "Modo Brutal"}
-                </small>
-
-            </div>
-
-
-            <span class="ranking-score">
-                ${player.recorde}
-                <small>acertos</small>
-            </span>
-
-        `;
-
-
-        rankingList.appendChild(
-            item
-        );
-
-    }
-);
 
     }
 
@@ -3605,7 +4461,7 @@ data.ranking.forEach(
         );
 
 
-        rankingList.innerHTML =
+        rankingList.textContent =
             "Erro ao conectar com o servidor.";
 
     }
@@ -3673,6 +4529,59 @@ function showLearnPortuguese(addToHistory = true) {
     }
 
 }
+
+function showContact(addToHistory = true) {
+
+    hideMainSections();
+
+
+    if (contactSection) {
+
+        contactSection.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    const usuario =
+        getUsuarioSalvo();
+
+
+    if (
+        contactNameInput &&
+        usuario?.username &&
+        !contactNameInput.value
+    ) {
+
+        contactNameInput.value =
+            usuario.username;
+
+    }
+
+
+    if (
+        contactEmailInput &&
+        usuario?.email &&
+        !contactEmailInput.value
+    ) {
+
+        contactEmailInput.value =
+            usuario.email;
+
+    }
+
+
+    if (addToHistory) {
+
+        saveAppHistory(
+            "contact"
+        );
+
+    }
+
+}
+
 
 function showAbout(addToHistory = true) {
 
@@ -3808,8 +4717,26 @@ async function showProfile(addToHistory = true) {
 
     }
 
+
     if (addToHistory) {
-        saveAppHistory("profile");
+
+        saveAppHistory(
+            "profile"
+        );
+
+    }
+
+
+    if (editUsernamePanel) {
+        editUsernamePanel.classList.add(
+            "hidden"
+        );
+    }
+
+    if (editEmailPanel) {
+        editEmailPanel.classList.add(
+            "hidden"
+        );
     }
 
 
@@ -3832,21 +4759,44 @@ async function showProfile(addToHistory = true) {
 
     try {
 
-        const response =
-            await fetch(
+        const headers = {
+            "Authorization":
+                `Bearer ${token}`
+        };
+
+
+        const [
+            response,
+            recordsResponse,
+            rankingsResponse
+        ] = await Promise.all([
+            fetch(
                 `${API_URL}/api/perfil`,
                 {
-                    method: "GET",
-
-                    headers: {
-
-                        "Authorization":
-                            `Bearer ${token}`
-
-                    }
-
+                    method:
+                        "GET",
+                    headers
                 }
-            );
+            ),
+
+            fetch(
+                `${API_URL}/api/records/me`,
+                {
+                    method:
+                        "GET",
+                    headers
+                }
+            ),
+
+            fetch(
+                `${API_URL}/api/perfil/rankings`,
+                {
+                    method:
+                        "GET",
+                    headers
+                }
+            )
+        ]);
 
 
         const data =
@@ -3869,11 +4819,53 @@ async function showProfile(addToHistory = true) {
             data.usuario;
 
 
+        atualizarUsuarioSalvo({
+            id:
+                usuario.id,
+
+            username:
+                usuario.username,
+
+            email:
+                usuario.email ||
+                null
+        });
+
+
         if (profileUsername) {
 
             profileUsername.textContent =
                 usuario.username ||
                 "—";
+
+        }
+
+
+        if (profileUsernameHeading) {
+
+            profileUsernameHeading
+                .textContent =
+                    usuario.username ||
+                    "Jogador";
+
+        }
+
+
+        if (profileEmail) {
+
+            profileEmail.textContent =
+                usuario.email ||
+                "Não cadastrado";
+
+        }
+
+
+        if (editEmailButton) {
+
+            editEmailButton.textContent =
+                usuario.email
+                    ? "✉️ Alterar e-mail"
+                    : "✉️ Adicionar e-mail";
 
         }
 
@@ -3900,9 +4892,10 @@ async function showProfile(addToHistory = true) {
 
 
                 profileDate.textContent =
-                    dataCadastro.toLocaleDateString(
-                        "pt-BR"
-                    );
+                    dataCadastro
+                        .toLocaleDateString(
+                            "pt-BR"
+                        );
 
             }
 
@@ -3914,97 +4907,108 @@ async function showProfile(addToHistory = true) {
             }
 
         }
-        // ======================================================
-// CARREGAR RECORDES DO PERFIL
-// ======================================================
 
-try {
 
-    const recordsResponse =
-        await fetch(
-            `${API_URL}/api/records/me`,
-            {
-                method: "GET",
+        if (
+            recordsResponse.ok
+        ) {
 
-                headers: {
+            const recordsData =
+                await recordsResponse
+                    .json();
 
-                    "Authorization":
-                        `Bearer ${token}`
+            const records =
+                recordsData.records ||
+                [];
 
-                }
+
+            const mathBrutal =
+                records.find(
+                    record =>
+                        record.jogo ===
+                            "matematica" &&
+                        record.modo ===
+                            "brutal"
+                );
+
+
+            const portugueseBrutal =
+                records.find(
+                    record =>
+                        record.jogo ===
+                            "portugues" &&
+                        record.modo ===
+                            "brutal"
+                );
+
+
+            if (profileMathRecord) {
+
+                profileMathRecord
+                    .textContent =
+                        mathBrutal
+                            ? mathBrutal
+                                .recorde
+                            : 0;
 
             }
-        );
 
 
-    const recordsData =
-        await recordsResponse.json();
+            if (
+                profilePortugueseRecord
+            ) {
+
+                profilePortugueseRecord
+                    .textContent =
+                        portugueseBrutal
+                            ? portugueseBrutal
+                                .recorde
+                            : 0;
+
+            }
+
+        }
 
 
-    if (!recordsResponse.ok) {
+        if (
+            rankingsResponse.ok
+        ) {
 
-        console.error(
-            "Erro ao carregar recordes do perfil:",
-            recordsData
-        );
+            const rankings =
+                await rankingsResponse
+                    .json();
 
-        return;
+
+            if (profileMathPosition) {
+
+                profileMathPosition
+                    .textContent =
+                        rankings
+                            .matematica
+                            ?.posicao
+                            ? `${rankings.matematica.posicao}º`
+                            : "Sem posição";
+
+            }
+
+
+            if (
+                profilePortuguesePosition
+            ) {
+
+                profilePortuguesePosition
+                    .textContent =
+                        rankings
+                            .portugues
+                            ?.posicao
+                            ? `${rankings.portugues.posicao}º`
+                            : "Sem posição";
+
+            }
+
+        }
 
     }
-
-
-    const records =
-        recordsData.records || [];
-
-
-    const mathBrutal =
-        records.find(
-            record =>
-                record.jogo === "matematica" &&
-                record.modo === "brutal"
-        );
-
-
-    const portugueseBrutal =
-        records.find(
-            record =>
-                record.jogo === "portugues" &&
-                record.modo === "brutal"
-        );
-
-
-    if (profileMathRecord) {
-
-        profileMathRecord.textContent =
-            mathBrutal
-                ? mathBrutal.recorde
-                : 0;
-
-    }
-
-
-    if (profilePortugueseRecord) {
-
-        profilePortugueseRecord.textContent =
-            portugueseBrutal
-                ? portugueseBrutal.recorde
-                : 0;
-
-    }
-
-}
-
-catch (error) {
-
-    console.error(
-        "Erro ao carregar recordes do perfil:",
-        error
-    );
-
-}
-    }
-
-    
 
     catch (error) {
 
@@ -4019,6 +5023,501 @@ catch (error) {
         );
 
     }
+
+}
+
+
+// ======================================================
+// EDITAR NOME DO USUÁRIO
+// ======================================================
+
+if (editUsernameButton) {
+
+    editUsernameButton
+        .addEventListener(
+            "click",
+            () => {
+
+                editEmailPanel
+                    ?.classList
+                    .add("hidden");
+
+                editUsernamePanel
+                    ?.classList
+                    .toggle("hidden");
+
+                definirMensagem(
+                    editUsernameMessage,
+                    ""
+                );
+
+                if (newUsernameInput) {
+
+                    newUsernameInput.value =
+                        getUsuarioSalvo()
+                            ?.username ||
+                        "";
+
+                }
+
+            }
+        );
+
+}
+
+
+if (cancelUsernameButton) {
+
+    cancelUsernameButton
+        .addEventListener(
+            "click",
+            () => {
+
+                editUsernamePanel
+                    ?.classList
+                    .add("hidden");
+
+            }
+        );
+
+}
+
+
+if (saveUsernameButton) {
+
+    saveUsernameButton
+        .addEventListener(
+            "click",
+            async () => {
+
+                const token =
+                    localStorage.getItem(
+                        "token"
+                    );
+
+                const novoUsername =
+                    newUsernameInput
+                        ?.value
+                        .trim() ||
+                    "";
+
+                const confirmacao =
+                    usernameConfirmationInput
+                        ?.value
+                        .trim() ||
+                    "";
+
+                const senha =
+                    usernameCurrentPasswordInput
+                        ?.value ||
+                    "";
+
+
+                if (
+                    !novoUsername ||
+                    !confirmacao ||
+                    !senha
+                ) {
+
+                    definirMensagem(
+                        editUsernameMessage,
+                        "Preencha todos os campos.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    saveUsernameButton
+                        .disabled =
+                            true;
+
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/api/perfil/username`,
+                            {
+                                method:
+                                    "PUT",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        `Bearer ${token}`
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        novoUsername,
+                                        confirmacao,
+                                        senha
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response
+                            .json();
+
+
+                    if (!response.ok) {
+
+                        definirMensagem(
+                            editUsernameMessage,
+                            data.message ||
+                            "Não foi possível alterar o nome.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (data.token) {
+
+                        localStorage
+                            .setItem(
+                                "token",
+                                data.token
+                            );
+
+                    }
+
+
+                    const usuario =
+                        atualizarUsuarioSalvo(
+                            data.usuario ||
+                            {
+                                username:
+                                    novoUsername
+                            }
+                        );
+
+
+                    const welcomeUsername =
+                        document
+                            .getElementById(
+                                "welcomeUsername"
+                            );
+
+
+                    if (welcomeUsername) {
+
+                        welcomeUsername
+                            .textContent =
+                                usuario
+                                    .username;
+
+                    }
+
+
+                    if (profileUsername) {
+
+                        profileUsername
+                            .textContent =
+                                usuario
+                                    .username;
+
+                    }
+
+
+                    if (
+                        profileUsernameHeading
+                    ) {
+
+                        profileUsernameHeading
+                            .textContent =
+                                usuario
+                                    .username;
+
+                    }
+
+
+                    definirMensagem(
+                        editUsernameMessage,
+                        "Nome atualizado com sucesso!",
+                        "success"
+                    );
+
+
+                    if (
+                        usernameConfirmationInput
+                    ) {
+
+                        usernameConfirmationInput
+                            .value =
+                                "";
+
+                    }
+
+
+                    if (
+                        usernameCurrentPasswordInput
+                    ) {
+
+                        usernameCurrentPasswordInput
+                            .value =
+                                "";
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.error(error);
+
+                    definirMensagem(
+                        editUsernameMessage,
+                        "Não foi possível conectar com o servidor.",
+                        "error"
+                    );
+
+                }
+
+                finally {
+
+                    saveUsernameButton
+                        .disabled =
+                            false;
+
+                }
+
+            }
+        );
+
+}
+
+
+// ======================================================
+// EDITAR E-MAIL
+// ======================================================
+
+if (editEmailButton) {
+
+    editEmailButton
+        .addEventListener(
+            "click",
+            () => {
+
+                editUsernamePanel
+                    ?.classList
+                    .add("hidden");
+
+                editEmailPanel
+                    ?.classList
+                    .toggle("hidden");
+
+                definirMensagem(
+                    editEmailMessage,
+                    ""
+                );
+
+
+                if (newEmailInput) {
+
+                    newEmailInput.value =
+                        getUsuarioSalvo()
+                            ?.email ||
+                        "";
+
+                }
+
+            }
+        );
+
+}
+
+
+if (cancelEmailButton) {
+
+    cancelEmailButton
+        .addEventListener(
+            "click",
+            () => {
+
+                editEmailPanel
+                    ?.classList
+                    .add("hidden");
+
+            }
+        );
+
+}
+
+
+if (saveEmailButton) {
+
+    saveEmailButton
+        .addEventListener(
+            "click",
+            async () => {
+
+                const token =
+                    localStorage.getItem(
+                        "token"
+                    );
+
+                const email =
+                    newEmailInput
+                        ?.value
+                        .trim() ||
+                    "";
+
+                const senha =
+                    emailCurrentPasswordInput
+                        ?.value ||
+                    "";
+
+
+                if (
+                    !email ||
+                    !senha
+                ) {
+
+                    definirMensagem(
+                        editEmailMessage,
+                        "Informe o e-mail e sua senha atual.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    saveEmailButton
+                        .disabled =
+                            true;
+
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/api/perfil/email`,
+                            {
+                                method:
+                                    "PUT",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        `Bearer ${token}`
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        email,
+                                        senha
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response
+                            .json();
+
+
+                    if (!response.ok) {
+
+                        definirMensagem(
+                            editEmailMessage,
+                            data.message ||
+                            "Não foi possível atualizar o e-mail.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    atualizarUsuarioSalvo({
+                        email:
+                            data.email
+                    });
+
+
+                    if (profileEmail) {
+
+                        profileEmail
+                            .textContent =
+                                data.email;
+
+                    }
+
+
+                    if (editEmailButton) {
+
+                        editEmailButton
+                            .textContent =
+                                "✉️ Alterar e-mail";
+
+                    }
+
+
+                    if (contactEmailInput) {
+
+                        contactEmailInput
+                            .value =
+                                data.email;
+
+                    }
+
+
+                    if (
+                        emailCurrentPasswordInput
+                    ) {
+
+                        emailCurrentPasswordInput
+                            .value =
+                                "";
+
+                    }
+
+
+                    definirMensagem(
+                        editEmailMessage,
+                        "E-mail atualizado com sucesso!",
+                        "success"
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(error);
+
+                    definirMensagem(
+                        editEmailMessage,
+                        "Não foi possível conectar com o servidor.",
+                        "error"
+                    );
+
+                }
+
+                finally {
+
+                    saveEmailButton
+                        .disabled =
+                            false;
+
+                }
+
+            }
+        );
 
 }
 
@@ -4038,6 +5537,22 @@ if (navProfile) {
 
 }
 
+if (navContact) {
+
+    navContact.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            showContact();
+
+        }
+    );
+
+}
+
+
 if (navAbout) {
 
     navAbout.addEventListener(
@@ -4050,6 +5565,572 @@ if (navAbout) {
 
         }
     );
+
+}
+
+
+
+// ======================================================
+// FORMULÁRIO FALE CONOSCO
+// ======================================================
+
+if (contactForm) {
+
+    contactForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            const token =
+                localStorage.getItem(
+                    "token"
+                );
+
+
+            const nome =
+                contactNameInput
+                    ?.value
+                    .trim() ||
+                "";
+
+            const email =
+                contactEmailInput
+                    ?.value
+                    .trim() ||
+                "";
+
+            const assunto =
+                contactSubjectInput
+                    ?.value
+                    .trim() ||
+                "";
+
+            const mensagem =
+                contactMessageInput
+                    ?.value
+                    .trim() ||
+                "";
+
+
+            if (
+                !nome ||
+                !email ||
+                !assunto ||
+                !mensagem
+            ) {
+
+                definirMensagem(
+                    contactFormMessage,
+                    "Preencha todos os campos.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const submitButton =
+                document.getElementById(
+                    "contactSubmitButton"
+                );
+
+
+            try {
+
+                if (submitButton) {
+                    submitButton.disabled =
+                        true;
+                }
+
+
+                definirMensagem(
+                    contactFormMessage,
+                    "Enviando..."
+                );
+
+
+                const response =
+                    await fetch(
+                        `${API_URL}/api/contato`,
+                        {
+                            method:
+                                "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    nome,
+                                    email,
+                                    assunto,
+                                    mensagem
+                                })
+                        }
+                    );
+
+
+                const data =
+                    await response
+                        .json();
+
+
+                if (!response.ok) {
+
+                    definirMensagem(
+                        contactFormMessage,
+                        data.message ||
+                        "Não foi possível enviar a mensagem.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                definirMensagem(
+                    contactFormMessage,
+                    "Mensagem enviada! Obrigado pelo contato.",
+                    "success"
+                );
+
+
+                if (contactSubjectInput) {
+                    contactSubjectInput.value =
+                        "";
+                }
+
+                if (contactMessageInput) {
+                    contactMessageInput.value =
+                        "";
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+                definirMensagem(
+                    contactFormMessage,
+                    "Não foi possível conectar com o servidor.",
+                    "error"
+                );
+
+            }
+
+            finally {
+
+                if (submitButton) {
+                    submitButton.disabled =
+                        false;
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+
+// ======================================================
+// TELAS DE AUTENTICAÇÃO E RECUPERAÇÃO
+// ======================================================
+
+function mostrarAuthBox(
+    alvo
+) {
+
+    [
+        loginBox,
+        registerBox,
+        forgotPasswordBox,
+        resetPasswordBox
+    ].forEach(
+        box => {
+
+            if (box) {
+                box.classList.add(
+                    "hidden"
+                );
+            }
+
+        }
+    );
+
+
+    if (alvo) {
+
+        alvo.classList.remove(
+            "hidden"
+        );
+
+    }
+
+}
+
+
+function obterResetToken() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return params.get(
+        "resetToken"
+    );
+
+}
+
+
+if (showForgotPasswordButton) {
+
+    showForgotPasswordButton
+        .addEventListener(
+            "click",
+            () => {
+
+                mostrarAuthBox(
+                    forgotPasswordBox
+                );
+
+                definirMensagem(
+                    forgotPasswordMessage,
+                    ""
+                );
+
+            }
+        );
+
+}
+
+
+if (backToLoginFromForgot) {
+
+    backToLoginFromForgot
+        .addEventListener(
+            "click",
+            () => {
+
+                mostrarAuthBox(
+                    loginBox
+                );
+
+            }
+        );
+
+}
+
+
+if (backToLoginFromReset) {
+
+    backToLoginFromReset
+        .addEventListener(
+            "click",
+            () => {
+
+                window.history
+                    .replaceState(
+                        {},
+                        "",
+                        window.location.pathname
+                    );
+
+                mostrarAuthBox(
+                    loginBox
+                );
+
+            }
+        );
+
+}
+
+
+if (forgotPasswordButton) {
+
+    forgotPasswordButton
+        .addEventListener(
+            "click",
+            async () => {
+
+                const identificador =
+                    forgotPasswordIdentifier
+                        ?.value
+                        .trim() ||
+                    "";
+
+
+                if (!identificador) {
+
+                    definirMensagem(
+                        forgotPasswordMessage,
+                        "Informe seu usuário ou e-mail.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    forgotPasswordButton
+                        .disabled =
+                            true;
+
+
+                    definirMensagem(
+                        forgotPasswordMessage,
+                        "Enviando..."
+                    );
+
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/api/senha/esqueci`,
+                            {
+                                method:
+                                    "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        identificador
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response
+                            .json();
+
+
+                    definirMensagem(
+                        forgotPasswordMessage,
+                        data.message ||
+                        "Solicitação processada.",
+                        response.ok
+                            ? "success"
+                            : "error"
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(error);
+
+                    definirMensagem(
+                        forgotPasswordMessage,
+                        "Não foi possível conectar com o servidor.",
+                        "error"
+                    );
+
+                }
+
+                finally {
+
+                    forgotPasswordButton
+                        .disabled =
+                            false;
+
+                }
+
+            }
+        );
+
+}
+
+
+if (resetPasswordButton) {
+
+    resetPasswordButton
+        .addEventListener(
+            "click",
+            async () => {
+
+                const token =
+                    obterResetToken();
+
+                const novaSenha =
+                    resetPasswordInput
+                        ?.value ||
+                    "";
+
+                const confirmacao =
+                    resetPasswordConfirmInput
+                        ?.value ||
+                    "";
+
+
+                if (!token) {
+
+                    definirMensagem(
+                        resetPasswordMessage,
+                        "Link de recuperação inválido.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    novaSenha.length < 6
+                ) {
+
+                    definirMensagem(
+                        resetPasswordMessage,
+                        "A senha deve ter pelo menos 6 caracteres.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    novaSenha !==
+                    confirmacao
+                ) {
+
+                    definirMensagem(
+                        resetPasswordMessage,
+                        "As senhas não são iguais.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    resetPasswordButton
+                        .disabled =
+                            true;
+
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/api/senha/redefinir`,
+                            {
+                                method:
+                                    "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        token,
+                                        novaSenha
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response
+                            .json();
+
+
+                    if (!response.ok) {
+
+                        definirMensagem(
+                            resetPasswordMessage,
+                            data.message ||
+                            "Não foi possível alterar a senha.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    localStorage.removeItem(
+                        "token"
+                    );
+
+                    localStorage.removeItem(
+                        "usuario"
+                    );
+
+
+                    definirMensagem(
+                        resetPasswordMessage,
+                        data.message ||
+                        "Senha atualizada com sucesso!",
+                        "success"
+                    );
+
+
+                    window.setTimeout(
+                        () => {
+
+                            window.history
+                                .replaceState(
+                                    {},
+                                    "",
+                                    window.location.pathname
+                                );
+
+                            mostrarAuthBox(
+                                loginBox
+                            );
+
+                        },
+                        1200
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(error);
+
+                    definirMensagem(
+                        resetPasswordMessage,
+                        "Não foi possível conectar com o servidor.",
+                        "error"
+                    );
+
+                }
+
+                finally {
+
+                    resetPasswordButton
+                        .disabled =
+                            false;
+
+                }
+
+            }
+        );
 
 }
 
@@ -4094,7 +6175,7 @@ if (loginButton) {
             ) {
 
                 alert(
-                    "Preencha usuário e senha."
+                    "Preencha usuário/e-mail e senha."
                 );
 
                 return;
@@ -4241,6 +6322,32 @@ function mostrarMenuPrincipal() {
 
     }
 
+    const usuarioAtual =
+        getUsuarioSalvo();
+
+
+    if (
+        contactNameInput &&
+        usuarioAtual?.username
+    ) {
+
+        contactNameInput.value =
+            usuarioAtual.username;
+
+    }
+
+
+    if (
+        contactEmailInput &&
+        usuarioAtual?.email
+    ) {
+
+        contactEmailInput.value =
+            usuarioAtual.email;
+
+    }
+
+
     carregarMeusRecordes();
 
     showMenu(false);
@@ -4336,6 +6443,12 @@ if (registerButton) {
                 );
 
 
+            const emailInput =
+                document.getElementById(
+                    "registerEmail"
+                );
+
+
             const passwordInput =
                 document.getElementById(
                     "registerPassword"
@@ -4351,6 +6464,12 @@ if (registerButton) {
             const username =
                 usernameInput ?
                     usernameInput.value.trim() :
+                    "";
+
+
+            const email =
+                emailInput ?
+                    emailInput.value.trim() :
                     "";
 
 
@@ -4395,6 +6514,19 @@ if (registerButton) {
             }
 
 
+            if (
+                senha.length < 6
+            ) {
+
+                alert(
+                    "A senha deve ter pelo menos 6 caracteres."
+                );
+
+                return;
+
+            }
+
+
             try {
 
                 /*
@@ -4421,6 +6553,7 @@ if (registerButton) {
                             body:
                                 JSON.stringify({
                                     username,
+                                    email,
                                     senha
                                 })
                         }
@@ -4450,6 +6583,10 @@ if (registerButton) {
 
                 if (usernameInput) {
                     usernameInput.value = "";
+                }
+
+                if (emailInput) {
+                    emailInput.value = "";
                 }
 
                 if (passwordInput) {
@@ -4553,13 +6690,9 @@ if (logoutButton) {
             }
 
 
-            if (loginBox) {
-
-                loginBox.classList.remove(
-                    "hidden"
-                );
-
-            }
+            mostrarAuthBox(
+                loginBox
+            );
 
         }
     );
@@ -4572,6 +6705,39 @@ if (logoutButton) {
 // ======================================================
 
 function verificarLoginSalvo() {
+
+    const resetToken =
+        obterResetToken();
+
+
+    if (resetToken) {
+
+        if (app) {
+
+            app.classList.add(
+                "hidden"
+            );
+
+        }
+
+
+        if (authScreen) {
+
+            authScreen.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+        mostrarAuthBox(
+            resetPasswordBox
+        );
+
+        return;
+
+    }
+
 
     const token =
         localStorage.getItem(
@@ -4613,6 +6779,11 @@ function verificarLoginSalvo() {
 
         }
 
+
+        mostrarAuthBox(
+            loginBox
+        );
+
     }
 
 }
@@ -4621,6 +6792,8 @@ function verificarLoginSalvo() {
 // ======================================================
 // INICIALIZAÇÃO
 // ======================================================
+
+carregarTemaSalvo();
 
 loadPortugueseQuestions();
 

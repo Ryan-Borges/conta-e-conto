@@ -1117,7 +1117,7 @@ button {
 
 
 .auth-switch {
-    margin-top: 20px;
+    margin-top: 10px;
 
     color: #555;
 
@@ -1155,6 +1155,9 @@ button {
     font-weight: bold;
 }
 
+.auth-message:empty {
+    display: none;
+}
 
 /* ======================================================
    RODAPÉ
@@ -2715,3 +2718,832 @@ footer {
 
 }
 
+
+/* ======================================================
+   CONTA & CONTO — ATUALIZAÇÃO DE PERFIL, CONTATO E TEMA
+====================================================== */
+
+/* ---------- Botão de tema ---------- */
+
+.theme-toggle {
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.13);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+
+/* ---------- Autenticação ---------- */
+
+.auth-link-button {
+    width: 100% !important;
+
+    margin-top: 10px;
+
+    padding: 11px;
+
+    background: #eef5ff;
+
+    color: #1769d2;
+
+    border: 1px solid #cfe0f5;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+.auth-link-button:hover {
+    background: #dfeeff;
+
+    text-decoration: none;
+}
+
+.auth-helper {
+    display: block;
+    margin: 7px 0 2px;
+    color: #718096;
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: left;
+}
+
+
+/* ---------- Feedback rápido do jogo ---------- */
+
+.performance-feedback {
+    position: fixed;
+    top: 96px;
+    left: 50%;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -16px) scale(0.94);
+    padding: 11px 18px;
+    background: #172033;
+    color: white;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 800;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+.performance-feedback.feedback-show {
+    animation: feedback-pop 0.85s ease both;
+}
+
+@keyframes feedback-pop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -14px) scale(0.9);
+    }
+
+    18% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1.06);
+    }
+
+    72% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -7px) scale(0.97);
+    }
+}
+
+.score-pop {
+    animation: score-pop 0.42s ease;
+}
+
+.level-pop {
+    animation: level-pop 0.55s ease;
+}
+
+@keyframes score-pop {
+    0% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes level-pop {
+    0% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.28);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.new-record-banner {
+    max-width: 420px;
+    margin: 0 auto 18px;
+    padding: 14px 18px;
+    background: #fff8dc;
+    color: #8a5a00;
+    border: 1px solid #f1d277;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 800;
+    animation: record-enter 0.6s ease;
+}
+
+@keyframes record-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* ---------- Ranking: posição do próprio usuário ---------- */
+
+.ranking-you-summary {
+    margin-bottom: 14px;
+    padding: 13px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: #e5f1ff;
+    color: #1557a8;
+    border: 1px solid #b9d6fb;
+    border-radius: 12px;
+}
+
+.ranking-you-summary strong {
+    color: #1769d2;
+}
+
+.ranking-item.ranking-me {
+    outline: 2px solid #1769d2;
+    outline-offset: -2px;
+    background: #eaf4ff;
+}
+
+.ranking-you-badge {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 2px 7px;
+    background: #1769d2;
+    color: white;
+    border-radius: 999px;
+    font-size: 10px;
+    vertical-align: middle;
+}
+
+
+/* ---------- Perfil reformulado ---------- */
+
+.profile-v2 {
+    width: 760px;
+    max-width: 100%;
+}
+
+.profile-hero {
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    border: 1px solid #d5e5fa;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(23, 105, 210, 0.08);
+}
+
+.profile-avatar-placeholder {
+    width: 92px;
+    height: 92px;
+    flex: 0 0 92px;
+    display: grid;
+    place-items: center;
+    background: #eaf3ff;
+    border: 3px solid #c8def9;
+    border-radius: 50%;
+    font-size: 42px;
+}
+
+.profile-hero-text {
+    min-width: 0;
+}
+
+.profile-kicker {
+    margin-bottom: 5px;
+    color: #718096;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.profile-hero h2 {
+    margin: 0 0 6px;
+    color: #1557a8;
+    font-size: 34px;
+    overflow-wrap: anywhere;
+}
+
+.profile-hero-text > p:last-child {
+    color: #718096;
+}
+
+.profile-stats-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.profile-stat-card {
+    padding: 22px;
+    background: white;
+    border: 1px solid #d5e5fa;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 7px 20px rgba(23, 105, 210, 0.06);
+}
+
+.profile-stat-card > span {
+    display: block;
+    color: #526176;
+    font-weight: 800;
+}
+
+.profile-stat-card > strong {
+    display: block;
+    margin-top: 10px;
+    color: #1769d2;
+    font-size: 34px;
+}
+
+.profile-stat-card > small {
+    color: #718096;
+}
+
+.profile-stat-card p {
+    margin-top: 12px;
+    color: #526176;
+}
+
+.profile-stat-card b {
+    color: #1557a8;
+}
+
+.profile-details-card {
+    margin-top: 16px;
+    padding: 6px 22px;
+    background: white;
+    border: 1px solid #d5e5fa;
+    border-radius: 16px;
+}
+
+.profile-detail-row {
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #e7eef8;
+}
+
+.profile-detail-row:last-child {
+    border-bottom: none;
+}
+
+.profile-detail-row span {
+    color: #718096;
+}
+
+.profile-detail-row strong {
+    color: #172033;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.profile-actions {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.profile-actions button,
+.profile-panel-actions button {
+    background: #1769d2;
+    color: white;
+}
+
+.secondary-button {
+    background: #e3edf9 !important;
+    color: #1557a8 !important;
+    border: 1px solid #c9dcf5 !important;
+}
+
+.profile-edit-panel {
+    margin-top: 18px;
+    padding: 24px;
+    background: white;
+    border: 1px solid #d5e5fa;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(23, 105, 210, 0.07);
+}
+
+.profile-edit-panel h3 {
+    margin-bottom: 7px;
+    color: #1557a8;
+}
+
+.profile-edit-panel > p {
+    margin-bottom: 14px;
+    color: #718096;
+    line-height: 1.5;
+}
+
+.profile-edit-panel input {
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px 14px;
+    background: white;
+    color: #172033;
+    border: 1px solid #cfdcf0;
+    border-radius: 9px;
+    outline: none;
+    font-size: 15px;
+}
+
+.profile-edit-panel input:focus {
+    border-color: #1769d2;
+    box-shadow: 0 0 0 3px rgba(23, 105, 210, 0.1);
+}
+
+.profile-panel-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.profile-form-message,
+.contact-form-message {
+    min-height: 20px;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.profile-form-message.success,
+.contact-form-message.success {
+    color: #16834d;
+}
+
+.profile-form-message.error,
+.contact-form-message.error {
+    color: #c0364e;
+}
+
+
+/* ---------- Fale conosco ---------- */
+
+.contact {
+    width: 700px;
+    max-width: 100%;
+}
+
+.contact-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contact-header h2 {
+    color: #1557a8;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.contact-header p {
+    max-width: 620px;
+    margin: 0 auto;
+    color: #718096;
+    line-height: 1.6;
+}
+
+.contact-card {
+    padding: 30px;
+    background: white;
+    border: 1px solid #d5e5fa;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(23, 105, 210, 0.08);
+}
+
+.contact-card form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-card label {
+    margin: 14px 0 6px;
+    color: #526176;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.contact-card label:first-child {
+    margin-top: 0;
+}
+
+.contact-card input,
+.contact-card textarea {
+    width: 100%;
+    padding: 13px 14px;
+    background: white;
+    color: #172033;
+    border: 1px solid #cfdcf0;
+    border-radius: 9px;
+    outline: none;
+    font: inherit;
+    resize: vertical;
+}
+
+.contact-card input:focus,
+.contact-card textarea:focus {
+    border-color: #1769d2;
+    box-shadow: 0 0 0 3px rgba(23, 105, 210, 0.1);
+}
+
+#contactSubmitButton {
+    margin-top: 18px;
+    align-self: flex-start;
+    background: #1769d2;
+    color: white;
+}
+
+.contact-email-note {
+    margin-top: 22px;
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 1px solid #e7eef8;
+    color: #718096;
+}
+
+.contact-email-note strong {
+    color: #526176;
+}
+
+
+/* ======================================================
+   TEMA ESCURO
+====================================================== */
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+html[data-theme="dark"] body {
+    background-color: #0d1420;
+    color: #e8eef8;
+}
+
+html[data-theme="dark"] header {
+    background-color: #124f9f;
+}
+
+html[data-theme="dark"] footer {
+    background: #0b111c;
+    color: #9fb0c6;
+}
+
+html[data-theme="dark"] .welcome-user,
+html[data-theme="dark"] .subject-menu,
+html[data-theme="dark"] .mode-button,
+html[data-theme="dark"] .info-card,
+html[data-theme="dark"] .question-area,
+html[data-theme="dark"] .game-over,
+html[data-theme="dark"] .ranking,
+html[data-theme="dark"] .ranking-list,
+html[data-theme="dark"] .profile-card,
+html[data-theme="dark"] .learning-card,
+html[data-theme="dark"] .learn-content,
+html[data-theme="dark"] .strategy-card,
+html[data-theme="dark"] .about-section,
+html[data-theme="dark"] .creator-card,
+html[data-theme="dark"] .about-final,
+html[data-theme="dark"] .math-operation-button,
+html[data-theme="dark"] .profile-hero,
+html[data-theme="dark"] .profile-stat-card,
+html[data-theme="dark"] .profile-details-card,
+html[data-theme="dark"] .profile-edit-panel,
+html[data-theme="dark"] .contact-card {
+    background: #172235;
+    color: #e8eef8;
+    border-color: #2b405d;
+}
+
+html[data-theme="dark"] .auth-box {
+    background: #172235;
+    color: #e8eef8;
+}
+
+html[data-theme="dark"] .auth-box input,
+html[data-theme="dark"] .question-area input,
+html[data-theme="dark"] .profile-edit-panel input,
+html[data-theme="dark"] .contact-card input,
+html[data-theme="dark"] .contact-card textarea {
+    background: #101a29;
+    color: #edf4ff;
+    border-color: #354a67;
+}
+
+html[data-theme="dark"] .auth-box input::placeholder,
+html[data-theme="dark"] .question-area input::placeholder,
+html[data-theme="dark"] .profile-edit-panel input::placeholder,
+html[data-theme="dark"] .contact-card input::placeholder,
+html[data-theme="dark"] .contact-card textarea::placeholder {
+    color: #7f91a9;
+}
+
+html[data-theme="dark"] .home h2,
+html[data-theme="dark"] .subject-menu h3,
+html[data-theme="dark"] .question-area h2,
+html[data-theme="dark"] .ranking h2,
+html[data-theme="dark"] .profile h2,
+html[data-theme="dark"] .learn h2,
+html[data-theme="dark"] .learn-content h2,
+html[data-theme="dark"] .about h2,
+html[data-theme="dark"] .contact-header h2,
+html[data-theme="dark"] .profile-hero h2,
+html[data-theme="dark"] .profile-edit-panel h3,
+html[data-theme="dark"] .math-game-context strong {
+    color: #75b6ff;
+}
+
+html[data-theme="dark"] .welcome-user,
+html[data-theme="dark"] .math-selection-intro,
+html[data-theme="dark"] .math-operation-button small,
+html[data-theme="dark"] .survival-text small,
+html[data-theme="dark"] .math-operation-kicker,
+html[data-theme="dark"] .math-game-context span,
+html[data-theme="dark"] .difficulty-text,
+html[data-theme="dark"] .timer-info,
+html[data-theme="dark"] .word-label,
+html[data-theme="dark"] .ranking > p,
+html[data-theme="dark"] .profile-kicker,
+html[data-theme="dark"] .profile-hero-text > p:last-child,
+html[data-theme="dark"] .profile-stat-card p,
+html[data-theme="dark"] .profile-detail-row span,
+html[data-theme="dark"] .profile-edit-panel > p,
+html[data-theme="dark"] .contact-header p,
+html[data-theme="dark"] .contact-card label,
+html[data-theme="dark"] .contact-email-note,
+html[data-theme="dark"] .auth-helper {
+    color: #9fb0c6;
+}
+
+html[data-theme="dark"] .profile-detail-row strong,
+html[data-theme="dark"] .math-operation-button,
+html[data-theme="dark"] .ranking h3 {
+    color: #e8eef8;
+}
+
+html[data-theme="dark"] .profile-stat-card > span,
+html[data-theme="dark"] .profile-stat-card b,
+html[data-theme="dark"] .contact-email-note strong {
+    color: #c7d7ec;
+}
+
+html[data-theme="dark"] .profile-stat-card > strong,
+html[data-theme="dark"] .profileMathRecord,
+html[data-theme="dark"] #profileMathRecord,
+html[data-theme="dark"] #profilePortugueseRecord {
+    color: #75b6ff;
+}
+
+html[data-theme="dark"] .option-button {
+    background: #132033;
+    color: #e8eef8;
+    border-color: #354a67;
+}
+
+html[data-theme="dark"] .option-button:hover {
+    background: #1c2e47;
+}
+
+html[data-theme="dark"] .timer-bar-background {
+    background: #2a3a50;
+}
+
+html[data-theme="dark"] .answer-review {
+    background: #101a29;
+    border-color: #2b405d;
+}
+
+html[data-theme="dark"] .explanation {
+    background: #172235;
+}
+
+html[data-theme="dark"] .ranking-list {
+    background: #101a29;
+}
+
+html[data-theme="dark"] .ranking-item {
+    border-color: #2b405d;
+}
+
+html[data-theme="dark"] .ranking-item.ranking-me {
+    background: #173452;
+    outline-color: #75b6ff;
+}
+
+html[data-theme="dark"] .ranking-you-summary {
+    background: #173452;
+    color: #b9dbff;
+    border-color: #356a9f;
+}
+
+html[data-theme="dark"] .ranking-you-summary strong {
+    color: #75b6ff;
+}
+
+html[data-theme="dark"] .profile-avatar-placeholder {
+    background: #1d314b;
+    border-color: #365a82;
+}
+
+html[data-theme="dark"] .profile-detail-row,
+html[data-theme="dark"] .contact-email-note {
+    border-color: #2b405d;
+}
+
+html[data-theme="dark"] .secondary-button {
+    background: #24364d !important;
+    color: #b8d9ff !important;
+    border-color: #385677 !important;
+}
+
+html[data-theme="dark"] .survival-button {
+    background: linear-gradient(135deg, #291923, #172235);
+    color: #e8eef8;
+    border-color: #7b4050;
+}
+
+html[data-theme="dark"] .survival-text strong,
+html[data-theme="dark"] .survival-record {
+    color: #ff9caf;
+}
+
+html[data-theme="dark"] .survival-record {
+    background: #321c25;
+}
+
+html[data-theme="dark"] .back-button {
+    background: #24364d;
+    color: #b8d9ff;
+    border-color: #385677;
+}
+
+html[data-theme="dark"] .new-record-banner {
+    background: #362c12;
+    color: #ffd978;
+    border-color: #705a1c;
+}
+
+
+/* ---------- Mobile da nova versão ---------- */
+
+@media (max-width: 700px) {
+
+    .performance-feedback {
+        top: 78px;
+        max-width: calc(100vw - 28px);
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .profile-hero {
+        padding: 22px;
+        align-items: flex-start;
+    }
+
+    .profile-avatar-placeholder {
+        width: 70px;
+        height: 70px;
+        flex-basis: 70px;
+        font-size: 32px;
+    }
+
+    .profile-hero h2 {
+        font-size: 27px;
+    }
+
+    .profile-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .profile-detail-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .profile-detail-row strong {
+        text-align: left;
+    }
+
+    .profile-actions,
+    .profile-panel-actions {
+        flex-direction: column;
+    }
+
+    .profile-actions button,
+    .profile-panel-actions button {
+        width: 100%;
+    }
+
+    .profile-edit-panel,
+    .contact-card {
+        padding: 20px;
+    }
+
+    #contactSubmitButton {
+        width: 100%;
+    }
+
+    .ranking-you-summary {
+        flex-direction: column;
+        gap: 3px;
+        text-align: center;
+    }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .performance-feedback.feedback-show,
+    .score-pop,
+    .level-pop,
+    .new-record-banner {
+        animation: none !important;
+    }
+
+}
+
+
+html[data-theme="dark"] .strategy-group,
+html[data-theme="dark"] .strategy-example,
+html[data-theme="dark"] .study-card,
+html[data-theme="dark"] .ranking-item,
+html[data-theme="dark"] .numeric-key,
+html[data-theme="dark"] .about-subject,
+html[data-theme="dark"] .technology-list span,
+html[data-theme="dark"] .about-features div {
+    background: #172235;
+    color: #e8eef8;
+    border-color: #2b405d;
+}
+
+html[data-theme="dark"] .strategy-group summary small,
+html[data-theme="dark"] .strategy-answer {
+    color: #9fb0c6;
+}
+
+html[data-theme="dark"] .numeric-key:hover {
+    background: #22344c;
+}
+
+html[data-theme="dark"] .creator-avatar {
+    background: #2a3a50;
+    color: #dce9f8;
+}
