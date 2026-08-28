@@ -1162,9 +1162,14 @@
                 <div
                     id="profileAvatarSlot"
                     class="profile-avatar-placeholder"
-                    aria-label="Avatar do usuário"
                 >
-                    👤
+                    <img
+                        id="profileAvatarImage"
+                        src="avatars/01.webp"
+                        width="92"
+                        height="92"
+                        alt="Avatar do usuário"
+                    >
                 </div>
 
                 <div class="profile-hero-text">
@@ -1251,6 +1256,41 @@
                 >
                     ✉️ Adicionar/alterar e-mail
                 </button>
+
+                <button
+                    type="button"
+                    id="editAvatarButton"
+                    class="secondary-button"
+                >
+                    🖼️ Trocar foto de perfil
+                </button>
+
+            </div>
+
+
+            <div
+                id="editAvatarPanel"
+                class="profile-edit-panel hidden"
+            >
+
+                <h3>Escolher foto de perfil</h3>
+
+                <p>
+                    Selecione um avatar. Ele aparece no seu perfil e no ranking.
+                </p>
+
+                <div
+                    id="avatarGrid"
+                    class="avatar-grid"
+                    role="radiogroup"
+                    aria-label="Avatares disponíveis"
+                >
+                </div>
+
+                <p
+                    id="editAvatarMessage"
+                    class="profile-form-message"
+                ></p>
 
             </div>
 

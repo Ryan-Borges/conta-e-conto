@@ -216,6 +216,31 @@ function emailValido(
 }
 
 
+// Quantidade de avatares disponíveis em /avatars.
+// Ao adicionar novos arquivos, atualize também o
+// CHECK da coluna avatar_id e a constante do front.
+const TOTAL_AVATARES = 12;
+
+
+function avatarValido(
+    valor
+) {
+
+    const numero =
+        Number(valor);
+
+
+    return (
+        Number.isInteger(
+            numero
+        ) &&
+        numero >= 1 &&
+        numero <= TOTAL_AVATARES
+    );
+
+}
+
+
 function escaparHtml(
     valor
 ) {
@@ -483,6 +508,7 @@ app.get(
                         id,
                         username,
                         email,
+                        avatar_id,
                         data_cadastro
                      FROM usuarios
                      WHERE id = ?`,
@@ -1031,6 +1057,92 @@ app.put(
 
 
 // ==========================================
+// ALTERAR AVATAR
+// ==========================================
+
+app.put(
+    "/api/perfil/avatar",
+    autenticarToken,
+    async (req, res) => {
+
+        try {
+
+            const avatarId =
+                Number(
+                    req.body.avatarId
+                );
+
+
+            if (
+                !avatarValido(
+                    avatarId
+                )
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+                        message:
+                            "Avatar inválido."
+                    });
+
+            }
+
+
+            const [resultado] =
+                await pool.query(
+                    `UPDATE usuarios
+                        SET avatar_id = ?
+                      WHERE id = ?`,
+                    [
+                        avatarId,
+                        req.usuario.id
+                    ]
+                );
+
+
+            if (
+                resultado.affectedRows === 0
+            ) {
+
+                return res
+                    .status(404)
+                    .json({
+                        message:
+                            "Usuário não encontrado."
+                    });
+
+            }
+
+
+            res.json({
+                message:
+                    "Avatar atualizado com sucesso.",
+
+                avatar_id:
+                    avatarId
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            res
+                .status(500)
+                .json({
+                    message:
+                        "Erro interno do servidor."
+                });
+
+        }
+
+    }
+);
+
+
+// ==========================================
 // CADASTRAR USUÁRIO
 // ==========================================
 
@@ -1328,7 +1440,16 @@ app.post(
 
                         email:
                             usuario.email ||
-                            null
+                            null,
+
+                        avatar_id:
+                            avatarValido(
+                                usuario.avatar_id
+                            )
+                                ? Number(
+                                    usuario.avatar_id
+                                )
+                                : 1
                     }
                 });
 
@@ -2354,6 +2475,7 @@ app.get(
                     `SELECT
                         usuarios.id AS usuario_id,
                         usuarios.username,
+                        usuarios.avatar_id,
                         records.recorde
                      FROM records
                      INNER JOIN usuarios
@@ -2385,6 +2507,15 @@ app.get(
 
                             username:
                                 player.username,
+
+                            avatar_id:
+                                avatarValido(
+                                    player.avatar_id
+                                )
+                                    ? Number(
+                                        player.avatar_id
+                                    )
+                                    : 1,
 
                             recorde:
                                 Number(

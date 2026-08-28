@@ -365,6 +365,31 @@ const profilePortuguesePosition =
         "profilePortuguesePosition"
     );
 
+const profileAvatarImage =
+    document.getElementById(
+        "profileAvatarImage"
+    );
+
+const editAvatarButton =
+    document.getElementById(
+        "editAvatarButton"
+    );
+
+const editAvatarPanel =
+    document.getElementById(
+        "editAvatarPanel"
+    );
+
+const avatarGrid =
+    document.getElementById(
+        "avatarGrid"
+    );
+
+const editAvatarMessage =
+    document.getElementById(
+        "editAvatarMessage"
+    );
+
 const editUsernameButton =
     document.getElementById(
         "editUsernameButton"
@@ -1352,6 +1377,337 @@ function atualizarUsuarioSalvo(
 
 
     return novoUsuario;
+
+}
+
+
+// ======================================================
+// AVATARES
+// ======================================================
+
+// Deve corresponder a TOTAL_AVATARES no server.js
+// e ao CHECK da coluna usuarios.avatar_id.
+const TOTAL_AVATARES = 12;
+
+const AVATAR_PADRAO = 1;
+
+
+function normalizarAvatarId(
+    valor
+) {
+
+    const numero =
+        Number(valor);
+
+
+    if (
+        !Number.isInteger(
+            numero
+        ) ||
+        numero < 1 ||
+        numero > TOTAL_AVATARES
+    ) {
+
+        return AVATAR_PADRAO;
+
+    }
+
+
+    return numero;
+
+}
+
+
+function avatarUrl(
+    avatarId,
+    tamanho = "sm"
+) {
+
+    const id =
+        String(
+            normalizarAvatarId(
+                avatarId
+            )
+        ).padStart(2, "0");
+
+
+    return tamanho === "sm"
+        ? `avatars/sm/${id}.webp`
+        : `avatars/${id}.webp`;
+
+}
+
+
+function aplicarAvatarNoPerfil(
+    avatarId
+) {
+
+    if (!profileAvatarImage) {
+        return;
+    }
+
+
+    profileAvatarImage.src =
+        avatarUrl(
+            avatarId,
+            "lg"
+        );
+
+}
+
+
+function renderizarGradeAvatares(
+    avatarSelecionado
+) {
+
+    if (!avatarGrid) {
+        return;
+    }
+
+
+    const atual =
+        normalizarAvatarId(
+            avatarSelecionado
+        );
+
+
+    avatarGrid.replaceChildren();
+
+
+    for (
+        let id = 1;
+        id <= TOTAL_AVATARES;
+        id++
+    ) {
+
+        const botao =
+            document.createElement(
+                "button"
+            );
+
+        botao.type = "button";
+
+        botao.className =
+            "avatar-option";
+
+        botao.dataset.avatarId =
+            String(id);
+
+        botao.setAttribute(
+            "role",
+            "radio"
+        );
+
+        botao.setAttribute(
+            "aria-checked",
+            id === atual
+                ? "true"
+                : "false"
+        );
+
+        botao.setAttribute(
+            "aria-label",
+            `Avatar ${id}`
+        );
+
+
+        const imagem =
+            document.createElement(
+                "img"
+            );
+
+        imagem.src =
+            avatarUrl(id, "sm");
+
+        imagem.width = 72;
+        imagem.height = 72;
+        imagem.alt = "";
+
+        imagem.loading = "lazy";
+
+
+        botao.appendChild(
+            imagem
+        );
+
+        avatarGrid.appendChild(
+            botao
+        );
+
+    }
+
+}
+
+
+async function salvarAvatar(
+    avatarId
+) {
+
+    const token =
+        localStorage.getItem("token");
+
+
+    if (!token) {
+
+        definirMensagem(
+            editAvatarMessage,
+            "Você precisa estar logado.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const anterior =
+        normalizarAvatarId(
+            getUsuarioSalvo()
+                ?.avatar_id
+        );
+
+
+    const novo =
+        normalizarAvatarId(
+            avatarId
+        );
+
+
+    if (novo === anterior) {
+        return;
+    }
+
+
+    const botoes =
+        avatarGrid
+            ? Array.from(
+                avatarGrid.children
+            )
+            : [];
+
+
+    // Atualiza a interface antes da resposta
+    // e desfaz se a requisição falhar.
+    botoes.forEach(
+        botao => {
+
+            botao.disabled = true;
+
+            botao.setAttribute(
+                "aria-checked",
+                Number(
+                    botao.dataset.avatarId
+                ) === novo
+                    ? "true"
+                    : "false"
+            );
+
+        }
+    );
+
+    aplicarAvatarNoPerfil(novo);
+
+    definirMensagem(
+        editAvatarMessage,
+        "Salvando…"
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/perfil/avatar`,
+                {
+                    method:
+                        "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    },
+
+                    body:
+                        JSON.stringify({
+                            avatarId: novo
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Não foi possível salvar o avatar."
+            );
+
+        }
+
+
+        atualizarUsuarioSalvo({
+            avatar_id: novo
+        });
+
+
+        definirMensagem(
+            editAvatarMessage,
+            "Foto de perfil atualizada!",
+            "success"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Erro ao salvar avatar:",
+            error
+        );
+
+
+        aplicarAvatarNoPerfil(
+            anterior
+        );
+
+        renderizarGradeAvatares(
+            anterior
+        );
+
+
+        definirMensagem(
+            editAvatarMessage,
+            error.message ||
+            "Erro ao conectar com o servidor.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    finally {
+
+        if (avatarGrid) {
+
+            Array.from(
+                avatarGrid.children
+            ).forEach(
+                botao => {
+                    botao.disabled = false;
+                }
+            );
+
+        }
+
+    }
 
 }
 
@@ -4345,6 +4701,29 @@ async function carregarRanking(jogo) {
                         position;
 
 
+                const avatarElement =
+                    document.createElement(
+                        "img"
+                    );
+
+                avatarElement
+                    .className =
+                        "ranking-avatar";
+
+                avatarElement.src =
+                    avatarUrl(
+                        player.avatar_id,
+                        "sm"
+                    );
+
+                avatarElement.width = 44;
+                avatarElement.height = 44;
+                avatarElement.alt = "";
+
+                avatarElement.loading =
+                    "lazy";
+
+
                 const playerElement =
                     document.createElement(
                         "div"
@@ -4439,6 +4818,7 @@ async function carregarRanking(jogo) {
 
                 item.append(
                     positionElement,
+                    avatarElement,
                     playerElement,
                     score
                 );
@@ -4819,6 +5199,12 @@ async function showProfile(addToHistory = true) {
             data.usuario;
 
 
+        const avatarAtual =
+            normalizarAvatarId(
+                usuario.avatar_id
+            );
+
+
         atualizarUsuarioSalvo({
             id:
                 usuario.id,
@@ -4828,8 +5214,21 @@ async function showProfile(addToHistory = true) {
 
             email:
                 usuario.email ||
-                null
+                null,
+
+            avatar_id:
+                avatarAtual
         });
+
+
+        aplicarAvatarNoPerfil(
+            avatarAtual
+        );
+
+
+        renderizarGradeAvatares(
+            avatarAtual
+        );
 
 
         if (profileUsername) {
@@ -5028,6 +5427,73 @@ async function showProfile(addToHistory = true) {
 
 
 // ======================================================
+// TROCAR FOTO DE PERFIL
+// ======================================================
+
+if (editAvatarButton) {
+
+    editAvatarButton
+        .addEventListener(
+            "click",
+            () => {
+
+                editUsernamePanel
+                    ?.classList
+                    .add("hidden");
+
+                editEmailPanel
+                    ?.classList
+                    .add("hidden");
+
+                editAvatarPanel
+                    ?.classList
+                    .toggle("hidden");
+
+                definirMensagem(
+                    editAvatarMessage,
+                    ""
+                );
+
+            }
+        );
+
+}
+
+
+if (avatarGrid) {
+
+    avatarGrid
+        .addEventListener(
+            "click",
+            event => {
+
+                const botao =
+                    event.target
+                        .closest(
+                            ".avatar-option"
+                        );
+
+
+                if (
+                    !botao ||
+                    botao.disabled
+                ) {
+                    return;
+                }
+
+
+                salvarAvatar(
+                    botao.dataset
+                        .avatarId
+                );
+
+            }
+        );
+
+}
+
+
+// ======================================================
 // EDITAR NOME DO USUÁRIO
 // ======================================================
 
@@ -5039,6 +5505,10 @@ if (editUsernameButton) {
             () => {
 
                 editEmailPanel
+                    ?.classList
+                    .add("hidden");
+
+                editAvatarPanel
                     ?.classList
                     .add("hidden");
 
@@ -5309,6 +5779,10 @@ if (editEmailButton) {
             () => {
 
                 editUsernamePanel
+                    ?.classList
+                    .add("hidden");
+
+                editAvatarPanel
                     ?.classList
                     .add("hidden");
 
