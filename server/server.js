@@ -58,11 +58,59 @@ app.use(
 function criarLimitador({
     janelaMs,
     maximo,
-    mensagem
+    mensagem,
+
+    /*
+        Por padrão o limite é por IP. Rotas que protegem
+        uma conta específica passam uma função para incluir
+        o identificador na chave — senão um ataque
+        distribuído contra um único usuário passa livre.
+    */
+    obterChave = req =>
+        req.ip || "desconhecido"
 }) {
 
     const acessos =
         new Map();
+
+
+    /*
+        Sem esta limpeza o Map só cresce: entradas
+        expiradas nunca eram removidas, apenas
+        sobrescritas se o mesmo IP voltasse.
+    */
+    const limpeza =
+        setInterval(
+            () => {
+
+                const agora =
+                    Date.now();
+
+                for (
+                    const [chave, registro]
+                    of acessos
+                ) {
+
+                    if (
+                        agora >
+                        registro.expiraEm
+                    ) {
+
+                        acessos.delete(
+                            chave
+                        );
+
+                    }
+
+                }
+
+            },
+            janelaMs
+        );
+
+    // Não impede o processo de encerrar.
+    limpeza.unref?.();
+
 
     return (req, res, next) => {
 
@@ -70,7 +118,7 @@ function criarLimitador({
             Date.now();
 
         const chave =
-            req.ip || "desconhecido";
+            obterChave(req);
 
         const registro =
             acessos.get(chave);
@@ -122,7 +170,16 @@ const limitarLogin =
             15 * 60 * 1000,
         maximo: 15,
         mensagem:
-            "Muitas tentativas de login. Aguarde alguns minutos e tente novamente."
+            "Muitas tentativas de login. Aguarde alguns minutos e tente novamente.",
+
+        obterChave: req =>
+            `${req.ip || "desconhecido"}|${
+                String(
+                    req.body?.username || ""
+                )
+                    .trim()
+                    .toLowerCase()
+            }`
     });
 
 
@@ -153,6 +210,28 @@ const limitarContato =
         maximo: 5,
         mensagem:
             "Muitas mensagens enviadas. Tente novamente mais tarde."
+    });
+
+
+/*
+    As rotas de alteração de perfil são autenticadas,
+    mas continuavam sem limite de escrita. A chave usa o
+    id do usuário, já disponível pelo autenticarToken.
+*/
+const limitarPerfil =
+    criarLimitador({
+        janelaMs:
+            15 * 60 * 1000,
+        maximo: 30,
+        mensagem:
+            "Muitas alterações no perfil. Aguarde alguns minutos.",
+
+        obterChave: req =>
+            String(
+                req.usuario?.id ||
+                req.ip ||
+                "desconhecido"
+            )
     });
 
 
@@ -377,7 +456,7 @@ async function enviarEmail({
 // AUTENTICAÇÃO JWT
 // ==========================================
 
-function autenticarToken(
+async function autenticarToken(
     req,
     res,
     next
@@ -420,19 +499,16 @@ function autenticarToken(
     }
 
 
+    let usuario;
+
+
     try {
 
-        const usuario =
+        usuario =
             jwt.verify(
                 token,
                 process.env.JWT_SECRET
             );
-
-
-        req.usuario =
-            usuario;
-
-        next();
 
     }
 
@@ -446,6 +522,86 @@ function autenticarToken(
             });
 
     }
+
+
+    /*
+        Um token vale 7 dias. Sem esta verificação, quem
+        invadiu a conta continuaria dentro mesmo depois de
+        a vítima redefinir a senha.
+
+        UNIX_TIMESTAMP devolve segundos, na mesma base do
+        "iat" do JWT — comparar Date do MySQL com epoch em
+        JS traria problema de fuso.
+    */
+    try {
+
+        const [linhas] =
+            await pool.query(
+                `SELECT
+                    UNIX_TIMESTAMP(senha_alterada_em)
+                        AS senhaAlteradaEm
+                 FROM usuarios
+                 WHERE id = ?`,
+                [
+                    usuario.id
+                ]
+            );
+
+
+        if (linhas.length === 0) {
+
+            return res
+                .status(403)
+                .json({
+                    message:
+                        "Token inválido ou expirado."
+                });
+
+        }
+
+
+        const senhaAlteradaEm =
+            linhas[0].senhaAlteradaEm;
+
+
+        if (
+            senhaAlteradaEm &&
+            Number(usuario.iat) <
+            Number(senhaAlteradaEm)
+        ) {
+
+            return res
+                .status(403)
+                .json({
+                    message:
+                        "Sua senha foi alterada. Entre novamente."
+                });
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Erro ao validar token:",
+            error
+        );
+
+        return res
+            .status(500)
+            .json({
+                message:
+                    "Erro interno do servidor."
+            });
+
+    }
+
+
+    req.usuario =
+        usuario;
+
+    next();
 
 }
 
@@ -659,6 +815,7 @@ app.get(
 app.put(
     "/api/perfil/username",
     autenticarToken,
+    limitarPerfil,
     async (req, res) => {
 
         try {
@@ -889,6 +1046,7 @@ app.put(
 app.put(
     "/api/perfil/email",
     autenticarToken,
+    limitarPerfil,
     async (req, res) => {
 
         try {
@@ -1063,6 +1221,7 @@ app.put(
 app.put(
     "/api/perfil/avatar",
     autenticarToken,
+    limitarPerfil,
     async (req, res) => {
 
         try {
@@ -1804,7 +1963,8 @@ app.post(
 
                 await conexao.query(
                     `UPDATE usuarios
-                     SET senha = ?
+                     SET senha = ?,
+                         senha_alterada_em = NOW()
                      WHERE id = ?`,
                     [
                         senhaHash,
@@ -1997,7 +2157,12 @@ app.post(
                     email,
 
                 assunto:
-                    `[Conta & Conto] ${assunto}`,
+                    `[Conta & Conto] ${
+                        assunto.replace(
+                            /[\r\n]+/g,
+                            " "
+                        )
+                    }`,
 
                 html:
                     `
