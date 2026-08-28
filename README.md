@@ -232,24 +232,36 @@ conta-e-conto/
 ├── css/
 │   └── style.css
 │
-├── data/
+├── docs/
 │   └── portugues.json
 │
 ├── js/
 │   └── script.js
 │
 ├── server/
+│   ├── migrations/
+│   │   └── 001_senha_alterada_em.sql
 │   ├── database.js
+│   ├── migrate.js
+│   ├── schema.sql
 │   ├── server.js
 │   ├── package.json
 │   └── package-lock.json
 │
+├── avatars/
+│   ├── 01.webp … 12.webp
+│   └── sm/
+│       └── 01.webp … 12.webp
+│
 ├── index.html
+├── vercel.json
 ├── .gitignore
 └── README.md
 ```
 
-O arquivo `portugues.json` é mantido como referência e backup, enquanto as questões utilizadas pela versão atual são obtidas através do banco de dados MySQL.
+O arquivo `docs/portugues.json` é mantido como referência e backup, enquanto as questões utilizadas pela versão atual são obtidas através do banco de dados MySQL.
+
+A estrutura das tabelas fica em `server/schema.sql`.
 
 ---
 
@@ -314,10 +326,41 @@ DB_PORT=
 JWT_SECRET=
 ```
 
+Variáveis opcionais (recuperação de senha e formulário de contato):
+
+```env
+BREVO_API_KEY=
+EMAIL_FROM=
+CONTACT_EMAIL=
+FRONTEND_URL=
+RESET_TOKEN_MINUTES=30
+```
+
+Prepare o banco.
+
+Banco novo (cria todas as tabelas):
+
+```bash
+mysql -h HOST -P PORTA -u USUARIO -p NOME_DO_BANCO < schema.sql
+```
+
+Banco que já existe (aplica só o que falta, usando o
+`.env` — não precisa do cliente `mysql` instalado):
+
+```bash
+npm run migrate
+```
+
+Para ver o que está pendente sem aplicar nada:
+
+```bash
+npm run migrate:lista
+```
+
 Depois execute o backend:
 
 ```bash
-node server.js
+npm start
 ```
 
 Por padrão, o backend ficará disponível localmente em:
@@ -327,6 +370,26 @@ http://localhost:3000
 ```
 
 O frontend pode ser executado utilizando uma extensão como **Live Server** no Visual Studio Code.
+
+Use a porta **5500** — é a que está liberada no CORS do backend.
+
+Quando o site é aberto por `localhost` ou `127.0.0.1`, o frontend
+aponta sozinho para o backend local (`http://localhost:3000`).
+Em qualquer outro endereço usa a API publicada, sem precisar
+alterar código.
+
+Para usar a API de produção mesmo rodando local, execute no
+console do navegador:
+
+```js
+localStorage.setItem("apiUrl", "https://conta-e-conto-api.onrender.com")
+```
+
+Para voltar ao padrão:
+
+```js
+localStorage.removeItem("apiUrl")
+```
 
 ---
 
