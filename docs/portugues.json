@@ -1,569 +1,2844 @@
 [
-    {
-        "id": 1,
-        "nivel": 1,
-        "frase": "A menina comprou um livro novo.",
-        "palavra": "menina",
-        "classe": "Substantivo",
-        "alternativas": [
-            "Substantivo",
-            "Verbo",
-            "Adjetivo",
-            "Advérbio"
-        ],
-        "explicacao": "Menina é um substantivo porque nomeia uma pessoa."
-    },
-    {
-        "id": 2,
-        "nivel": 1,
-        "frase": "O cachorro correu pelo parque.",
-        "palavra": "correu",
-        "classe": "Verbo",
-        "alternativas": [
-            "Substantivo",
-            "Verbo",
-            "Adjetivo",
-            "Pronome"
-        ],
-        "explicacao": "Correu é um verbo porque indica uma ação realizada pelo cachorro."
-    },
-    {
-        "id": 3,
-        "nivel": 1,
-        "frase": "A casa bonita fica perto da escola.",
-        "palavra": "bonita",
-        "classe": "Adjetivo",
-        "alternativas": [
-            "Advérbio",
-            "Verbo",
-            "Adjetivo",
-            "Substantivo"
-        ],
-        "explicacao": "Bonita é um adjetivo porque caracteriza o substantivo casa."
-    },
-    {
-        "id": 4,
-        "nivel": 1,
-        "frase": "Ele chegou rapidamente à escola.",
-        "palavra": "rapidamente",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Substantivo",
-            "Adjetivo",
-            "Advérbio",
-            "Verbo"
-        ],
-        "explicacao": "Rapidamente é um advérbio porque modifica o verbo chegou, indicando o modo da ação."
-    },
-    {
-        "id": 5,
-        "nivel": 1,
-        "frase": "Nós estudamos para a prova.",
-        "palavra": "Nós",
-        "classe": "Pronome",
-        "alternativas": [
-            "Pronome",
-            "Substantivo",
-            "Preposição",
-            "Verbo"
-        ],
-        "explicacao": "Nós é um pronome pessoal que representa as pessoas que estão falando."
-    },
-
-    {
-        "id": 6,
-        "nivel": 2,
-        "frase": "Os estudantes chegaram cedo.",
-        "palavra": "Os",
-        "classe": "Artigo",
-        "alternativas": [
-            "Pronome",
-            "Artigo",
-            "Adjetivo",
-            "Advérbio"
-        ],
-        "explicacao": "Os é um artigo definido que acompanha e determina o substantivo estudantes."
-    },
-    {
-        "id": 7,
-        "nivel": 2,
-        "frase": "Pedro comprou três cadernos.",
-        "palavra": "três",
-        "classe": "Numeral",
-        "alternativas": [
-            "Artigo",
-            "Numeral",
-            "Pronome",
-            "Substantivo"
-        ],
-        "explicacao": "Três é um numeral porque indica a quantidade de cadernos."
-    },
-    {
-        "id": 8,
-        "nivel": 2,
-        "frase": "Este livro pertence a João.",
-        "palavra": "Este",
-        "classe": "Pronome",
-        "alternativas": [
-            "Artigo",
-            "Adjetivo",
-            "Pronome",
-            "Verbo"
-        ],
-        "explicacao": "Este é um pronome demonstrativo, pois indica a posição do livro em relação aos participantes da comunicação."
-    },
-    {
-        "id": 9,
-        "nivel": 2,
-        "frase": "Estudei muito para a prova.",
-        "palavra": "para",
-        "classe": "Preposição",
-        "alternativas": [
-            "Conjunção",
-            "Preposição",
-            "Advérbio",
-            "Pronome"
-        ],
-        "explicacao": "Para é uma preposição porque estabelece uma relação entre os termos da oração."
-    },
-    {
-        "id": 10,
-        "nivel": 2,
-        "frase": "Maria estudou e conseguiu uma boa nota.",
-        "palavra": "e",
-        "classe": "Conjunção",
-        "alternativas": [
-            "Preposição",
-            "Pronome",
-            "Conjunção",
-            "Artigo"
-        ],
-        "explicacao": "E é uma conjunção porque liga duas ideias ou orações."
-    },
-
-    {
-        "id": 11,
-        "nivel": 3,
-        "frase": "Comprei uma mochila nova.",
-        "palavra": "uma",
-        "classe": "Artigo",
-        "alternativas": [
-            "Numeral",
-            "Artigo",
-            "Pronome",
-            "Adjetivo"
-        ],
-        "explicacao": "Uma é um artigo indefinido que acompanha o substantivo mochila."
-    },
-    {
-        "id": 12,
-        "nivel": 3,
-        "frase": "Apenas dois alunos faltaram.",
-        "palavra": "dois",
-        "classe": "Numeral",
-        "alternativas": [
-            "Adjetivo",
-            "Numeral",
-            "Artigo",
-            "Pronome"
-        ],
-        "explicacao": "Dois é um numeral cardinal porque indica uma quantidade."
-    },
-    {
-        "id": 13,
-        "nivel": 3,
-        "frase": "Uau! Que apresentação incrível!",
-        "palavra": "Uau",
-        "classe": "Interjeição",
-        "alternativas": [
-            "Advérbio",
-            "Interjeição",
-            "Substantivo",
-            "Conjunção"
-        ],
-        "explicacao": "Uau é uma interjeição usada para expressar surpresa ou admiração."
-    },
-    {
-        "id": 14,
-        "nivel": 3,
-        "frase": "Talvez ele chegue amanhã.",
-        "palavra": "Talvez",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Adjetivo",
-            "Advérbio",
-            "Pronome",
-            "Verbo"
-        ],
-        "explicacao": "Talvez é um advérbio que indica dúvida ou possibilidade."
-    },
-    {
-        "id": 15,
-        "nivel": 3,
-        "frase": "Ela gosta de música brasileira.",
-        "palavra": "de",
-        "classe": "Preposição",
-        "alternativas": [
-            "Conjunção",
-            "Artigo",
-            "Preposição",
-            "Pronome"
-        ],
-        "explicacao": "De é uma preposição que estabelece uma relação entre os termos da oração."
-    },
-
-    {
-        "id": 16,
-        "nivel": 4,
-        "frase": "O aluno inteligente resolveu a questão.",
-        "palavra": "inteligente",
-        "classe": "Adjetivo",
-        "alternativas": [
-            "Substantivo",
-            "Adjetivo",
-            "Advérbio",
-            "Verbo"
-        ],
-        "explicacao": "Inteligente é um adjetivo porque caracteriza o substantivo aluno."
-    },
-    {
-        "id": 17,
-        "nivel": 4,
-        "frase": "Eles chegaram muito cansados.",
-        "palavra": "muito",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Adjetivo",
-            "Numeral",
-            "Advérbio",
-            "Pronome"
-        ],
-        "explicacao": "Muito é um advérbio de intensidade porque intensifica a característica expressa por cansados."
-    },
-    {
-        "id": 18,
-        "nivel": 4,
-        "frase": "João saiu porque estava atrasado.",
-        "palavra": "porque",
-        "classe": "Conjunção",
-        "alternativas": [
-            "Preposição",
-            "Conjunção",
-            "Advérbio",
-            "Pronome"
-        ],
-        "explicacao": "Porque é uma conjunção que estabelece uma relação de causa entre as orações."
-    },
-    {
-        "id": 19,
-        "nivel": 4,
-        "frase": "Aqueles alunos estudaram bastante.",
-        "palavra": "Aqueles",
-        "classe": "Pronome",
-        "alternativas": [
-            "Artigo",
-            "Adjetivo",
-            "Pronome",
-            "Numeral"
-        ],
-        "explicacao": "Aqueles é um pronome demonstrativo, usado para indicar pessoas ou coisas."
-    },
-    {
-        "id": 20,
-        "nivel": 4,
-        "frase": "O professor explicou a matéria claramente.",
-        "palavra": "claramente",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Adjetivo",
-            "Substantivo",
-            "Advérbio",
-            "Verbo"
-        ],
-        "explicacao": "Claramente é um advérbio de modo porque indica como o professor explicou a matéria."
-    },
-
-    {
-        "id": 21,
-        "nivel": 5,
-        "frase": "Meu irmão comprou um computador.",
-        "palavra": "Meu",
-        "classe": "Pronome",
-        "alternativas": [
-            "Artigo",
-            "Pronome",
-            "Adjetivo",
-            "Numeral"
-        ],
-        "explicacao": "Meu é um pronome possessivo porque indica uma relação de posse."
-    },
-    {
-        "id": 22,
-        "nivel": 5,
-        "frase": "Nenhum aluno faltou hoje.",
-        "palavra": "Nenhum",
-        "classe": "Pronome",
-        "alternativas": [
-            "Pronome",
-            "Artigo",
-            "Numeral",
-            "Advérbio"
-        ],
-        "explicacao": "Nenhum é um pronome indefinido porque se refere a pessoas de maneira imprecisa."
-    },
-    {
-        "id": 23,
-        "nivel": 5,
-        "frase": "Ela estudou, mas não fez a atividade.",
-        "palavra": "mas",
-        "classe": "Conjunção",
-        "alternativas": [
-            "Preposição",
-            "Conjunção",
-            "Advérbio",
-            "Pronome"
-        ],
-        "explicacao": "Mas é uma conjunção coordenativa adversativa, pois estabelece uma ideia de oposição."
-    },
-    {
-        "id": 24,
-        "nivel": 5,
-        "frase": "A prova estava bastante difícil.",
-        "palavra": "bastante",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Adjetivo",
-            "Advérbio",
-            "Substantivo",
-            "Artigo"
-        ],
-        "explicacao": "Bastante funciona como advérbio de intensidade, intensificando o adjetivo difícil."
-    },
-    {
-        "id": 25,
-        "nivel": 5,
-        "frase": "Segundo a professora, a prova será amanhã.",
-        "palavra": "Segundo",
-        "classe": "Preposição",
-        "alternativas": [
-            "Numeral",
-            "Adjetivo",
-            "Preposição",
-            "Pronome"
-        ],
-        "explicacao": "Segundo funciona como preposição quando introduz a informação atribuída à professora."
-    },
-
-    {
-        "id": 26,
-        "nivel": 6,
-        "frase": "Todos participaram da atividade.",
-        "palavra": "Todos",
-        "classe": "Pronome",
-        "alternativas": [
-            "Pronome",
-            "Artigo",
-            "Numeral",
-            "Substantivo"
-        ],
-        "explicacao": "Todos é um pronome indefinido porque se refere de maneira abrangente às pessoas mencionadas."
-    },
-    {
-        "id": 27,
-        "nivel": 6,
-        "frase": "O aluno respondeu corretamente.",
-        "palavra": "corretamente",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Adjetivo",
-            "Advérbio",
-            "Verbo",
-            "Substantivo"
-        ],
-        "explicacao": "Corretamente é um advérbio de modo porque indica como o aluno respondeu."
-    },
-    {
-        "id": 28,
-        "nivel": 6,
-        "frase": "Embora estivesse cansado, continuou estudando.",
-        "palavra": "Embora",
-        "classe": "Conjunção",
-        "alternativas": [
-            "Preposição",
-            "Conjunção",
-            "Advérbio",
-            "Pronome"
-        ],
-        "explicacao": "Embora é uma conjunção subordinativa concessiva, pois introduz uma ideia de concessão."
-    },
-    {
-        "id": 29,
-        "nivel": 6,
-        "frase": "A primeira questão era simples.",
-        "palavra": "primeira",
-        "classe": "Numeral",
-        "alternativas": [
-            "Adjetivo",
-            "Numeral",
-            "Pronome",
-            "Artigo"
-        ],
-        "explicacao": "Primeira é um numeral ordinal porque indica a posição da questão."
-    },
-    {
-        "id": 30,
-        "nivel": 6,
-        "frase": "Ele mesmo resolveu o problema.",
-        "palavra": "mesmo",
-        "classe": "Pronome",
-        "alternativas": [
-            "Pronome",
-            "Advérbio",
-            "Adjetivo",
-            "Conjunção"
-        ],
-        "explicacao": "Mesmo funciona como pronome porque retoma e reforça o referente ele."
-    },
-
-    {
-        "id": 31,
-        "nivel": 7,
-        "frase": "Ninguém conseguiu responder à questão.",
-        "palavra": "Ninguém",
-        "classe": "Pronome",
-        "alternativas": [
-            "Substantivo",
-            "Pronome",
-            "Artigo",
-            "Advérbio"
-        ],
-        "explicacao": "Ninguém é um pronome indefinido que se refere a uma pessoa de forma indeterminada."
-    },
-    {
-        "id": 32,
-        "nivel": 7,
-        "frase": "Ele estudou bastante, portanto conseguiu um bom resultado.",
-        "palavra": "portanto",
-        "classe": "Conjunção",
-        "alternativas": [
-            "Preposição",
-            "Pronome",
-            "Conjunção",
-            "Advérbio"
-        ],
-        "explicacao": "Portanto é uma conjunção coordenativa conclusiva, pois introduz uma conclusão."
-    },
-    {
-        "id": 33,
-        "nivel": 7,
-        "frase": "A escola fica onde termina a avenida.",
-        "palavra": "onde",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Pronome",
-            "Advérbio",
-            "Conjunção",
-            "Preposição"
-        ],
-        "explicacao": "Onde é um advérbio de lugar, indicando o local em que algo acontece."
-    },
-    {
-        "id": 34,
-        "nivel": 7,
-        "frase": "Que ótimo! Você conseguiu resolver.",
-        "palavra": "ótimo",
-        "classe": "Adjetivo",
-        "alternativas": [
-            "Substantivo",
-            "Adjetivo",
-            "Advérbio",
-            "Interjeição"
-        ],
-        "explicacao": "Ótimo é um adjetivo porque atribui uma característica a algo."
-    },
-    {
-        "id": 35,
-        "nivel": 7,
-        "frase": "Tal aluno apresentou o trabalho.",
-        "palavra": "Tal",
-        "classe": "Pronome",
-        "alternativas": [
-            "Artigo",
-            "Pronome",
-            "Adjetivo",
-            "Numeral"
-        ],
-        "explicacao": "Tal pode funcionar como pronome demonstrativo quando retoma ou indica determinado ser."
-    },
-
-    {
-        "id": 36,
-        "nivel": 8,
-        "frase": "Apenas os melhores alunos participaram da competição.",
-        "palavra": "Apenas",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Adjetivo",
-            "Advérbio",
-            "Pronome",
-            "Conjunção"
-        ],
-        "explicacao": "Apenas é um advérbio que indica exclusão ou restrição."
-    },
-    {
-        "id": 37,
-        "nivel": 8,
-        "frase": "Conforme combinamos, entregarei o trabalho amanhã.",
-        "palavra": "Conforme",
-        "classe": "Conjunção",
-        "alternativas": [
-            "Pronome",
-            "Preposição",
-            "Conjunção",
-            "Advérbio"
-        ],
-        "explicacao": "Conforme funciona como conjunção ao introduzir uma oração que estabelece conformidade."
-    },
-    {
-        "id": 38,
-        "nivel": 8,
-        "frase": "O próprio estudante corrigiu o exercício.",
-        "palavra": "próprio",
-        "classe": "Pronome",
-        "alternativas": [
-            "Adjetivo",
-            "Pronome",
-            "Advérbio",
-            "Artigo"
-        ],
-        "explicacao": "Próprio pode funcionar como pronome de reforço, destacando o próprio referente."
-    },
-    {
-        "id": 39,
-        "nivel": 8,
-        "frase": "Quase todos terminaram a prova.",
-        "palavra": "Quase",
-        "classe": "Advérbio",
-        "alternativas": [
-            "Pronome",
-            "Adjetivo",
-            "Advérbio",
-            "Numeral"
-        ],
-        "explicacao": "Quase é um advérbio que indica proximidade ou quantidade aproximada."
-    },
-    {
-        "id": 40,
-        "nivel": 8,
-        "frase": "Ah! Finalmente terminamos o projeto.",
-        "palavra": "Ah",
-        "classe": "Interjeição",
-        "alternativas": [
-            "Advérbio",
-            "Interjeição",
-            "Conjunção",
-            "Pronome"
-        ],
-        "explicacao": "Ah é uma interjeição que pode expressar emoção, alívio ou surpresa dependendo do contexto."
-    }
+  {
+    "id": 1,
+    "nivel": 1,
+    "frase": "A menina comprou um livro novo.",
+    "palavra": "menina",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Verbo",
+      "Adjetivo",
+      "Advérbio"
+    ],
+    "explicacao": "Menina é um substantivo porque nomeia uma pessoa."
+  },
+  {
+    "id": 2,
+    "nivel": 1,
+    "frase": "O cachorro correu pelo parque.",
+    "palavra": "correu",
+    "classe": "Verbo",
+    "alternativas": [
+      "Substantivo",
+      "Verbo",
+      "Adjetivo",
+      "Pronome"
+    ],
+    "explicacao": "Correu é um verbo porque indica uma ação realizada pelo cachorro."
+  },
+  {
+    "id": 3,
+    "nivel": 1,
+    "frase": "A casa bonita fica perto da escola.",
+    "palavra": "bonita",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Advérbio",
+      "Verbo",
+      "Adjetivo",
+      "Substantivo"
+    ],
+    "explicacao": "Bonita é um adjetivo porque caracteriza o substantivo casa."
+  },
+  {
+    "id": 4,
+    "nivel": 1,
+    "frase": "Ele chegou rapidamente à escola.",
+    "palavra": "rapidamente",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Advérbio",
+      "Verbo"
+    ],
+    "explicacao": "Rapidamente é um advérbio porque modifica o verbo chegou, indicando o modo da ação."
+  },
+  {
+    "id": 5,
+    "nivel": 1,
+    "frase": "Nós estudamos para a prova.",
+    "palavra": "Nós",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Substantivo",
+      "Preposição",
+      "Verbo"
+    ],
+    "explicacao": "Nós é um pronome pessoal que representa as pessoas que estão falando."
+  },
+  {
+    "id": 41,
+    "nivel": 1,
+    "frase": "A criança brincou no jardim.",
+    "palavra": "criança",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Verbo",
+      "Advérbio"
+    ],
+    "explicacao": "\"Criança\" é um substantivo porque nomeia um ser."
+  },
+  {
+    "id": 42,
+    "nivel": 1,
+    "frase": "O cachorro correu pela rua.",
+    "palavra": "correu",
+    "classe": "Verbo",
+    "alternativas": [
+      "Substantivo",
+      "Verbo",
+      "Adjetivo",
+      "Artigo"
+    ],
+    "explicacao": "\"Correu\" é um verbo porque expressa uma ação realizada pelo cachorro."
+  },
+  {
+    "id": 43,
+    "nivel": 1,
+    "frase": "A menina alegre cantava.",
+    "palavra": "alegre",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Adjetivo",
+      "Substantivo",
+      "Verbo",
+      "Pronome"
+    ],
+    "explicacao": "\"Alegre\" é um adjetivo porque caracteriza o substantivo \"menina\"."
+  },
+  {
+    "id": 44,
+    "nivel": 1,
+    "frase": "O aluno abriu o caderno.",
+    "palavra": "O",
+    "classe": "Artigo",
+    "alternativas": [
+      "Artigo",
+      "Pronome",
+      "Preposição",
+      "Numeral"
+    ],
+    "explicacao": "\"O\" é um artigo definido que acompanha o substantivo \"aluno\"."
+  },
+  {
+    "id": 45,
+    "nivel": 1,
+    "frase": "Ela chegou cedo à escola.",
+    "palavra": "Ela",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Substantivo",
+      "Artigo",
+      "Advérbio"
+    ],
+    "explicacao": "\"Ela\" é um pronome pessoal utilizado para representar uma pessoa sem repetir seu nome."
+  },
+  {
+    "id": 81,
+    "nivel": 1,
+    "frase": "O cachorro dormiu no sofá.",
+    "palavra": "cachorro",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Verbo",
+      "Adjetivo",
+      "Advérbio"
+    ],
+    "explicacao": "Cachorro é um substantivo porque nomeia um animal."
+  },
+  {
+    "id": 82,
+    "nivel": 1,
+    "frase": "As crianças brincaram no parque.",
+    "palavra": "brincaram",
+    "classe": "Verbo",
+    "alternativas": [
+      "Substantivo",
+      "Verbo",
+      "Adjetivo",
+      "Artigo"
+    ],
+    "explicacao": "Brincaram é um verbo porque indica uma ação praticada pelas crianças."
+  },
+  {
+    "id": 83,
+    "nivel": 1,
+    "frase": "A casa amarela fica na esquina.",
+    "palavra": "amarela",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Verbo",
+      "Advérbio"
+    ],
+    "explicacao": "Amarela é um adjetivo porque atribui uma característica ao substantivo casa."
+  },
+  {
+    "id": 84,
+    "nivel": 1,
+    "frase": "Meu irmão comprou uma bicicleta.",
+    "palavra": "bicicleta",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Verbo",
+      "Substantivo",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "Bicicleta é um substantivo porque nomeia um objeto."
+  },
+  {
+    "id": 85,
+    "nivel": 1,
+    "frase": "O professor explicou a matéria.",
+    "palavra": "explicou",
+    "classe": "Verbo",
+    "alternativas": [
+      "Verbo",
+      "Substantivo",
+      "Advérbio",
+      "Adjetivo"
+    ],
+    "explicacao": "Explicou é um verbo porque expressa a ação realizada pelo professor."
+  },
+  {
+    "id": 86,
+    "nivel": 1,
+    "frase": "A sopa estava quente.",
+    "palavra": "quente",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Advérbio",
+      "Adjetivo",
+      "Substantivo",
+      "Verbo"
+    ],
+    "explicacao": "Quente é um adjetivo porque indica uma qualidade da sopa."
+  },
+  {
+    "id": 87,
+    "nivel": 1,
+    "frase": "Os pássaros voaram sobre o lago.",
+    "palavra": "pássaros",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Verbo",
+      "Preposição"
+    ],
+    "explicacao": "Pássaros é um substantivo porque nomeia seres."
+  },
+  {
+    "id": 88,
+    "nivel": 1,
+    "frase": "Ela cantou uma música bonita.",
+    "palavra": "cantou",
+    "classe": "Verbo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Verbo",
+      "Artigo"
+    ],
+    "explicacao": "Cantou é um verbo porque indica a ação praticada por ela."
+  },
+  {
+    "id": 89,
+    "nivel": 1,
+    "frase": "O menino corajoso enfrentou o medo.",
+    "palavra": "corajoso",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Adjetivo",
+      "Substantivo",
+      "Verbo",
+      "Advérbio"
+    ],
+    "explicacao": "Corajoso é um adjetivo porque caracteriza o substantivo menino."
+  },
+  {
+    "id": 90,
+    "nivel": 1,
+    "frase": "A chuva molhou as plantas.",
+    "palavra": "chuva",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Verbo",
+      "Substantivo",
+      "Advérbio",
+      "Adjetivo"
+    ],
+    "explicacao": "Chuva é um substantivo porque nomeia um fenômeno da natureza."
+  },
+  {
+    "id": 91,
+    "nivel": 1,
+    "frase": "Nós estudamos todos os dias.",
+    "palavra": "estudamos",
+    "classe": "Verbo",
+    "alternativas": [
+      "Pronome",
+      "Verbo",
+      "Substantivo",
+      "Advérbio"
+    ],
+    "explicacao": "Estudamos é um verbo porque indica a ação praticada por nós."
+  },
+  {
+    "id": 92,
+    "nivel": 1,
+    "frase": "O carro novo custou caro.",
+    "palavra": "novo",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Substantivo",
+      "Advérbio",
+      "Adjetivo",
+      "Verbo"
+    ],
+    "explicacao": "Novo é um adjetivo porque atribui uma característica ao substantivo carro."
+  },
+  {
+    "id": 6,
+    "nivel": 2,
+    "frase": "Os estudantes chegaram cedo.",
+    "palavra": "Os",
+    "classe": "Artigo",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Adjetivo",
+      "Advérbio"
+    ],
+    "explicacao": "Os é um artigo definido que acompanha e determina o substantivo estudantes."
+  },
+  {
+    "id": 7,
+    "nivel": 2,
+    "frase": "Pedro comprou três cadernos.",
+    "palavra": "três",
+    "classe": "Numeral",
+    "alternativas": [
+      "Artigo",
+      "Numeral",
+      "Pronome",
+      "Substantivo"
+    ],
+    "explicacao": "Três é um numeral porque indica a quantidade de cadernos."
+  },
+  {
+    "id": 8,
+    "nivel": 2,
+    "frase": "Este livro pertence a João.",
+    "palavra": "Este",
+    "classe": "Pronome",
+    "alternativas": [
+      "Artigo",
+      "Adjetivo",
+      "Pronome",
+      "Verbo"
+    ],
+    "explicacao": "Este é um pronome demonstrativo, pois indica a posição do livro em relação aos participantes da comunicação."
+  },
+  {
+    "id": 9,
+    "nivel": 2,
+    "frase": "Estudei muito para a prova.",
+    "palavra": "para",
+    "classe": "Preposição",
+    "alternativas": [
+      "Conjunção",
+      "Preposição",
+      "Advérbio",
+      "Pronome"
+    ],
+    "explicacao": "Para é uma preposição porque estabelece uma relação entre os termos da oração."
+  },
+  {
+    "id": 10,
+    "nivel": 2,
+    "frase": "Maria estudou e conseguiu uma boa nota.",
+    "palavra": "e",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Preposição",
+      "Pronome",
+      "Conjunção",
+      "Artigo"
+    ],
+    "explicacao": "E é uma conjunção porque liga duas ideias ou orações."
+  },
+  {
+    "id": 46,
+    "nivel": 2,
+    "frase": "Pedro respondeu rapidamente à pergunta.",
+    "palavra": "rapidamente",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Adjetivo",
+      "Verbo",
+      "Substantivo"
+    ],
+    "explicacao": "\"Rapidamente\" é um advérbio de modo porque indica como Pedro respondeu."
+  },
+  {
+    "id": 47,
+    "nivel": 2,
+    "frase": "Comprei dois livros ontem.",
+    "palavra": "dois",
+    "classe": "Numeral",
+    "alternativas": [
+      "Numeral",
+      "Artigo",
+      "Pronome",
+      "Adjetivo"
+    ],
+    "explicacao": "\"Dois\" é um numeral porque indica uma quantidade exata de livros."
+  },
+  {
+    "id": 48,
+    "nivel": 2,
+    "frase": "O presente é para Maria.",
+    "palavra": "para",
+    "classe": "Preposição",
+    "alternativas": [
+      "Preposição",
+      "Conjunção",
+      "Advérbio",
+      "Pronome"
+    ],
+    "explicacao": "\"Para\" é uma preposição porque estabelece uma relação entre os termos da frase."
+  },
+  {
+    "id": 49,
+    "nivel": 2,
+    "frase": "Estudei bastante, mas ainda estou nervoso.",
+    "palavra": "mas",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Preposição",
+      "Advérbio",
+      "Interjeição"
+    ],
+    "explicacao": "\"Mas\" é uma conjunção porque liga duas orações estabelecendo uma ideia de oposição."
+  },
+  {
+    "id": 50,
+    "nivel": 2,
+    "frase": "Uau! Esse desenho ficou incrível.",
+    "palavra": "Uau",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Interjeição",
+      "Advérbio",
+      "Adjetivo",
+      "Conjunção"
+    ],
+    "explicacao": "\"Uau\" é uma interjeição porque expressa admiração."
+  },
+  {
+    "id": 93,
+    "nivel": 2,
+    "frase": "Os alunos entregaram o trabalho.",
+    "palavra": "Os",
+    "classe": "Artigo",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Numeral",
+      "Preposição"
+    ],
+    "explicacao": "Os é um artigo definido que determina o substantivo alunos."
+  },
+  {
+    "id": 94,
+    "nivel": 2,
+    "frase": "Comprei três cadernos na papelaria.",
+    "palavra": "três",
+    "classe": "Numeral",
+    "alternativas": [
+      "Numeral",
+      "Adjetivo",
+      "Artigo",
+      "Substantivo"
+    ],
+    "explicacao": "Três é um numeral cardinal porque indica uma quantidade exata."
+  },
+  {
+    "id": 95,
+    "nivel": 2,
+    "frase": "Uma menina esperava na fila.",
+    "palavra": "Uma",
+    "classe": "Artigo",
+    "alternativas": [
+      "Numeral",
+      "Artigo",
+      "Pronome",
+      "Adjetivo"
+    ],
+    "explicacao": "Uma é um artigo indefinido porque apresenta o substantivo menina sem identificá-la."
+  },
+  {
+    "id": 96,
+    "nivel": 2,
+    "frase": "O primeiro colocado recebeu o troféu.",
+    "palavra": "primeiro",
+    "classe": "Numeral",
+    "alternativas": [
+      "Adjetivo",
+      "Numeral",
+      "Substantivo",
+      "Advérbio"
+    ],
+    "explicacao": "Primeiro é um numeral ordinal porque indica posição em uma sequência."
+  },
+  {
+    "id": 97,
+    "nivel": 2,
+    "frase": "A professora chegou cedo.",
+    "palavra": "A",
+    "classe": "Artigo",
+    "alternativas": [
+      "Artigo",
+      "Preposição",
+      "Pronome",
+      "Advérbio"
+    ],
+    "explicacao": "A é um artigo definido que determina o substantivo professora."
+  },
+  {
+    "id": 98,
+    "nivel": 2,
+    "frase": "Ele leu dois livros nas férias.",
+    "palavra": "dois",
+    "classe": "Numeral",
+    "alternativas": [
+      "Artigo",
+      "Numeral",
+      "Pronome",
+      "Adjetivo"
+    ],
+    "explicacao": "Dois é um numeral cardinal porque indica quantidade."
+  },
+  {
+    "id": 99,
+    "nivel": 2,
+    "frase": "Um cachorro latiu a noite inteira.",
+    "palavra": "Um",
+    "classe": "Artigo",
+    "alternativas": [
+      "Artigo",
+      "Numeral",
+      "Pronome",
+      "Substantivo"
+    ],
+    "explicacao": "Um é um artigo indefinido porque apresenta o substantivo cachorro de forma imprecisa."
+  },
+  {
+    "id": 100,
+    "nivel": 2,
+    "frase": "As portas estavam abertas.",
+    "palavra": "As",
+    "classe": "Artigo",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Advérbio",
+      "Numeral"
+    ],
+    "explicacao": "As é um artigo definido que determina o substantivo portas."
+  },
+  {
+    "id": 101,
+    "nivel": 2,
+    "frase": "Ela ficou em segundo lugar na prova.",
+    "palavra": "segundo",
+    "classe": "Numeral",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Numeral",
+      "Preposição"
+    ],
+    "explicacao": "Segundo é um numeral ordinal porque indica a posição alcançada."
+  },
+  {
+    "id": 102,
+    "nivel": 2,
+    "frase": "Vi o filme ontem à noite.",
+    "palavra": "o",
+    "classe": "Artigo",
+    "alternativas": [
+      "Artigo",
+      "Pronome",
+      "Preposição",
+      "Numeral"
+    ],
+    "explicacao": "O é um artigo definido que determina o substantivo filme."
+  },
+  {
+    "id": 103,
+    "nivel": 2,
+    "frase": "Havia cem pessoas no auditório.",
+    "palavra": "cem",
+    "classe": "Numeral",
+    "alternativas": [
+      "Numeral",
+      "Substantivo",
+      "Advérbio",
+      "Artigo"
+    ],
+    "explicacao": "Cem é um numeral cardinal porque expressa uma quantidade."
+  },
+  {
+    "id": 104,
+    "nivel": 2,
+    "frase": "O quarto candidato foi aprovado.",
+    "palavra": "quarto",
+    "classe": "Numeral",
+    "alternativas": [
+      "Substantivo",
+      "Numeral",
+      "Adjetivo",
+      "Artigo"
+    ],
+    "explicacao": "Aqui quarto é um numeral ordinal, pois indica a posição do candidato, e não um cômodo."
+  },
+  {
+    "id": 11,
+    "nivel": 3,
+    "frase": "Comprei uma mochila nova.",
+    "palavra": "uma",
+    "classe": "Artigo",
+    "alternativas": [
+      "Numeral",
+      "Artigo",
+      "Pronome",
+      "Adjetivo"
+    ],
+    "explicacao": "Uma é um artigo indefinido que acompanha o substantivo mochila."
+  },
+  {
+    "id": 12,
+    "nivel": 3,
+    "frase": "Apenas dois alunos faltaram.",
+    "palavra": "dois",
+    "classe": "Numeral",
+    "alternativas": [
+      "Adjetivo",
+      "Numeral",
+      "Artigo",
+      "Pronome"
+    ],
+    "explicacao": "Dois é um numeral cardinal porque indica uma quantidade."
+  },
+  {
+    "id": 13,
+    "nivel": 3,
+    "frase": "Uau! Que apresentação incrível!",
+    "palavra": "Uau",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Advérbio",
+      "Interjeição",
+      "Substantivo",
+      "Conjunção"
+    ],
+    "explicacao": "Uau é uma interjeição usada para expressar surpresa ou admiração."
+  },
+  {
+    "id": 14,
+    "nivel": 3,
+    "frase": "Talvez ele chegue amanhã.",
+    "palavra": "Talvez",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Pronome",
+      "Verbo"
+    ],
+    "explicacao": "Talvez é um advérbio que indica dúvida ou possibilidade."
+  },
+  {
+    "id": 15,
+    "nivel": 3,
+    "frase": "Ela gosta de música brasileira.",
+    "palavra": "de",
+    "classe": "Preposição",
+    "alternativas": [
+      "Conjunção",
+      "Artigo",
+      "Preposição",
+      "Pronome"
+    ],
+    "explicacao": "De é uma preposição que estabelece uma relação entre os termos da oração."
+  },
+  {
+    "id": 51,
+    "nivel": 3,
+    "frase": "A professora explicou o conteúdo.",
+    "palavra": "professora",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Pronome",
+      "Verbo"
+    ],
+    "explicacao": "\"Professora\" é um substantivo porque nomeia uma pessoa."
+  },
+  {
+    "id": 52,
+    "nivel": 3,
+    "frase": "Aquele prédio antigo será restaurado.",
+    "palavra": "antigo",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Adjetivo",
+      "Pronome",
+      "Substantivo",
+      "Advérbio"
+    ],
+    "explicacao": "\"Antigo\" é um adjetivo porque caracteriza o substantivo \"prédio\"."
+  },
+  {
+    "id": 53,
+    "nivel": 3,
+    "frase": "Nós terminaremos o trabalho amanhã.",
+    "palavra": "terminaremos",
+    "classe": "Verbo",
+    "alternativas": [
+      "Verbo",
+      "Advérbio",
+      "Substantivo",
+      "Pronome"
+    ],
+    "explicacao": "\"Terminaremos\" é um verbo porque expressa uma ação no futuro."
+  },
+  {
+    "id": 54,
+    "nivel": 3,
+    "frase": "Eles viajarão amanhã.",
+    "palavra": "amanhã",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Substantivo",
+      "Adjetivo",
+      "Preposição"
+    ],
+    "explicacao": "\"Amanhã\" funciona como advérbio de tempo porque indica quando a viagem ocorrerá."
+  },
+  {
+    "id": 55,
+    "nivel": 3,
+    "frase": "Minha mochila está na sala.",
+    "palavra": "Minha",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "\"Minha\" é um pronome possessivo porque indica posse em relação à mochila."
+  },
+  {
+    "id": 105,
+    "nivel": 3,
+    "frase": "Ela chegou antes de todos.",
+    "palavra": "Ela",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Substantivo",
+      "Artigo",
+      "Verbo"
+    ],
+    "explicacao": "Ela é um pronome pessoal porque substitui o nome da pessoa mencionada."
+  },
+  {
+    "id": 106,
+    "nivel": 3,
+    "frase": "Meu caderno ficou na escola.",
+    "palavra": "Meu",
+    "classe": "Pronome",
+    "alternativas": [
+      "Artigo",
+      "Pronome",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "Meu é um pronome possessivo porque indica a quem pertence o caderno."
+  },
+  {
+    "id": 107,
+    "nivel": 3,
+    "frase": "Nós vamos viajar amanhã.",
+    "palavra": "Nós",
+    "classe": "Pronome",
+    "alternativas": [
+      "Substantivo",
+      "Pronome",
+      "Verbo",
+      "Advérbio"
+    ],
+    "explicacao": "Nós é um pronome pessoal do caso reto porque indica quem pratica a ação."
+  },
+  {
+    "id": 108,
+    "nivel": 3,
+    "frase": "O time venceu a partida difícil.",
+    "palavra": "difícil",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Advérbio",
+      "Substantivo",
+      "Adjetivo",
+      "Verbo"
+    ],
+    "explicacao": "Difícil é um adjetivo porque caracteriza o substantivo partida."
+  },
+  {
+    "id": 109,
+    "nivel": 3,
+    "frase": "Sua opinião foi importante.",
+    "palavra": "Sua",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Adjetivo",
+      "Preposição"
+    ],
+    "explicacao": "Sua é um pronome possessivo porque indica posse em relação à opinião."
+  },
+  {
+    "id": 110,
+    "nivel": 3,
+    "frase": "Eles construíram uma casa grande.",
+    "palavra": "grande",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Advérbio",
+      "Numeral"
+    ],
+    "explicacao": "Grande é um adjetivo porque atribui uma característica ao substantivo casa."
+  },
+  {
+    "id": 111,
+    "nivel": 3,
+    "frase": "Tu precisas descansar.",
+    "palavra": "Tu",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Verbo",
+      "Substantivo",
+      "Artigo"
+    ],
+    "explicacao": "Tu é um pronome pessoal que indica a pessoa com quem se fala."
+  },
+  {
+    "id": 112,
+    "nivel": 3,
+    "frase": "Nosso projeto foi aprovado.",
+    "palavra": "Nosso",
+    "classe": "Pronome",
+    "alternativas": [
+      "Adjetivo",
+      "Artigo",
+      "Pronome",
+      "Numeral"
+    ],
+    "explicacao": "Nosso é um pronome possessivo porque indica a quem pertence o projeto."
+  },
+  {
+    "id": 113,
+    "nivel": 3,
+    "frase": "A resposta correta estava na última página.",
+    "palavra": "correta",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Adjetivo",
+      "Substantivo",
+      "Verbo",
+      "Advérbio"
+    ],
+    "explicacao": "Correta é um adjetivo porque qualifica o substantivo resposta."
+  },
+  {
+    "id": 114,
+    "nivel": 3,
+    "frase": "Eu preparei o jantar para a família.",
+    "palavra": "Eu",
+    "classe": "Pronome",
+    "alternativas": [
+      "Substantivo",
+      "Pronome",
+      "Artigo",
+      "Verbo"
+    ],
+    "explicacao": "Eu é um pronome pessoal porque indica quem pratica a ação."
+  },
+  {
+    "id": 115,
+    "nivel": 3,
+    "frase": "O filme foi emocionante.",
+    "palavra": "emocionante",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Verbo",
+      "Advérbio",
+      "Adjetivo",
+      "Substantivo"
+    ],
+    "explicacao": "Emocionante é um adjetivo porque atribui uma característica ao substantivo filme."
+  },
+  {
+    "id": 116,
+    "nivel": 3,
+    "frase": "Ele me entregou o bilhete.",
+    "palavra": "me",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Preposição",
+      "Advérbio"
+    ],
+    "explicacao": "Me é um pronome pessoal oblíquo porque indica quem recebeu a ação."
+  },
+  {
+    "id": 117,
+    "nivel": 3,
+    "frase": "As ruas estreitas dificultam o trânsito.",
+    "palavra": "estreitas",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Verbo",
+      "Artigo"
+    ],
+    "explicacao": "Estreitas é um adjetivo porque caracteriza o substantivo ruas."
+  },
+  {
+    "id": 118,
+    "nivel": 3,
+    "frase": "Teu comportamento surpreendeu a todos.",
+    "palavra": "Teu",
+    "classe": "Pronome",
+    "alternativas": [
+      "Artigo",
+      "Adjetivo",
+      "Pronome",
+      "Substantivo"
+    ],
+    "explicacao": "Teu é um pronome possessivo porque indica a quem se refere o comportamento."
+  },
+  {
+    "id": 16,
+    "nivel": 4,
+    "frase": "O aluno inteligente resolveu a questão.",
+    "palavra": "inteligente",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Advérbio",
+      "Verbo"
+    ],
+    "explicacao": "Inteligente é um adjetivo porque caracteriza o substantivo aluno."
+  },
+  {
+    "id": 17,
+    "nivel": 4,
+    "frase": "Eles chegaram muito cansados.",
+    "palavra": "muito",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Numeral",
+      "Advérbio",
+      "Pronome"
+    ],
+    "explicacao": "Muito é um advérbio de intensidade porque intensifica a característica expressa por cansados."
+  },
+  {
+    "id": 18,
+    "nivel": 4,
+    "frase": "João saiu porque estava atrasado.",
+    "palavra": "porque",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Preposição",
+      "Conjunção",
+      "Advérbio",
+      "Pronome"
+    ],
+    "explicacao": "Porque é uma conjunção que estabelece uma relação de causa entre as orações."
+  },
+  {
+    "id": 19,
+    "nivel": 4,
+    "frase": "Aqueles alunos estudaram bastante.",
+    "palavra": "Aqueles",
+    "classe": "Pronome",
+    "alternativas": [
+      "Artigo",
+      "Adjetivo",
+      "Pronome",
+      "Numeral"
+    ],
+    "explicacao": "Aqueles é um pronome demonstrativo, usado para indicar pessoas ou coisas."
+  },
+  {
+    "id": 20,
+    "nivel": 4,
+    "frase": "O professor explicou a matéria claramente.",
+    "palavra": "claramente",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Substantivo",
+      "Advérbio",
+      "Verbo"
+    ],
+    "explicacao": "Claramente é um advérbio de modo porque indica como o professor explicou a matéria."
+  },
+  {
+    "id": 56,
+    "nivel": 4,
+    "frase": "As árvores cresceram muito.",
+    "palavra": "As",
+    "classe": "Artigo",
+    "alternativas": [
+      "Artigo",
+      "Pronome",
+      "Preposição",
+      "Conjunção"
+    ],
+    "explicacao": "\"As\" é um artigo definido que determina o substantivo \"árvores\"."
+  },
+  {
+    "id": 57,
+    "nivel": 4,
+    "frase": "Carla ficou em terceiro lugar.",
+    "palavra": "terceiro",
+    "classe": "Numeral",
+    "alternativas": [
+      "Numeral",
+      "Adjetivo",
+      "Substantivo",
+      "Pronome"
+    ],
+    "explicacao": "\"Terceiro\" é um numeral ordinal porque indica a posição ocupada por Carla."
+  },
+  {
+    "id": 58,
+    "nivel": 4,
+    "frase": "Saí de casa com meu irmão.",
+    "palavra": "com",
+    "classe": "Preposição",
+    "alternativas": [
+      "Preposição",
+      "Conjunção",
+      "Advérbio",
+      "Artigo"
+    ],
+    "explicacao": "\"Com\" é uma preposição que estabelece uma relação de companhia."
+  },
+  {
+    "id": 59,
+    "nivel": 4,
+    "frase": "Você pode estudar ou descansar.",
+    "palavra": "ou",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Preposição",
+      "Pronome",
+      "Advérbio"
+    ],
+    "explicacao": "\"Ou\" é uma conjunção que estabelece uma relação de alternativa."
+  },
+  {
+    "id": 60,
+    "nivel": 4,
+    "frase": "Ai! Machuquei meu braço.",
+    "palavra": "Ai",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Interjeição",
+      "Advérbio",
+      "Conjunção",
+      "Pronome"
+    ],
+    "explicacao": "\"Ai\" é uma interjeição porque expressa uma reação de dor."
+  },
+  {
+    "id": 119,
+    "nivel": 4,
+    "frase": "O ônibus chegou tarde.",
+    "palavra": "tarde",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Substantivo",
+      "Advérbio",
+      "Adjetivo",
+      "Verbo"
+    ],
+    "explicacao": "Aqui tarde é um advérbio de tempo, pois indica quando o ônibus chegou."
+  },
+  {
+    "id": 120,
+    "nivel": 4,
+    "frase": "O livro está sobre a mesa.",
+    "palavra": "sobre",
+    "classe": "Preposição",
+    "alternativas": [
+      "Advérbio",
+      "Preposição",
+      "Conjunção",
+      "Artigo"
+    ],
+    "explicacao": "Sobre é uma preposição porque liga o verbo ao termo seguinte, indicando lugar."
+  },
+  {
+    "id": 121,
+    "nivel": 4,
+    "frase": "Ela falou calmamente com a turma.",
+    "palavra": "calmamente",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Substantivo",
+      "Conjunção"
+    ],
+    "explicacao": "Calmamente é um advérbio de modo porque indica como ela falou."
+  },
+  {
+    "id": 122,
+    "nivel": 4,
+    "frase": "Viajamos de trem até a capital.",
+    "palavra": "de",
+    "classe": "Preposição",
+    "alternativas": [
+      "Artigo",
+      "Preposição",
+      "Pronome",
+      "Conjunção"
+    ],
+    "explicacao": "De é uma preposição porque relaciona o verbo ao meio de transporte."
+  },
+  {
+    "id": 123,
+    "nivel": 4,
+    "frase": "Ontem fomos ao cinema.",
+    "palavra": "Ontem",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Substantivo",
+      "Preposição",
+      "Adjetivo"
+    ],
+    "explicacao": "Ontem é um advérbio de tempo porque indica quando a ação ocorreu."
+  },
+  {
+    "id": 124,
+    "nivel": 4,
+    "frase": "O presente é para você.",
+    "palavra": "para",
+    "classe": "Preposição",
+    "alternativas": [
+      "Conjunção",
+      "Advérbio",
+      "Preposição",
+      "Pronome"
+    ],
+    "explicacao": "Para é uma preposição porque liga o termo anterior ao destinatário."
+  },
+  {
+    "id": 125,
+    "nivel": 4,
+    "frase": "Ele respondeu rapidamente à pergunta.",
+    "palavra": "rapidamente",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Adjetivo",
+      "Verbo",
+      "Substantivo"
+    ],
+    "explicacao": "Rapidamente é um advérbio de modo porque indica como ele respondeu."
+  },
+  {
+    "id": 126,
+    "nivel": 4,
+    "frase": "Saímos com os amigos no domingo.",
+    "palavra": "com",
+    "classe": "Preposição",
+    "alternativas": [
+      "Preposição",
+      "Conjunção",
+      "Artigo",
+      "Advérbio"
+    ],
+    "explicacao": "Com é uma preposição porque estabelece relação de companhia entre os termos."
+  },
+  {
+    "id": 127,
+    "nivel": 4,
+    "frase": "A loja fica perto da praça.",
+    "palavra": "perto",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Preposição",
+      "Advérbio",
+      "Substantivo"
+    ],
+    "explicacao": "Perto é um advérbio de lugar porque indica onde a loja fica."
+  },
+  {
+    "id": 128,
+    "nivel": 4,
+    "frase": "Ele saiu sem o casaco.",
+    "palavra": "sem",
+    "classe": "Preposição",
+    "alternativas": [
+      "Advérbio",
+      "Preposição",
+      "Conjunção",
+      "Pronome"
+    ],
+    "explicacao": "Sem é uma preposição porque relaciona o verbo ao termo seguinte, indicando ausência."
+  },
+  {
+    "id": 129,
+    "nivel": 4,
+    "frase": "Nunca vi algo parecido.",
+    "palavra": "Nunca",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Pronome",
+      "Advérbio",
+      "Conjunção",
+      "Adjetivo"
+    ],
+    "explicacao": "Nunca é um advérbio de negação e de tempo, pois nega a ocorrência do fato."
+  },
+  {
+    "id": 130,
+    "nivel": 4,
+    "frase": "O gato pulou entre as caixas.",
+    "palavra": "entre",
+    "classe": "Preposição",
+    "alternativas": [
+      "Preposição",
+      "Advérbio",
+      "Verbo",
+      "Conjunção"
+    ],
+    "explicacao": "Entre é uma preposição porque liga o verbo ao termo que indica posição."
+  },
+  {
+    "id": 131,
+    "nivel": 4,
+    "frase": "Ela dança bem.",
+    "palavra": "bem",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Substantivo",
+      "Advérbio",
+      "Verbo"
+    ],
+    "explicacao": "Bem é um advérbio de modo porque indica como ela dança."
+  },
+  {
+    "id": 132,
+    "nivel": 4,
+    "frase": "Chegamos após o intervalo.",
+    "palavra": "após",
+    "classe": "Preposição",
+    "alternativas": [
+      "Conjunção",
+      "Preposição",
+      "Advérbio",
+      "Artigo"
+    ],
+    "explicacao": "Após é uma preposição porque relaciona o verbo ao termo seguinte, indicando tempo."
+  },
+  {
+    "id": 21,
+    "nivel": 5,
+    "frase": "Meu irmão comprou um computador.",
+    "palavra": "Meu",
+    "classe": "Pronome",
+    "alternativas": [
+      "Artigo",
+      "Pronome",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "Meu é um pronome possessivo porque indica uma relação de posse."
+  },
+  {
+    "id": 22,
+    "nivel": 5,
+    "frase": "Nenhum aluno faltou hoje.",
+    "palavra": "Nenhum",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Numeral",
+      "Advérbio"
+    ],
+    "explicacao": "Nenhum é um pronome indefinido porque se refere a pessoas de maneira imprecisa."
+  },
+  {
+    "id": 23,
+    "nivel": 5,
+    "frase": "Ela estudou, mas não fez a atividade.",
+    "palavra": "mas",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Preposição",
+      "Conjunção",
+      "Advérbio",
+      "Pronome"
+    ],
+    "explicacao": "Mas é uma conjunção coordenativa adversativa, pois estabelece uma ideia de oposição."
+  },
+  {
+    "id": 24,
+    "nivel": 5,
+    "frase": "A prova estava bastante difícil.",
+    "palavra": "bastante",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Substantivo",
+      "Artigo"
+    ],
+    "explicacao": "Bastante funciona como advérbio de intensidade, intensificando o adjetivo difícil."
+  },
+  {
+    "id": 25,
+    "nivel": 5,
+    "frase": "Segundo a professora, a prova será amanhã.",
+    "palavra": "Segundo",
+    "classe": "Preposição",
+    "alternativas": [
+      "Numeral",
+      "Adjetivo",
+      "Preposição",
+      "Pronome"
+    ],
+    "explicacao": "Segundo funciona como preposição quando introduz a informação atribuída à professora."
+  },
+  {
+    "id": 61,
+    "nivel": 5,
+    "frase": "A esperança permaneceu mesmo nos dias difíceis.",
+    "palavra": "esperança",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Advérbio",
+      "Verbo"
+    ],
+    "explicacao": "\"Esperança\" é um substantivo abstrato porque nomeia um sentimento ou ideia."
+  },
+  {
+    "id": 62,
+    "nivel": 5,
+    "frase": "O corredor parecia extremamente cansado.",
+    "palavra": "cansado",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Verbo",
+      "Substantivo"
+    ],
+    "explicacao": "\"Cansado\" é um adjetivo porque atribui um estado ao substantivo \"corredor\"."
+  },
+  {
+    "id": 63,
+    "nivel": 5,
+    "frase": "Os estudantes haviam concluído a atividade.",
+    "palavra": "haviam",
+    "classe": "Verbo",
+    "alternativas": [
+      "Verbo",
+      "Advérbio",
+      "Pronome",
+      "Conjunção"
+    ],
+    "explicacao": "\"Haviam\" é uma forma verbal e participa da locução verbal \"haviam concluído\"."
+  },
+  {
+    "id": 64,
+    "nivel": 5,
+    "frase": "O atleta estava muito preparado.",
+    "palavra": "muito",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Pronome",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "\"Muito\" é um advérbio de intensidade porque intensifica o adjetivo \"preparado\"."
+  },
+  {
+    "id": 65,
+    "nivel": 5,
+    "frase": "Aquele é o livro que procurávamos.",
+    "palavra": "Aquele",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Adjetivo",
+      "Substantivo"
+    ],
+    "explicacao": "\"Aquele\" é um pronome demonstrativo usado para indicar algo em relação às pessoas do discurso."
+  },
+  {
+    "id": 133,
+    "nivel": 5,
+    "frase": "Este livro pertence à biblioteca.",
+    "palavra": "Este",
+    "classe": "Pronome",
+    "alternativas": [
+      "Artigo",
+      "Pronome",
+      "Numeral",
+      "Adjetivo"
+    ],
+    "explicacao": "Este é um pronome demonstrativo porque indica a posição do livro em relação a quem fala."
+  },
+  {
+    "id": 134,
+    "nivel": 5,
+    "frase": "Alguns alunos faltaram hoje.",
+    "palavra": "Alguns",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Numeral",
+      "Artigo",
+      "Adjetivo"
+    ],
+    "explicacao": "Alguns é um pronome indefinido porque se refere aos alunos de forma imprecisa."
+  },
+  {
+    "id": 135,
+    "nivel": 5,
+    "frase": "Aquela casa foi reformada.",
+    "palavra": "Aquela",
+    "classe": "Pronome",
+    "alternativas": [
+      "Artigo",
+      "Adjetivo",
+      "Pronome",
+      "Substantivo"
+    ],
+    "explicacao": "Aquela é um pronome demonstrativo porque situa a casa a distância de quem fala."
+  },
+  {
+    "id": 136,
+    "nivel": 5,
+    "frase": "Nenhum candidato foi reprovado.",
+    "palavra": "Nenhum",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Advérbio",
+      "Numeral",
+      "Artigo"
+    ],
+    "explicacao": "Nenhum é um pronome indefinido porque se refere ao substantivo de modo vago e negativo."
+  },
+  {
+    "id": 137,
+    "nivel": 5,
+    "frase": "Ele foi o terceiro a chegar.",
+    "palavra": "terceiro",
+    "classe": "Numeral",
+    "alternativas": [
+      "Adjetivo",
+      "Numeral",
+      "Substantivo",
+      "Pronome"
+    ],
+    "explicacao": "Terceiro é um numeral ordinal porque indica a ordem de chegada."
+  },
+  {
+    "id": 138,
+    "nivel": 5,
+    "frase": "Essa questão parece complicada.",
+    "palavra": "Essa",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Adjetivo",
+      "Conjunção"
+    ],
+    "explicacao": "Essa é um pronome demonstrativo porque aponta a questão referida."
+  },
+  {
+    "id": 139,
+    "nivel": 5,
+    "frase": "Muitos torcedores compareceram ao estádio.",
+    "palavra": "Muitos",
+    "classe": "Pronome",
+    "alternativas": [
+      "Advérbio",
+      "Pronome",
+      "Numeral",
+      "Adjetivo"
+    ],
+    "explicacao": "Antes de um substantivo, muitos é pronome indefinido, pois indica quantidade imprecisa de torcedores."
+  },
+  {
+    "id": 140,
+    "nivel": 5,
+    "frase": "O prédio tem vinte andares.",
+    "palavra": "vinte",
+    "classe": "Numeral",
+    "alternativas": [
+      "Numeral",
+      "Substantivo",
+      "Artigo",
+      "Advérbio"
+    ],
+    "explicacao": "Vinte é um numeral cardinal porque indica quantidade exata."
+  },
+  {
+    "id": 141,
+    "nivel": 5,
+    "frase": "Isso não faz sentido algum.",
+    "palavra": "Isso",
+    "classe": "Pronome",
+    "alternativas": [
+      "Substantivo",
+      "Pronome",
+      "Advérbio",
+      "Artigo"
+    ],
+    "explicacao": "Isso é um pronome demonstrativo porque retoma uma ideia já mencionada."
+  },
+  {
+    "id": 142,
+    "nivel": 5,
+    "frase": "Trabalhamos durante a madrugada.",
+    "palavra": "durante",
+    "classe": "Preposição",
+    "alternativas": [
+      "Conjunção",
+      "Advérbio",
+      "Preposição",
+      "Verbo"
+    ],
+    "explicacao": "Durante é uma preposição porque relaciona o verbo ao período de tempo indicado."
+  },
+  {
+    "id": 143,
+    "nivel": 5,
+    "frase": "Qualquer pessoa pode participar.",
+    "palavra": "Qualquer",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Adjetivo",
+      "Artigo",
+      "Numeral"
+    ],
+    "explicacao": "Qualquer é um pronome indefinido porque se refere a pessoa sem especificar quem."
+  },
+  {
+    "id": 144,
+    "nivel": 5,
+    "frase": "A festa aconteceu no quinto andar.",
+    "palavra": "quinto",
+    "classe": "Numeral",
+    "alternativas": [
+      "Substantivo",
+      "Numeral",
+      "Adjetivo",
+      "Advérbio"
+    ],
+    "explicacao": "Quinto é um numeral ordinal porque indica a posição do andar."
+  },
+  {
+    "id": 145,
+    "nivel": 5,
+    "frase": "Ela caminhou até a esquina.",
+    "palavra": "até",
+    "classe": "Preposição",
+    "alternativas": [
+      "Advérbio",
+      "Preposição",
+      "Conjunção",
+      "Artigo"
+    ],
+    "explicacao": "Até é uma preposição porque liga o verbo ao termo que indica limite."
+  },
+  {
+    "id": 146,
+    "nivel": 5,
+    "frase": "Cada aluno recebeu um material.",
+    "palavra": "Cada",
+    "classe": "Pronome",
+    "alternativas": [
+      "Numeral",
+      "Artigo",
+      "Pronome",
+      "Adjetivo"
+    ],
+    "explicacao": "Cada é um pronome indefinido porque se refere aos alunos individualmente, sem precisar quais."
+  },
+  {
+    "id": 147,
+    "nivel": 5,
+    "frase": "O evento durou duas horas.",
+    "palavra": "duas",
+    "classe": "Numeral",
+    "alternativas": [
+      "Artigo",
+      "Numeral",
+      "Pronome",
+      "Adjetivo"
+    ],
+    "explicacao": "Duas é um numeral cardinal porque indica a quantidade de horas."
+  },
+  {
+    "id": 148,
+    "nivel": 5,
+    "frase": "Ele lutou contra o cansaço.",
+    "palavra": "contra",
+    "classe": "Preposição",
+    "alternativas": [
+      "Preposição",
+      "Advérbio",
+      "Conjunção",
+      "Substantivo"
+    ],
+    "explicacao": "Contra é uma preposição porque relaciona o verbo ao termo seguinte, indicando oposição."
+  },
+  {
+    "id": 26,
+    "nivel": 6,
+    "frase": "Todos participaram da atividade.",
+    "palavra": "Todos",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Numeral",
+      "Substantivo"
+    ],
+    "explicacao": "Todos é um pronome indefinido porque se refere de maneira abrangente às pessoas mencionadas."
+  },
+  {
+    "id": 27,
+    "nivel": 6,
+    "frase": "O aluno respondeu corretamente.",
+    "palavra": "corretamente",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Verbo",
+      "Substantivo"
+    ],
+    "explicacao": "Corretamente é um advérbio de modo porque indica como o aluno respondeu."
+  },
+  {
+    "id": 28,
+    "nivel": 6,
+    "frase": "Embora estivesse cansado, continuou estudando.",
+    "palavra": "Embora",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Preposição",
+      "Conjunção",
+      "Advérbio",
+      "Pronome"
+    ],
+    "explicacao": "Embora é uma conjunção subordinativa concessiva, pois introduz uma ideia de concessão."
+  },
+  {
+    "id": 29,
+    "nivel": 6,
+    "frase": "A primeira questão era simples.",
+    "palavra": "primeira",
+    "classe": "Numeral",
+    "alternativas": [
+      "Adjetivo",
+      "Numeral",
+      "Pronome",
+      "Artigo"
+    ],
+    "explicacao": "Primeira é um numeral ordinal porque indica a posição da questão."
+  },
+  {
+    "id": 30,
+    "nivel": 6,
+    "frase": "Ele mesmo resolveu o problema.",
+    "palavra": "mesmo",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Advérbio",
+      "Adjetivo",
+      "Conjunção"
+    ],
+    "explicacao": "Mesmo funciona como pronome porque retoma e reforça o referente ele."
+  },
+  {
+    "id": 66,
+    "nivel": 6,
+    "frase": "Uma estudante apresentou o projeto.",
+    "palavra": "Uma",
+    "classe": "Artigo",
+    "alternativas": [
+      "Artigo",
+      "Numeral",
+      "Pronome",
+      "Preposição"
+    ],
+    "explicacao": "\"Uma\" é artigo indefinido porque acompanha e determina o substantivo \"estudante\" sem indicar quantidade em contraste com outros números."
+  },
+  {
+    "id": 67,
+    "nivel": 6,
+    "frase": "Recebi o dobro da quantidade prevista.",
+    "palavra": "dobro",
+    "classe": "Numeral",
+    "alternativas": [
+      "Numeral",
+      "Substantivo",
+      "Advérbio",
+      "Adjetivo"
+    ],
+    "explicacao": "\"Dobro\" é um numeral multiplicativo porque indica uma quantidade duas vezes maior."
+  },
+  {
+    "id": 68,
+    "nivel": 6,
+    "frase": "O avião passou sobre a cidade.",
+    "palavra": "sobre",
+    "classe": "Preposição",
+    "alternativas": [
+      "Preposição",
+      "Advérbio",
+      "Conjunção",
+      "Pronome"
+    ],
+    "explicacao": "\"Sobre\" é uma preposição que relaciona o movimento do avião à cidade."
+  },
+  {
+    "id": 69,
+    "nivel": 6,
+    "frase": "Não fomos ao parque porque começou a chover.",
+    "palavra": "porque",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Preposição",
+      "Advérbio",
+      "Interjeição"
+    ],
+    "explicacao": "\"Porque\" é uma conjunção que introduz a causa de não terem ido ao parque."
+  },
+  {
+    "id": 70,
+    "nivel": 6,
+    "frase": "Oba! Conseguimos terminar o trabalho.",
+    "palavra": "Oba",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Interjeição",
+      "Advérbio",
+      "Conjunção",
+      "Verbo"
+    ],
+    "explicacao": "\"Oba\" é uma interjeição porque manifesta alegria ou satisfação."
+  },
+  {
+    "id": 149,
+    "nivel": 6,
+    "frase": "Estudei muito, mas não passei.",
+    "palavra": "mas",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Advérbio",
+      "Conjunção",
+      "Preposição",
+      "Pronome"
+    ],
+    "explicacao": "Mas é uma conjunção coordenativa adversativa porque liga as orações indicando oposição."
+  },
+  {
+    "id": 150,
+    "nivel": 6,
+    "frase": "O livro que li era ótimo.",
+    "palavra": "que",
+    "classe": "Pronome",
+    "alternativas": [
+      "Conjunção",
+      "Pronome",
+      "Preposição",
+      "Advérbio"
+    ],
+    "explicacao": "Aqui que é pronome relativo, pois retoma o substantivo livro e introduz a oração."
+  },
+  {
+    "id": 151,
+    "nivel": 6,
+    "frase": "Ela cantou e dançou na festa.",
+    "palavra": "e",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Preposição",
+      "Artigo",
+      "Advérbio"
+    ],
+    "explicacao": "E é uma conjunção coordenativa aditiva porque soma as duas ações."
+  },
+  {
+    "id": 152,
+    "nivel": 6,
+    "frase": "Não fui à festa, pois estava cansado.",
+    "palavra": "pois",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Advérbio",
+      "Preposição",
+      "Conjunção",
+      "Pronome"
+    ],
+    "explicacao": "Pois é uma conjunção que introduz a explicação do fato anterior."
+  },
+  {
+    "id": 153,
+    "nivel": 6,
+    "frase": "Escolha o caminho que preferir.",
+    "palavra": "que",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Conjunção",
+      "Advérbio",
+      "Artigo"
+    ],
+    "explicacao": "Que é pronome relativo porque retoma o substantivo caminho."
+  },
+  {
+    "id": 154,
+    "nivel": 6,
+    "frase": "Ou você estuda, ou você trabalha.",
+    "palavra": "Ou",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Advérbio",
+      "Preposição",
+      "Interjeição"
+    ],
+    "explicacao": "Ou é uma conjunção coordenativa alternativa porque apresenta escolha entre as orações."
+  },
+  {
+    "id": 155,
+    "nivel": 6,
+    "frase": "O autor cujo livro li ganhou o prêmio.",
+    "palavra": "cujo",
+    "classe": "Pronome",
+    "alternativas": [
+      "Conjunção",
+      "Pronome",
+      "Adjetivo",
+      "Artigo"
+    ],
+    "explicacao": "Cujo é um pronome relativo que indica posse entre autor e livro."
+  },
+  {
+    "id": 156,
+    "nivel": 6,
+    "frase": "Ele correu, porém chegou atrasado.",
+    "palavra": "porém",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Advérbio",
+      "Conjunção",
+      "Pronome",
+      "Preposição"
+    ],
+    "explicacao": "Porém é uma conjunção coordenativa adversativa porque marca oposição entre as orações."
+  },
+  {
+    "id": 157,
+    "nivel": 6,
+    "frase": "Quero sair, todavia está chovendo.",
+    "palavra": "todavia",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Advérbio",
+      "Interjeição",
+      "Preposição"
+    ],
+    "explicacao": "Todavia é uma conjunção adversativa, equivalente a mas, e liga orações opostas."
+  },
+  {
+    "id": 158,
+    "nivel": 6,
+    "frase": "Os alunos que estudaram foram aprovados.",
+    "palavra": "que",
+    "classe": "Pronome",
+    "alternativas": [
+      "Conjunção",
+      "Advérbio",
+      "Pronome",
+      "Preposição"
+    ],
+    "explicacao": "Que é pronome relativo porque retoma o substantivo alunos."
+  },
+  {
+    "id": 159,
+    "nivel": 6,
+    "frase": "Corri bastante, portanto estou cansado.",
+    "palavra": "portanto",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Advérbio",
+      "Conjunção",
+      "Preposição",
+      "Pronome"
+    ],
+    "explicacao": "Portanto é uma conjunção coordenativa conclusiva porque introduz a conclusão."
+  },
+  {
+    "id": 160,
+    "nivel": 6,
+    "frase": "A pessoa a quem entreguei o livro agradeceu.",
+    "palavra": "quem",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Conjunção",
+      "Advérbio",
+      "Substantivo"
+    ],
+    "explicacao": "Quem é um pronome relativo que retoma o substantivo pessoa."
+  },
+  {
+    "id": 161,
+    "nivel": 6,
+    "frase": "Ele nem estudou nem descansou.",
+    "palavra": "nem",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Advérbio",
+      "Pronome",
+      "Preposição"
+    ],
+    "explicacao": "Nem é uma conjunção coordenativa aditiva de sentido negativo, equivalente a e não."
+  },
+  {
+    "id": 162,
+    "nivel": 6,
+    "frase": "Este é o professor que nos ensinou.",
+    "palavra": "que",
+    "classe": "Pronome",
+    "alternativas": [
+      "Conjunção",
+      "Pronome",
+      "Artigo",
+      "Advérbio"
+    ],
+    "explicacao": "Que é pronome relativo porque retoma o substantivo professor."
+  },
+  {
+    "id": 163,
+    "nivel": 6,
+    "frase": "Ela não apenas cozinhou, como também serviu.",
+    "palavra": "como",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Advérbio",
+      "Conjunção",
+      "Preposição",
+      "Pronome"
+    ],
+    "explicacao": "Em não apenas... como também, como integra uma conjunção aditiva que soma as duas ações."
+  },
+  {
+    "id": 164,
+    "nivel": 6,
+    "frase": "Trouxe o material de que precisávamos.",
+    "palavra": "que",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Conjunção",
+      "Preposição",
+      "Advérbio"
+    ],
+    "explicacao": "Que é pronome relativo porque retoma o substantivo material."
+  },
+  {
+    "id": 31,
+    "nivel": 7,
+    "frase": "Ninguém conseguiu responder à questão.",
+    "palavra": "Ninguém",
+    "classe": "Pronome",
+    "alternativas": [
+      "Substantivo",
+      "Pronome",
+      "Artigo",
+      "Advérbio"
+    ],
+    "explicacao": "Ninguém é um pronome indefinido que se refere a uma pessoa de forma indeterminada."
+  },
+  {
+    "id": 32,
+    "nivel": 7,
+    "frase": "Ele estudou bastante, portanto conseguiu um bom resultado.",
+    "palavra": "portanto",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Preposição",
+      "Pronome",
+      "Conjunção",
+      "Advérbio"
+    ],
+    "explicacao": "Portanto é uma conjunção coordenativa conclusiva, pois introduz uma conclusão."
+  },
+  {
+    "id": 33,
+    "nivel": 7,
+    "frase": "A escola fica onde termina a avenida.",
+    "palavra": "onde",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Pronome",
+      "Advérbio",
+      "Conjunção",
+      "Preposição"
+    ],
+    "explicacao": "Onde é um advérbio de lugar, indicando o local em que algo acontece."
+  },
+  {
+    "id": 34,
+    "nivel": 7,
+    "frase": "Que ótimo! Você conseguiu resolver.",
+    "palavra": "ótimo",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Advérbio",
+      "Interjeição"
+    ],
+    "explicacao": "Ótimo é um adjetivo porque atribui uma característica a algo."
+  },
+  {
+    "id": 35,
+    "nivel": 7,
+    "frase": "Tal aluno apresentou o trabalho.",
+    "palavra": "Tal",
+    "classe": "Pronome",
+    "alternativas": [
+      "Artigo",
+      "Pronome",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "Tal pode funcionar como pronome demonstrativo quando retoma ou indica determinado ser."
+  },
+  {
+    "id": 71,
+    "nivel": 7,
+    "frase": "A liberdade exige responsabilidade.",
+    "palavra": "liberdade",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Adjetivo",
+      "Verbo",
+      "Advérbio"
+    ],
+    "explicacao": "\"Liberdade\" é um substantivo abstrato porque nomeia um conceito."
+  },
+  {
+    "id": 72,
+    "nivel": 7,
+    "frase": "Os resultados foram surpreendentes.",
+    "palavra": "surpreendentes",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Adjetivo",
+      "Verbo",
+      "Advérbio",
+      "Substantivo"
+    ],
+    "explicacao": "\"Surpreendentes\" é um adjetivo porque caracteriza o substantivo \"resultados\"."
+  },
+  {
+    "id": 73,
+    "nivel": 7,
+    "frase": "Talvez eles participem da competição.",
+    "palavra": "Talvez",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Conjunção",
+      "Pronome",
+      "Preposição"
+    ],
+    "explicacao": "\"Talvez\" é um advérbio de dúvida porque expressa incerteza sobre a participação."
+  },
+  {
+    "id": 74,
+    "nivel": 7,
+    "frase": "Ninguém respondeu à pergunta.",
+    "palavra": "Ninguém",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Substantivo",
+      "Advérbio",
+      "Artigo"
+    ],
+    "explicacao": "\"Ninguém\" é um pronome indefinido porque se refere de maneira indeterminada a pessoas."
+  },
+  {
+    "id": 75,
+    "nivel": 7,
+    "frase": "Ele se esforçou, portanto conseguiu melhorar.",
+    "palavra": "portanto",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Advérbio",
+      "Preposição",
+      "Pronome"
+    ],
+    "explicacao": "\"Portanto\" funciona como conjunção conclusiva, estabelecendo uma relação de conclusão entre as orações."
+  },
+  {
+    "id": 165,
+    "nivel": 7,
+    "frase": "Espero que você venha à reunião.",
+    "palavra": "que",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Pronome",
+      "Conjunção",
+      "Preposição",
+      "Advérbio"
+    ],
+    "explicacao": "Aqui que é conjunção integrante, pois introduz uma oração que completa o sentido do verbo esperar, sem retomar substantivo."
+  },
+  {
+    "id": 166,
+    "nivel": 7,
+    "frase": "Ufa! Terminamos o trabalho a tempo.",
+    "palavra": "Ufa",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Advérbio",
+      "Interjeição",
+      "Substantivo",
+      "Conjunção"
+    ],
+    "explicacao": "Ufa é uma interjeição porque exprime alívio de forma isolada."
+  },
+  {
+    "id": 167,
+    "nivel": 7,
+    "frase": "Se chover, não sairemos de casa.",
+    "palavra": "Se",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Pronome",
+      "Advérbio",
+      "Preposição"
+    ],
+    "explicacao": "Se é uma conjunção subordinativa condicional porque apresenta a condição para o fato."
+  },
+  {
+    "id": 168,
+    "nivel": 7,
+    "frase": "Ele está muito cansado hoje.",
+    "palavra": "muito",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Pronome",
+      "Adjetivo",
+      "Advérbio",
+      "Numeral"
+    ],
+    "explicacao": "Antes de um adjetivo, muito é advérbio de intensidade, pois indica o grau de cansaço."
+  },
+  {
+    "id": 169,
+    "nivel": 7,
+    "frase": "Talvez ela chegue mais tarde.",
+    "palavra": "Talvez",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Conjunção",
+      "Interjeição",
+      "Pronome"
+    ],
+    "explicacao": "Talvez é um advérbio de dúvida porque expressa incerteza sobre o fato."
+  },
+  {
+    "id": 170,
+    "nivel": 7,
+    "frase": "Nossa! Que surpresa agradável.",
+    "palavra": "Nossa",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Pronome",
+      "Interjeição",
+      "Adjetivo",
+      "Substantivo"
+    ],
+    "explicacao": "Aqui Nossa é interjeição, pois exprime espanto, e não pronome possessivo."
+  },
+  {
+    "id": 171,
+    "nivel": 7,
+    "frase": "A prova estava bastante longa.",
+    "palavra": "bastante",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Pronome",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "Antes de um adjetivo, bastante é advérbio de intensidade e fica invariável."
+  },
+  {
+    "id": 172,
+    "nivel": 7,
+    "frase": "Quando cheguei, todos já tinham saído.",
+    "palavra": "Quando",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Advérbio",
+      "Pronome",
+      "Preposição"
+    ],
+    "explicacao": "Quando é uma conjunção subordinativa temporal porque situa no tempo a oração seguinte."
+  },
+  {
+    "id": 173,
+    "nivel": 7,
+    "frase": "Oba! Conseguimos a vaga.",
+    "palavra": "Oba",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Interjeição",
+      "Advérbio",
+      "Substantivo",
+      "Verbo"
+    ],
+    "explicacao": "Oba é uma interjeição porque exprime alegria de forma isolada."
+  },
+  {
+    "id": 174,
+    "nivel": 7,
+    "frase": "Ele fala demais durante as aulas.",
+    "palavra": "demais",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Pronome",
+      "Adjetivo",
+      "Advérbio",
+      "Conjunção"
+    ],
+    "explicacao": "Demais é advérbio de intensidade porque indica o grau da ação de falar."
+  },
+  {
+    "id": 175,
+    "nivel": 7,
+    "frase": "Fiquei em casa porque estava doente.",
+    "palavra": "porque",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Substantivo",
+      "Conjunção",
+      "Advérbio",
+      "Preposição"
+    ],
+    "explicacao": "Porque é uma conjunção subordinativa causal porque introduz o motivo do fato."
+  },
+  {
+    "id": 176,
+    "nivel": 7,
+    "frase": "Certamente ele virá à reunião.",
+    "palavra": "Certamente",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Conjunção",
+      "Interjeição"
+    ],
+    "explicacao": "Certamente é um advérbio de afirmação porque reforça a certeza do fato."
+  },
+  {
+    "id": 177,
+    "nivel": 7,
+    "frase": "Ai! Machuquei o dedo na porta.",
+    "palavra": "Ai",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Interjeição",
+      "Advérbio",
+      "Pronome",
+      "Conjunção"
+    ],
+    "explicacao": "Ai é uma interjeição porque exprime dor de forma isolada."
+  },
+  {
+    "id": 178,
+    "nivel": 7,
+    "frase": "Conforme combinamos, começaremos cedo.",
+    "palavra": "Conforme",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Preposição",
+      "Conjunção",
+      "Advérbio",
+      "Verbo"
+    ],
+    "explicacao": "Conforme é conjunção subordinativa conformativa porque indica acordo com o que foi combinado."
+  },
+  {
+    "id": 179,
+    "nivel": 7,
+    "frase": "Ela quase desistiu da prova.",
+    "palavra": "quase",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Adjetivo",
+      "Pronome",
+      "Preposição"
+    ],
+    "explicacao": "Quase é um advérbio de intensidade porque indica que a ação não se completou."
+  },
+  {
+    "id": 180,
+    "nivel": 7,
+    "frase": "Caso precise de ajuda, me avise.",
+    "palavra": "Caso",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Substantivo",
+      "Conjunção",
+      "Verbo",
+      "Advérbio"
+    ],
+    "explicacao": "Aqui Caso é conjunção subordinativa condicional, equivalente a se, e não substantivo."
+  },
+  {
+    "id": 181,
+    "nivel": 7,
+    "frase": "Psiu! Não faça barulho na biblioteca.",
+    "palavra": "Psiu",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Advérbio",
+      "Substantivo",
+      "Interjeição",
+      "Conjunção"
+    ],
+    "explicacao": "Psiu é uma interjeição porque exprime um pedido de silêncio de forma isolada."
+  },
+  {
+    "id": 36,
+    "nivel": 8,
+    "frase": "Apenas os melhores alunos participaram da competição.",
+    "palavra": "Apenas",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Pronome",
+      "Conjunção"
+    ],
+    "explicacao": "Apenas é um advérbio que indica exclusão ou restrição."
+  },
+  {
+    "id": 37,
+    "nivel": 8,
+    "frase": "Conforme combinamos, entregarei o trabalho amanhã.",
+    "palavra": "Conforme",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Pronome",
+      "Preposição",
+      "Conjunção",
+      "Advérbio"
+    ],
+    "explicacao": "Conforme funciona como conjunção ao introduzir uma oração que estabelece conformidade."
+  },
+  {
+    "id": 38,
+    "nivel": 8,
+    "frase": "O próprio estudante corrigiu o exercício.",
+    "palavra": "próprio",
+    "classe": "Pronome",
+    "alternativas": [
+      "Adjetivo",
+      "Pronome",
+      "Advérbio",
+      "Artigo"
+    ],
+    "explicacao": "Próprio pode funcionar como pronome de reforço, destacando o próprio referente."
+  },
+  {
+    "id": 39,
+    "nivel": 8,
+    "frase": "Quase todos terminaram a prova.",
+    "palavra": "Quase",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Pronome",
+      "Adjetivo",
+      "Advérbio",
+      "Numeral"
+    ],
+    "explicacao": "Quase é um advérbio que indica proximidade ou quantidade aproximada."
+  },
+  {
+    "id": 40,
+    "nivel": 8,
+    "frase": "Ah! Finalmente terminamos o projeto.",
+    "palavra": "Ah",
+    "classe": "Interjeição",
+    "alternativas": [
+      "Advérbio",
+      "Interjeição",
+      "Conjunção",
+      "Pronome"
+    ],
+    "explicacao": "Ah é uma interjeição que pode expressar emoção, alívio ou surpresa dependendo do contexto."
+  },
+  {
+    "id": 76,
+    "nivel": 8,
+    "frase": "O conhecimento transforma perspectivas.",
+    "palavra": "conhecimento",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Verbo",
+      "Adjetivo",
+      "Advérbio"
+    ],
+    "explicacao": "\"Conhecimento\" é um substantivo abstrato porque nomeia uma ideia ou conceito."
+  },
+  {
+    "id": 77,
+    "nivel": 8,
+    "frase": "Os alunos permaneceram atentos durante a explicação.",
+    "palavra": "atentos",
+    "classe": "Adjetivo",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Verbo",
+      "Substantivo"
+    ],
+    "explicacao": "\"Atentos\" é um adjetivo porque atribui um estado aos alunos."
+  },
+  {
+    "id": 78,
+    "nivel": 8,
+    "frase": "A equipe certamente alcançará bons resultados.",
+    "palavra": "certamente",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Adjetivo",
+      "Conjunção",
+      "Pronome"
+    ],
+    "explicacao": "\"Certamente\" é um advérbio de afirmação e reforça a certeza expressa na frase."
+  },
+  {
+    "id": 79,
+    "nivel": 8,
+    "frase": "Alguns preferiram permanecer em silêncio.",
+    "palavra": "Alguns",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Numeral",
+      "Adjetivo"
+    ],
+    "explicacao": "\"Alguns\" é um pronome indefinido porque se refere de maneira imprecisa a determinadas pessoas."
+  },
+  {
+    "id": 80,
+    "nivel": 8,
+    "frase": "Embora estivesse cansada, Marina continuou estudando.",
+    "palavra": "Embora",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Conjunção",
+      "Preposição",
+      "Advérbio",
+      "Interjeição"
+    ],
+    "explicacao": "\"Embora\" é uma conjunção concessiva porque introduz uma ideia que contrasta com a ação principal."
+  },
+  {
+    "id": 182,
+    "nivel": 8,
+    "frase": "O jantar estava delicioso.",
+    "palavra": "jantar",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Verbo",
+      "Substantivo",
+      "Adjetivo",
+      "Advérbio"
+    ],
+    "explicacao": "Embora jantar seja verbo, aqui vem precedido do artigo O e nomeia a refeição, funcionando como substantivo."
+  },
+  {
+    "id": 183,
+    "nivel": 8,
+    "frase": "Ele fala muito baixo em público.",
+    "palavra": "baixo",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Substantivo",
+      "Preposição"
+    ],
+    "explicacao": "Aqui baixo modifica o verbo falar e indica o modo, portanto é advérbio, não adjetivo."
+  },
+  {
+    "id": 184,
+    "nivel": 8,
+    "frase": "Ela está meio nervosa com a apresentação.",
+    "palavra": "meio",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Numeral",
+      "Advérbio",
+      "Adjetivo",
+      "Substantivo"
+    ],
+    "explicacao": "Antes de um adjetivo, meio é advérbio de intensidade e permanece invariável."
+  },
+  {
+    "id": 185,
+    "nivel": 8,
+    "frase": "Falaram bastante sobre o assunto.",
+    "palavra": "bastante",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Pronome",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "Modificando o verbo falar, bastante é advérbio de intensidade e fica invariável."
+  },
+  {
+    "id": 186,
+    "nivel": 8,
+    "frase": "Só ele sabe a resposta certa.",
+    "palavra": "Só",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Adjetivo",
+      "Advérbio",
+      "Pronome",
+      "Conjunção"
+    ],
+    "explicacao": "Aqui Só equivale a somente e indica restrição, sendo advérbio, e não adjetivo com sentido de sozinho."
+  },
+  {
+    "id": 187,
+    "nivel": 8,
+    "frase": "Encontrei muitos livros interessantes.",
+    "palavra": "muitos",
+    "classe": "Pronome",
+    "alternativas": [
+      "Advérbio",
+      "Numeral",
+      "Pronome",
+      "Adjetivo"
+    ],
+    "explicacao": "Acompanhando o substantivo livros, muitos é pronome indefinido, e não advérbio."
+  },
+  {
+    "id": 188,
+    "nivel": 8,
+    "frase": "O andar do prédio foi reformado.",
+    "palavra": "andar",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Substantivo",
+      "Verbo",
+      "Adjetivo",
+      "Advérbio"
+    ],
+    "explicacao": "Precedido do artigo O, andar nomeia o pavimento e funciona como substantivo, não como verbo."
+  },
+  {
+    "id": 189,
+    "nivel": 8,
+    "frase": "Aquele que estuda alcança seus objetivos.",
+    "palavra": "que",
+    "classe": "Pronome",
+    "alternativas": [
+      "Conjunção",
+      "Pronome",
+      "Advérbio",
+      "Artigo"
+    ],
+    "explicacao": "Que é pronome relativo porque retoma o pronome demonstrativo Aquele."
+  },
+  {
+    "id": 190,
+    "nivel": 8,
+    "frase": "Chegamos tarde, logo perdemos o início.",
+    "palavra": "logo",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Advérbio",
+      "Conjunção",
+      "Preposição",
+      "Interjeição"
+    ],
+    "explicacao": "Aqui logo liga as orações indicando conclusão, funcionando como conjunção conclusiva, e não como advérbio de tempo."
+  },
+  {
+    "id": 191,
+    "nivel": 8,
+    "frase": "O caminhar diário melhora a saúde.",
+    "palavra": "caminhar",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Verbo",
+      "Adjetivo",
+      "Substantivo",
+      "Advérbio"
+    ],
+    "explicacao": "Precedido do artigo O e caracterizado por diário, caminhar está substantivado."
+  },
+  {
+    "id": 192,
+    "nivel": 8,
+    "frase": "Todos, exceto Ana, participaram do jogo.",
+    "palavra": "exceto",
+    "classe": "Preposição",
+    "alternativas": [
+      "Preposição",
+      "Conjunção",
+      "Advérbio",
+      "Pronome"
+    ],
+    "explicacao": "Exceto é uma preposição porque relaciona os termos indicando exclusão."
+  },
+  {
+    "id": 193,
+    "nivel": 8,
+    "frase": "Ela é a mais dedicada da turma.",
+    "palavra": "mais",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Pronome",
+      "Advérbio",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "Mais é advérbio de intensidade porque gradua o adjetivo dedicada."
+  },
+  {
+    "id": 194,
+    "nivel": 8,
+    "frase": "Deram-me um livro de presente.",
+    "palavra": "me",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Artigo",
+      "Preposição",
+      "Advérbio"
+    ],
+    "explicacao": "Me é pronome pessoal oblíquo porque indica quem recebeu o livro."
+  },
+  {
+    "id": 195,
+    "nivel": 8,
+    "frase": "Ele agiu como um verdadeiro profissional.",
+    "palavra": "como",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Advérbio",
+      "Preposição",
+      "Conjunção",
+      "Pronome"
+    ],
+    "explicacao": "Aqui como introduz uma comparação, funcionando como conjunção subordinativa comparativa."
+  },
+  {
+    "id": 196,
+    "nivel": 8,
+    "frase": "Vi o menino cujo pai é médico.",
+    "palavra": "cujo",
+    "classe": "Pronome",
+    "alternativas": [
+      "Pronome",
+      "Conjunção",
+      "Artigo",
+      "Adjetivo"
+    ],
+    "explicacao": "Cujo é pronome relativo porque estabelece posse entre menino e pai."
+  },
+  {
+    "id": 197,
+    "nivel": 8,
+    "frase": "Ela respondeu tudo corretamente.",
+    "palavra": "tudo",
+    "classe": "Pronome",
+    "alternativas": [
+      "Substantivo",
+      "Advérbio",
+      "Pronome",
+      "Numeral"
+    ],
+    "explicacao": "Tudo é pronome indefinido porque se refere ao conjunto das questões sem especificar."
+  },
+  {
+    "id": 198,
+    "nivel": 8,
+    "frase": "O porquê da decisão não foi explicado.",
+    "palavra": "porquê",
+    "classe": "Substantivo",
+    "alternativas": [
+      "Conjunção",
+      "Substantivo",
+      "Advérbio",
+      "Pronome"
+    ],
+    "explicacao": "Com acento e precedido do artigo O, porquê nomeia o motivo e funciona como substantivo."
+  },
+  {
+    "id": 199,
+    "nivel": 8,
+    "frase": "Nada mudou desde aquele dia.",
+    "palavra": "Nada",
+    "classe": "Pronome",
+    "alternativas": [
+      "Advérbio",
+      "Pronome",
+      "Substantivo",
+      "Conjunção"
+    ],
+    "explicacao": "Nada é pronome indefinido porque se refere à ausência total de algo, sem especificar."
+  },
+  {
+    "id": 200,
+    "nivel": 8,
+    "frase": "Ele estuda, entretanto não pratica.",
+    "palavra": "entretanto",
+    "classe": "Conjunção",
+    "alternativas": [
+      "Advérbio",
+      "Conjunção",
+      "Preposição",
+      "Interjeição"
+    ],
+    "explicacao": "Entretanto é conjunção coordenativa adversativa porque liga as orações marcando oposição."
+  },
+  {
+    "id": 201,
+    "nivel": 8,
+    "frase": "Os alunos saíram cedo devido à chuva.",
+    "palavra": "devido",
+    "classe": "Preposição",
+    "alternativas": [
+      "Adjetivo",
+      "Preposição",
+      "Conjunção",
+      "Advérbio"
+    ],
+    "explicacao": "Em devido a, a locução funciona como preposição, relacionando o fato à sua causa."
+  },
+  {
+    "id": 202,
+    "nivel": 8,
+    "frase": "Falou alto para que todos ouvissem.",
+    "palavra": "alto",
+    "classe": "Advérbio",
+    "alternativas": [
+      "Advérbio",
+      "Adjetivo",
+      "Substantivo",
+      "Numeral"
+    ],
+    "explicacao": "Modificando o verbo falar, alto indica modo e é advérbio, não adjetivo."
+  },
+  {
+    "id": 203,
+    "nivel": 8,
+    "frase": "Comprei bastantes cadernos para o semestre.",
+    "palavra": "bastantes",
+    "classe": "Pronome",
+    "alternativas": [
+      "Advérbio",
+      "Pronome",
+      "Adjetivo",
+      "Numeral"
+    ],
+    "explicacao": "Acompanhando o substantivo cadernos, bastantes é pronome indefinido e por isso vai para o plural."
+  }
 ]
