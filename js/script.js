@@ -3879,6 +3879,86 @@ function generatePortugueseQuestion() {
 // PORTUGUÊS - MOSTRAR QUESTÃO
 // ======================================================
 
+/*
+    Localiza a palavra analisada na frase como palavra
+    inteira.
+
+    Uma busca por substring destacaria o "o" dentro de
+    "comprou" ou o "a" dentro de "aluno" — o que atinge
+    justamente artigos, preposições e conjunções.
+
+    \b do JavaScript é ASCII, então trataria "é" ou "ã"
+    como limite de palavra. Por isso a verificação das
+    bordas é feita com \p{L}, que reconhece acentuação.
+
+    Devolve o índice inicial ou -1.
+*/
+function encontrarPalavraInteira(
+    frase,
+    palavra
+) {
+
+    if (!palavra) {
+        return -1;
+    }
+
+
+    const alvo =
+        palavra.toLowerCase();
+
+    const texto =
+        frase.toLowerCase();
+
+    const ehLetra =
+        caractere =>
+            caractere !== undefined &&
+            /[\p{L}\p{N}]/u.test(
+                caractere
+            );
+
+
+    let posicao =
+        texto.indexOf(alvo);
+
+
+    while (posicao !== -1) {
+
+        const anterior =
+            texto[posicao - 1];
+
+        const seguinte =
+            texto[posicao + alvo.length];
+
+
+        if (
+            !ehLetra(anterior) &&
+            !ehLetra(seguinte)
+        ) {
+
+            return posicao;
+
+        }
+
+
+        posicao =
+            texto.indexOf(
+                alvo,
+                posicao + 1
+            );
+
+    }
+
+
+    /*
+        Nenhuma ocorrência isolada: pode ser uma expressão
+        com hífen ou uma flexão. Cai na busca simples para
+        ao menos destacar alguma coisa.
+    */
+    return texto.indexOf(alvo);
+
+}
+
+
 function showPortugueseQuestion() {
 
     if (
@@ -3908,11 +3988,10 @@ function showPortugueseQuestion() {
 
 
         const inicio =
-            frase
-                .toLowerCase()
-                .indexOf(
-                    palavra.toLowerCase()
-                );
+            encontrarPalavraInteira(
+                frase,
+                palavra
+            );
 
 
         portugueseQuestionElement

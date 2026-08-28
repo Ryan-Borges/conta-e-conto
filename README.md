@@ -142,7 +142,35 @@ Para calcular:
 
 O jogo de Português utiliza questões armazenadas em banco de dados e trabalha principalmente com a identificação de classes gramaticais em frases.
 
-Atualmente, o banco possui **80 questões**.
+O banco de questões pode ser ampliado sem alterar código.
+Os arquivos ficam em `server/seeds/` e são inseridos por
+script, que ignora frases já existentes — rodar duas vezes
+não duplica nada.
+
+Dentro de `server`:
+
+```bash
+node validar-questoes.js seeds/questoes-portugues-extra.json
+```
+
+```bash
+node seed-questoes.js seeds/questoes-portugues-extra.json --simular
+```
+
+```bash
+node seed-questoes.js seeds/questoes-portugues-extra.json
+```
+
+Para atualizar o backup em `docs/portugues.json`:
+
+```bash
+node questoes-dump.js
+```
+
+O validador confere nível, classe, alternativas, duplicatas
+e, principalmente, se a palavra analisada aparece na frase
+como palavra inteira — o jogo destaca essa palavra e uma
+busca por pedaço destacaria a letra errada.
 
 A área de aprendizagem aborda as dez classes gramaticais:
 
@@ -240,11 +268,18 @@ conta-e-conto/
 │
 ├── server/
 │   ├── migrations/
-│   │   └── 001_senha_alterada_em.sql
+│   │   ├── 001_senha_alterada_em.sql
+│   │   └── 002_indice_ranking.sql
+│   ├── seeds/
+│   │   └── questoes-portugues-extra.json
 │   ├── database.js
 │   ├── migrate.js
+│   ├── questoes-dump.js
+│   ├── schema-dump.js
 │   ├── schema.sql
+│   ├── seed-questoes.js
 │   ├── server.js
+│   ├── validar-questoes.js
 │   ├── package.json
 │   └── package-lock.json
 │

@@ -8,6 +8,10 @@
     "migrate": "node migrate.js",
     "migrate:lista": "node migrate.js --lista",
     "schema:dump": "node schema-dump.js",
+    "questoes:validar": "node validar-questoes.js seeds/questoes-portugues-extra.json",
+    "questoes:simular": "node seed-questoes.js seeds/questoes-portugues-extra.json --simular",
+    "questoes:inserir": "node seed-questoes.js seeds/questoes-portugues-extra.json",
+    "questoes:exportar": "node questoes-dump.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
