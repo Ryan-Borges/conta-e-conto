@@ -121,11 +121,6 @@ const mathQuestionElement =
 const answerInput =
     document.getElementById("answerInput");
 
-const numericKeyboard =
-    document.getElementById(
-        "numericKeyboard"
-    );
-
 const numericKeys =
     document.querySelectorAll(
         ".numeric-key[data-value]"
@@ -851,8 +846,6 @@ let level = 1;
 let currentQuestion = "";
 
 let currentAnswer = 0;
-
-let currentOperation = "";
 
 let timer = TEMPO_TOTAL;
 
@@ -3151,9 +3144,6 @@ function generateMathQuestion() {
 
     currentAnswer =
         question.answer;
-
-    currentOperation =
-        operationKey;
 
     currentQuestion =
         question.expression;

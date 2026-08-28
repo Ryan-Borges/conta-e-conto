@@ -428,6 +428,37 @@ localStorage.removeItem("apiUrl")
 
 ---
 
+## ✅ Qualidade
+
+O projeto tem verificação automática. Dentro de `server`:
+
+```bash
+npm run verificar
+```
+
+Isso roda o ESLint e os testes. Separadamente:
+
+```bash
+npm run lint
+```
+
+```bash
+npm test
+```
+
+Os testes usam um banco falso — não tocam no Aiven e não
+precisam de credenciais. O GitHub Actions roda os mesmos
+comandos a cada push.
+
+O ESLint está em `devDependencies`. Se quiser builds mais
+rápidos no Render, configure o comando de build como:
+
+```bash
+npm ci --omit=dev
+```
+
+---
+
 ## 🌐 API
 
 O backend do projeto disponibiliza uma API REST responsável pela comunicação entre o frontend e o banco de dados.

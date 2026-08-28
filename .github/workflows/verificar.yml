@@ -1,0 +1,45 @@
+# Roda lint e testes a cada push e pull request.
+#
+# O repositório é público, então o GitHub Actions é
+# gratuito e sem limite de minutos.
+#
+# Os testes usam um banco falso e não tocam no Aiven —
+# nenhuma credencial é necessária aqui.
+
+name: Verificar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Mesma versão exigida em server/package.json
+          # (o backend usa fetch nativo).
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+
+      - name: Instalar dependencias
+        working-directory: server
+        run: npm ci
+
+      - name: Lint
+        working-directory: server
+        run: npm run lint
+
+      - name: Testes
+        working-directory: server
+        run: npm test
+
+      - name: Validar banco de questoes
+        working-directory: server
+        run: node validar-questoes.js seeds/questoes-portugues-extra.json
