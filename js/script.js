@@ -6874,17 +6874,43 @@ function mostrarAuthBox(
 }
 
 
+/*
+    O token é lido da URL uma única vez e guardado aqui.
+
+    Logo depois de ser lido ele é apagado da barra de
+    endereços, para não ficar no histórico do navegador —
+    então a leitura seguinte, na hora de enviar a nova
+    senha, não encontraria mais nada na URL.
+*/
+let tokenDeRecuperacao = null;
+
+
 function obterResetToken() {
+
+    if (tokenDeRecuperacao) {
+        return tokenDeRecuperacao;
+    }
 
     const params =
         new URLSearchParams(
             window.location.search
         );
 
-    return params.get(
-        "resetToken"
-    );
+    tokenDeRecuperacao =
+        params.get("resetToken");
 
+    return tokenDeRecuperacao;
+
+}
+
+
+/*
+    Depois de usado, o token não serve mais: o servidor o
+    marca como consumido. Guardá-lo só permitiria reenviar
+    o formulário por engano.
+*/
+function limparResetToken() {
+    tokenDeRecuperacao = null;
 }
 
 
@@ -7186,15 +7212,11 @@ if (resetPasswordForm) {
                     );
 
 
+                    limparResetToken();
+
+
                     window.setTimeout(
                         () => {
-
-                            window.history
-                                .replaceState(
-                                    {},
-                                    "",
-                                    window.location.pathname
-                                );
 
                             mostrarAuthBox(
                                 loginBox
