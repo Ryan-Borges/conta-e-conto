@@ -456,6 +456,124 @@ async function enviarEmail({
 // AUTENTICAÇÃO JWT
 // ==========================================
 
+/*
+    Cache de usuarios.senha_alterada_em.
+
+    O banco é um plano gratuito com conexões limitadas, e
+    esta consulta rodaria em toda requisição autenticada.
+    Abrir o perfil dispara três chamadas em paralelo, então
+    sem cache seriam três consultas idênticas.
+
+    A janela é curta de propósito: no pior caso um token já
+    invalidado continua aceito por até CACHE_SENHA_MS. Isso
+    é irrelevante perto dos 7 dias que a verificação existe
+    para cortar.
+*/
+const USUARIO_INEXISTENTE =
+    Symbol("usuario-inexistente");
+
+const CACHE_SENHA_MS =
+    60 * 1000;
+
+const CACHE_SENHA_MAXIMO =
+    500;
+
+const cacheSenhaAlterada =
+    new Map();
+
+
+function invalidarCacheSenha(
+    usuarioId
+) {
+
+    cacheSenhaAlterada.delete(
+        Number(usuarioId)
+    );
+
+}
+
+
+async function obterSenhaAlteradaEm(
+    usuarioId
+) {
+
+    const chave =
+        Number(usuarioId);
+
+    const agora =
+        Date.now();
+
+    const registro =
+        cacheSenhaAlterada.get(chave);
+
+
+    if (
+        registro &&
+        agora < registro.expiraEm
+    ) {
+
+        return registro.valor;
+
+    }
+
+
+    const [linhas] =
+        await pool.query(
+            `SELECT
+                UNIX_TIMESTAMP(senha_alterada_em)
+                    AS senhaAlteradaEm
+             FROM usuarios
+             WHERE id = ?`,
+            [
+                chave
+            ]
+        );
+
+
+    const valor =
+        linhas.length === 0
+            ? USUARIO_INEXISTENTE
+            : linhas[0].senhaAlteradaEm;
+
+
+    /*
+        Mesma armadilha do limitador de requisições: sem
+        limite, o Map cresceria indefinidamente. Aqui a
+        entrada mais antiga sai quando o teto é atingido.
+    */
+    if (
+        cacheSenhaAlterada.size >=
+        CACHE_SENHA_MAXIMO
+    ) {
+
+        const maisAntiga =
+            cacheSenhaAlterada
+                .keys()
+                .next()
+                .value;
+
+        cacheSenhaAlterada.delete(
+            maisAntiga
+        );
+
+    }
+
+
+    cacheSenhaAlterada.set(
+        chave,
+        {
+            valor,
+            expiraEm:
+                agora + CACHE_SENHA_MS
+        }
+    );
+
+
+    return valor;
+
+}
+
+
 async function autenticarToken(
     req,
     res,
@@ -532,23 +650,25 @@ async function autenticarToken(
         UNIX_TIMESTAMP devolve segundos, na mesma base do
         "iat" do JWT — comparar Date do MySQL com epoch em
         JS traria problema de fuso.
+
+        O resultado fica em cache por pouco tempo porque o
+        banco é um plano gratuito com conexões limitadas.
+        Abrir o perfil, por exemplo, dispara três chamadas
+        autenticadas em paralelo; sem cache seriam três
+        consultas idênticas.
     */
     try {
 
-        const [linhas] =
-            await pool.query(
-                `SELECT
-                    UNIX_TIMESTAMP(senha_alterada_em)
-                        AS senhaAlteradaEm
-                 FROM usuarios
-                 WHERE id = ?`,
-                [
-                    usuario.id
-                ]
+        const senhaAlteradaEm =
+            await obterSenhaAlteradaEm(
+                usuario.id
             );
 
 
-        if (linhas.length === 0) {
+        if (
+            senhaAlteradaEm ===
+            USUARIO_INEXISTENTE
+        ) {
 
             return res
                 .status(403)
@@ -558,10 +678,6 @@ async function autenticarToken(
                 });
 
         }
-
-
-        const senhaAlteradaEm =
-            linhas[0].senhaAlteradaEm;
 
 
         if (
@@ -1998,6 +2114,15 @@ app.post(
                 await conexao
                     .commit();
 
+
+                /*
+                    Sem isto, os tokens antigos continuariam
+                    valendo até o cache expirar.
+                */
+                invalidarCacheSenha(
+                    solicitacao.usuario_id
+                );
+
             }
 
             catch (error) {
@@ -2716,14 +2841,26 @@ app.get(
 // INICIAR SERVIDOR
 // ==========================================
 
-app.listen(
-    PORT,
-    "0.0.0.0",
-    () => {
+/*
+    Só sobe o servidor quando este arquivo é executado
+    diretamente. Assim os testes conseguem importar o app
+    e abrir uma porta própria.
+*/
+if (require.main === module) {
 
-        console.log(
-            `Servidor rodando na porta ${PORT}`
-        );
+    app.listen(
+        PORT,
+        "0.0.0.0",
+        () => {
 
-    }
-);
+            console.log(
+                `Servidor rodando na porta ${PORT}`
+            );
+
+        }
+    );
+
+}
+
+
+module.exports = app;

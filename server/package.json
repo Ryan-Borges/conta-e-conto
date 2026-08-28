@@ -12,7 +12,7 @@
     "questoes:simular": "node seed-questoes.js seeds/questoes-portugues-extra.json --simular",
     "questoes:inserir": "node seed-questoes.js seeds/questoes-portugues-extra.json",
     "questoes:exportar": "node questoes-dump.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test testes/*.test.js"
   },
   "engines": {
     "node": ">=18"

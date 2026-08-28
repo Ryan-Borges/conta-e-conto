@@ -2235,6 +2235,8 @@ function showMathOperationModes(
 
 function openPortugueseModes(addToHistory = true) {
 
+    garantirQuestoesPortugues();
+
     hideMainSections();
 
 
@@ -3604,6 +3606,63 @@ function endMathGame(reason) {
 // PORTUGUÊS - CARREGAR QUESTÕES
 // ======================================================
 
+/*
+    O carregamento acontece quando o jogador entra no menu
+    de Português, não na abertura da página.
+
+    Antes, toda visita baixava o banco inteiro de questões
+    — hoje cerca de 46 KB — mesmo para quem só joga
+    Matemática. O backend está num plano gratuito, então
+    essa requisição custa caro e era quase sempre inútil.
+
+    A promessa é guardada para que várias chamadas
+    simultâneas resultem em uma única requisição.
+*/
+let promessaQuestoesPortugues = null;
+
+
+function garantirQuestoesPortugues() {
+
+    if (
+        portugueseQuestions.length > 0
+    ) {
+
+        return Promise.resolve();
+
+    }
+
+
+    if (!promessaQuestoesPortugues) {
+
+        promessaQuestoesPortugues =
+            loadPortugueseQuestions()
+                .finally(() => {
+
+                    /*
+                        Libera para uma nova tentativa caso
+                        tenha falhado — por exemplo, com o
+                        servidor ainda hibernando.
+                    */
+                    if (
+                        portugueseQuestions
+                            .length === 0
+                    ) {
+
+                        promessaQuestoesPortugues =
+                            null;
+
+                    }
+
+                });
+
+    }
+
+
+    return promessaQuestoesPortugues;
+
+}
+
+
 async function loadPortugueseQuestions() {
 
     try {
@@ -3654,7 +3713,7 @@ async function loadPortugueseQuestions() {
 // PORTUGUÊS - INICIAR
 // ======================================================
 
-function startPortugueseGame(
+async function startPortugueseGame(
     selectedLevel,
     addToHistory = true
 ) {
@@ -3705,19 +3764,6 @@ function startPortugueseGame(
     );
 
 
-    if (
-        portugueseQuestions.length === 0
-    ) {
-
-        alert(
-            "As questões de Português ainda estão carregando."
-        );
-
-        return;
-
-    }
-
-
     hideMainSections();
 
 
@@ -3726,6 +3772,81 @@ function startPortugueseGame(
         portugueseGame.classList.remove(
             "hidden"
         );
+
+    }
+
+
+    /*
+        As questões são carregadas sob demanda, e o backend
+        está num plano gratuito que hiberna após alguns
+        minutos parado. Nesse caso a primeira resposta pode
+        levar bastante tempo, então a espera precisa ser
+        explicada em vez de parecer travamento.
+    */
+    if (
+        portugueseQuestions.length === 0
+    ) {
+
+        if (portugueseOptionsElement) {
+            portugueseOptionsElement
+                .replaceChildren();
+        }
+
+
+        if (portugueseQuestionElement) {
+
+            portugueseQuestionElement
+                .textContent =
+                    "Carregando as questões…";
+
+        }
+
+
+        const avisoLento =
+            setTimeout(
+                () => {
+
+                    if (portugueseQuestionElement) {
+
+                        portugueseQuestionElement
+                            .textContent =
+                                "Ainda carregando… O servidor estava em repouso e pode levar até um minuto para responder.";
+
+                    }
+
+                },
+                3000
+            );
+
+
+        try {
+
+            await garantirQuestoesPortugues();
+
+        }
+
+        finally {
+
+            clearTimeout(avisoLento);
+
+        }
+
+
+        if (
+            portugueseQuestions.length === 0
+        ) {
+
+            if (portugueseQuestionElement) {
+
+                portugueseQuestionElement
+                    .textContent =
+                        "Não foi possível carregar as questões. Verifique sua conexão e tente novamente.";
+
+            }
+
+            return;
+
+        }
 
     }
 
@@ -7594,8 +7715,6 @@ function verificarLoginSalvo() {
 // ======================================================
 
 carregarTemaSalvo();
-
-loadPortugueseQuestions();
 
 verificarLoginSalvo();
 
