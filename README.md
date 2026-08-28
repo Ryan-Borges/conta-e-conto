@@ -56,7 +56,7 @@ O Conta & Conto possui:
 - 🔥 Modo Brutal
 - 🏆 Ranking de Matemática
 - 🏆 Ranking de Português
-- 💾 Armazenamento de recordes
+- 💾 Recordes calculados pelo servidor
 - 📚 Área de aprendizagem
 - 🧠 Estratégias de cálculo mental
 - 📝 Revisão de classes gramaticais
@@ -510,6 +510,29 @@ Armazena:
 - classe gramatical correta;
 - alternativas;
 - explicação da resposta.
+
+---
+
+## 🔒 Integridade do ranking
+
+O placar não é enviado pelo navegador. O servidor cria a
+partida, guarda como ela foi montada e calcula o resultado
+a partir das respostas.
+
+**Matemática** — as questões são geradas no servidor a
+partir de uma semente. O navegador recebe apenas as
+expressões; no encerramento, o servidor regera a mesma
+sequência e confere as respostas.
+
+**Português** — o enunciado vai sem a classe correta, então
+cada resposta é confirmada pelo servidor. É necessário
+porque errar encerra a partida na hora, e com quatro
+alternativas nenhum esquema de verificação no cliente
+resistiria.
+
+O desenho é econômico porque a hospedagem é gratuita:
+Matemática usa duas requisições por partida, e Português
+uma por resposta, naturalmente espaçadas pelo cronômetro.
 
 ---
 

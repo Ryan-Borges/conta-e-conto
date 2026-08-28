@@ -1039,7 +1039,11 @@ let portugueseTimer = TEMPO_TOTAL;
 
 let portugueseTimerInterval = null;
 
-let portugueseUsedQuestionIds = [];
+// Trava enquanto o servidor confirma a resposta.
+let portugueseEsperandoResposta = false;
+
+// Resultado devolvido pelo servidor ao encerrar.
+let portugueseResultadoServidor = null;
 
 
 // ======================================================
@@ -1829,84 +1833,170 @@ function definirMensagem(
 }
 
 
-async function salvarRecordeAPI(jogo, recorde) {
+/*
+    PARTIDAS
+
+    O placar deixou de ser enviado pronto pelo navegador.
+    O servidor cria a partida, guarda como ela foi montada e
+    calcula o placar a partir das respostas.
+
+    Matemática: o servidor manda só as expressões. O
+    navegador resolve para saber se continua o jogo, e no
+    fim manda as respostas para conferência.
+
+    Português: o servidor manda o enunciado sem a classe
+    correta, então cada resposta precisa ser confirmada por
+    ele — errar encerra a partida na hora e o cliente não
+    teria como saber sozinho.
+*/
+
+let partidaId = null;
+let partidaQuestoes = [];
+let partidaRespostas = [];
+let partidaEncerrada = false;
+
+
+function limparPartida() {
+    partidaId = null;
+    partidaQuestoes = [];
+    partidaRespostas = [];
+    partidaEncerrada = false;
+}
+
+
+async function pedirAoServidor(caminho, corpo) {
 
     const token =
         localStorage.getItem("token");
 
-
     if (!token) {
-
-        console.warn(
-            "Usuário não autenticado."
-        );
-
-        return;
-
+        throw new Error("Você precisa estar logado.");
     }
 
+    const resposta =
+        await fetch(
+            `${API_URL}${caminho}`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+
+                body: JSON.stringify(corpo || {})
+            }
+        );
+
+    const dados =
+        await resposta.json().catch(() => ({}));
+
+    if (!resposta.ok) {
+        throw new Error(
+            dados.message ||
+            "Não foi possível falar com o servidor."
+        );
+    }
+
+    return dados;
+
+}
+
+
+async function criarPartida(corpo) {
+
+    const dados =
+        await pedirAoServidor("/api/partidas", corpo);
+
+    partidaId = dados.partidaId;
+    partidaQuestoes = dados.questoes || [];
+    partidaRespostas = [];
+    partidaEncerrada = false;
+
+    return dados;
+
+}
+
+
+async function encerrarPartidaNoServidor() {
+
+    if (!partidaId || partidaEncerrada) {
+        return null;
+    }
+
+    partidaEncerrada = true;
 
     try {
 
-        const response =
-            await fetch(
-                `${API_URL}/api/records`,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json",
-
-                        "Authorization":
-                            `Bearer ${token}`
-                    },
-
-                    body:
-                        JSON.stringify({
-                            jogo: jogo,
-                            modo: "brutal",
-                            recorde: recorde
-                        })
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            console.error(
-                "Erro ao salvar recorde:",
-                data
-            );
-
-            return;
-
-        }
-
-
-        console.log(
-            "Recorde salvo na API:",
-            data
+        return await pedirAoServidor(
+            `/api/partidas/${partidaId}/encerrar`,
+            { respostas: partidaRespostas }
         );
-
-        await carregarMeusRecordes();
 
     }
 
     catch (error) {
 
         console.error(
-            "Erro ao conectar com a API:",
+            "Erro ao encerrar a partida:",
             error
         );
+
+        return null;
 
     }
 
 }
+
+
+/*
+    Resolve a expressão que veio do servidor.
+
+    As expressões têm um único tipo de operador e são
+    avaliadas da esquerda para a direita, então não é
+    preciso tratar precedência — nem usar eval.
+*/
+function calcularExpressao(expressao) {
+
+    const partes =
+        String(expressao)
+            .trim()
+            .split(/\s+/);
+
+    let total = Number(partes[0]);
+
+    for (let i = 1; i < partes.length; i += 2) {
+
+        const operador = partes[i];
+        const valor = Number(partes[i + 1]);
+
+        if (!Number.isFinite(valor)) {
+            return NaN;
+        }
+
+        if (operador === "+") {
+            total += valor;
+        }
+        else if (operador === "-") {
+            total -= valor;
+        }
+        else if (operador === "×") {
+            total *= valor;
+        }
+        else if (operador === "÷") {
+            total /= valor;
+        }
+        else {
+            return NaN;
+        }
+
+    }
+
+    return total;
+
+}
+
+
 
 async function carregarMeusRecordes() {
 
@@ -2227,8 +2317,6 @@ function showMathOperationModes(
 // ======================================================
 
 function openPortugueseModes(addToHistory = true) {
-
-    garantirQuestoesPortugues();
 
     hideMainSections();
 
@@ -2579,7 +2667,13 @@ function configureMathInputForDevice() {
 }
 
 
-function startSurvivalGame(addToHistory = true) {
+/*
+    Só a Sobrevivência conta para o ranking, então só ela
+    precisa da partida no servidor. Os modos por operação
+    continuam locais, com recorde no próprio navegador,
+    exatamente como antes.
+*/
+async function startSurvivalGame(addToHistory = true) {
 
     mathGameType =
         "survival";
@@ -2592,6 +2686,61 @@ function startSurvivalGame(addToHistory = true) {
 
     mathQuestionTime =
         TEMPO_TOTAL;
+
+
+    hideMainSections();
+
+    if (game) {
+        game.classList.remove("hidden");
+    }
+
+    if (mathQuestionElement) {
+        mathQuestionElement.textContent =
+            "Preparando a partida…";
+    }
+
+    const avisoLento =
+        setTimeout(
+            () => {
+
+                if (mathQuestionElement) {
+                    mathQuestionElement.textContent =
+                        "Ainda preparando… O servidor estava em repouso e pode levar até um minuto.";
+                }
+
+            },
+            3000
+        );
+
+
+    try {
+
+        await criarPartida({
+            jogo: "matematica",
+            modo: "brutal",
+            sobrevivencia: true
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        if (mathQuestionElement) {
+            mathQuestionElement.textContent =
+                error.message ||
+                "Não foi possível iniciar a partida.";
+        }
+
+        return;
+
+    }
+
+    finally {
+        clearTimeout(avisoLento);
+    }
+
 
     startGame();
 
@@ -3110,37 +3259,49 @@ function generateMathQuestion() {
             score
         );
 
-    let operationKey =
-        selectedMathOperation;
+    let question;
 
     if (
         mathGameType ===
         "survival"
     ) {
 
-        const availableOperations = [
-            "addition",
-            "subtraction",
-            "multiplication",
-            "division"
-        ];
+        /*
+            A questão vem do servidor, sem a resposta. O
+            navegador resolve a expressão só para saber se
+            continua o jogo; quem decide o placar é o
+            servidor, no encerramento.
+        */
+        const doServidor =
+            partidaQuestoes[score];
 
-        operationKey =
-            availableOperations[
-                randomNumber(
-                    0,
-                    availableOperations.length - 1
-                )
-            ];
+        if (!doServidor) {
+
+            endMathGame("wrong");
+
+            return;
+
+        }
+
+        question = {
+            expression: doServidor.expressao,
+            answer: calcularExpressao(doServidor.expressao)
+        };
+
+        level = doServidor.nivel || level;
 
     }
 
-    const question =
-        generateQuestionForOperation(
-            operationKey,
-            level,
-            score
-        );
+    else {
+
+        question =
+            generateQuestionForOperation(
+                selectedMathOperation,
+                level,
+                score
+            );
+
+    }
 
     currentAnswer =
         question.answer;
@@ -3269,6 +3430,19 @@ function checkMathAnswer() {
         Number(
             answerInput.value
         );
+
+
+    if (
+        mathGameType ===
+        "survival"
+    ) {
+
+        partidaRespostas.push({
+            resposta: userAnswer
+        });
+
+    }
+
 
     if (
         userAnswer ===
@@ -3485,17 +3659,42 @@ function endMathGame(reason) {
 
     }
 
-    // O banco continua usando "brutal" internamente
-    // para preservar todos os recordes já existentes.
+    /*
+        Na Sobrevivência o recorde é gravado pelo servidor,
+        a partir das respostas enviadas. O placar exibido
+        aqui é apenas o do navegador.
+    */
     if (
         mathGameType ===
         "survival"
     ) {
 
-        salvarRecordeAPI(
-            "matematica",
-            score
-        );
+        encerrarPartidaNoServidor()
+            .then(resultado => {
+
+                if (!resultado) {
+                    return;
+                }
+
+                if (
+                    Number(resultado.recorde) >
+                    Number(mathRecordValue)
+                ) {
+
+                    mathRecordValue =
+                        Number(resultado.recorde);
+
+                    localStorage.setItem(
+                        "mathRecord",
+                        mathRecordValue
+                    );
+
+                }
+
+                updateRecordsOnScreen();
+                carregarMeusRecordes();
+
+            });
 
     }
 
@@ -3596,107 +3795,8 @@ function endMathGame(reason) {
 // PORTUGUÊS - CARREGAR QUESTÕES
 // ======================================================
 
-/*
-    O carregamento acontece quando o jogador entra no menu
-    de Português, não na abertura da página.
-
-    Antes, toda visita baixava o banco inteiro de questões
-    — hoje cerca de 46 KB — mesmo para quem só joga
-    Matemática. O backend está num plano gratuito, então
-    essa requisição custa caro e era quase sempre inútil.
-
-    A promessa é guardada para que várias chamadas
-    simultâneas resultem em uma única requisição.
-*/
-let promessaQuestoesPortugues = null;
 
 
-function garantirQuestoesPortugues() {
-
-    if (
-        portugueseQuestions.length > 0
-    ) {
-
-        return Promise.resolve();
-
-    }
-
-
-    if (!promessaQuestoesPortugues) {
-
-        promessaQuestoesPortugues =
-            loadPortugueseQuestions()
-                .finally(() => {
-
-                    /*
-                        Libera para uma nova tentativa caso
-                        tenha falhado — por exemplo, com o
-                        servidor ainda hibernando.
-                    */
-                    if (
-                        portugueseQuestions
-                            .length === 0
-                    ) {
-
-                        promessaQuestoesPortugues =
-                            null;
-
-                    }
-
-                });
-
-    }
-
-
-    return promessaQuestoesPortugues;
-
-}
-
-
-async function loadPortugueseQuestions() {
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/api/questoes/portugues`
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Não foi possível carregar as questões de Português."
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        portugueseQuestions =
-            data.questoes || [];
-
-
-        console.log(
-            "Questões de Português carregadas do banco:",
-            portugueseQuestions.length
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Erro ao carregar Português:",
-            error
-        );
-
-    }
-
-}
 
 
 // ======================================================
@@ -3743,10 +3843,6 @@ async function startPortugueseGame(
     }
 
 
-    portugueseUsedQuestionIds =
-        [];
-
-
     clearInterval(timerInterval);
 
     clearInterval(
@@ -3767,76 +3863,81 @@ async function startPortugueseGame(
 
 
     /*
-        As questões são carregadas sob demanda, e o backend
-        está num plano gratuito que hiberna após alguns
-        minutos parado. Nesse caso a primeira resposta pode
-        levar bastante tempo, então a espera precisa ser
+        As questões vêm do servidor, sem a classe correta —
+        era isso que permitia ler o gabarito na aba Network.
+
+        O backend está num plano gratuito que hiberna após
+        alguns minutos parado, então a espera precisa ser
         explicada em vez de parecer travamento.
     */
-    if (
-        portugueseQuestions.length === 0
-    ) {
+    if (portugueseOptionsElement) {
+        portugueseOptionsElement.replaceChildren();
+    }
 
-        if (portugueseOptionsElement) {
-            portugueseOptionsElement
-                .replaceChildren();
-        }
+    if (portugueseQuestionElement) {
+        portugueseQuestionElement.textContent =
+            "Preparando a partida…";
+    }
 
+
+    const avisoLento =
+        setTimeout(
+            () => {
+
+                if (portugueseQuestionElement) {
+
+                    portugueseQuestionElement.textContent =
+                        "Ainda preparando… O servidor estava em repouso e pode levar até um minuto para responder.";
+
+                }
+
+            },
+            3000
+        );
+
+
+    try {
+
+        await criarPartida({
+            jogo: "portugues",
+            modo: MODOS_PORTUGUES[selectedLevel] || "tranquilo"
+        });
+
+        portugueseQuestions = partidaQuestoes;
+
+    }
+
+    catch (error) {
+
+        console.error(error);
 
         if (portugueseQuestionElement) {
 
-            portugueseQuestionElement
-                .textContent =
-                    "Carregando as questões…";
+            portugueseQuestionElement.textContent =
+                error.message ||
+                "Não foi possível iniciar a partida.";
 
         }
 
+        return;
 
-        const avisoLento =
-            setTimeout(
-                () => {
+    }
 
-                    if (portugueseQuestionElement) {
-
-                        portugueseQuestionElement
-                            .textContent =
-                                "Ainda carregando… O servidor estava em repouso e pode levar até um minuto para responder.";
-
-                    }
-
-                },
-                3000
-            );
+    finally {
+        clearTimeout(avisoLento);
+    }
 
 
-        try {
+    if (portugueseQuestions.length === 0) {
 
-            await garantirQuestoesPortugues();
+        if (portugueseQuestionElement) {
+
+            portugueseQuestionElement.textContent =
+                "Não há questões disponíveis no momento.";
 
         }
 
-        finally {
-
-            clearTimeout(avisoLento);
-
-        }
-
-
-        if (
-            portugueseQuestions.length === 0
-        ) {
-
-            if (portugueseQuestionElement) {
-
-                portugueseQuestionElement
-                    .textContent =
-                        "Não foi possível carregar as questões. Verifique sua conexão e tente novamente.";
-
-            }
-
-            return;
-
-        }
+        return;
 
     }
 
@@ -3899,6 +4000,16 @@ function updatePortugueseInterface() {
 // PORTUGUÊS - GERAR QUESTÃO
 // ======================================================
 
+/*
+    O modo também define o nível inicial no servidor.
+*/
+const MODOS_PORTUGUES = {
+    1: "tranquilo",
+    2: "velocidade",
+    3: "brutal"
+};
+
+
 function generatePortugueseQuestion() {
 
     clearInterval(
@@ -3906,80 +4017,47 @@ function generatePortugueseQuestion() {
     );
 
 
-    if (
-        portugueseLevel > 8
-    ) {
+    /*
+        A ordem das questões foi sorteada pelo servidor, e
+        ele confere se ela está sendo respeitada. Por isso a
+        questão da vez é sempre a da posição do placar —
+        não há mais sorteio no navegador.
 
+        O nível continua servindo só para exibição: quem
+        escolheu as questões de cada faixa foi o servidor.
+    */
+    if (portugueseLevel > 8) {
         portugueseLevel = 8;
+    }
+
+
+    const questao =
+        portugueseQuestions[portugueseScore];
+
+
+    if (!questao) {
+
+        endPortugueseGame("wrong");
+
+        return;
 
     }
 
 
-    let levelQuestions =
-        portugueseQuestions.filter(
-            question =>
-                Number(
-                    question.nivel
-                ) ===
-                portugueseLevel
-        );
+    portugueseCurrentQuestion = questao;
 
-
-    if (
-        levelQuestions.length === 0
-    ) {
-
-        levelQuestions =
-            portugueseQuestions;
-
+    if (questao.nivel) {
+        portugueseLevel = Number(questao.nivel);
     }
 
-
-    let availableQuestions =
-        levelQuestions.filter(
-            question =>
-                !portugueseUsedQuestionIds.includes(
-                    question.id
-                )
-        );
-
-
-    if (
-        availableQuestions.length === 0
-    ) {
-
-        portugueseUsedQuestionIds =
-            [];
-
-
-        availableQuestions =
-            levelQuestions;
-
-    }
-
-
-    const index =
-        randomNumber(
-            0,
-            availableQuestions.length - 1
-        );
-
-
-    portugueseCurrentQuestion =
-        availableQuestions[index];
-
-
-    portugueseUsedQuestionIds.push(
-        portugueseCurrentQuestion.id
-    );
-
-
-    updatePortugueseInterface();
-
-    showPortugueseQuestion();
 
     portugueseQuestionStartedAt =
         performance.now();
+
+
+    showPortugueseQuestion();
+
+    updatePortugueseInterface();
 
     startPortugueseTimer();
 
@@ -4292,12 +4370,23 @@ function updatePortugueseTimer() {
 // PORTUGUÊS - RESPONDER
 // ======================================================
 
-function checkPortugueseAnswer(
+/*
+    Quem diz se a resposta está certa é o servidor.
+
+    O navegador não recebe mais a classe correta, então não
+    teria como saber — e é justamente essa ignorância que
+    impede forjar um placar.
+
+    Enquanto a resposta não chega, os botões ficam
+    desabilitados para não haver clique duplo.
+*/
+async function checkPortugueseAnswer(
     selectedAnswer
 ) {
 
     if (
-        !portugueseCurrentQuestion
+        !portugueseCurrentQuestion ||
+        portugueseEsperandoResposta
     ) {
 
         return;
@@ -4310,52 +4399,109 @@ function checkPortugueseAnswer(
     );
 
 
-    if (
-        selectedAnswer ===
-        portugueseCurrentQuestion.classe
-    ) {
+    portugueseEsperandoResposta = true;
 
-        const tempoResposta =
-            (
-            performance.now() -
-            portugueseQuestionStartedAt
-            ) / 1000;
+    if (portugueseOptionsElement) {
 
-        portugueseScore++;
-
-        mostrarFeedbackRapido(
-            tempoResposta,
-            portugueseScore,
-            portugueseScoreElement
-        );
-
-        if (
-            portugueseScore %
-            10 === 0 &&
-            portugueseLevel < 8
-        ) {
-
-
-            portugueseLevel++;
-            portugueseUsedQuestionIds =
-                [];
-
+        for (const botao of portugueseOptionsElement.children) {
+            botao.disabled = true;
         }
 
+    }
 
-        updatePortugueseInterface();
 
-        generatePortugueseQuestion();
+    let veredito;
+
+    try {
+
+        veredito =
+            await pedirAoServidor(
+                `/api/partidas/${partidaId}/responder`,
+                {
+                    questaoId:
+                        portugueseCurrentQuestion.id,
+
+                    resposta:
+                        selectedAnswer
+                }
+            );
 
     }
 
-    else {
+    catch (error) {
 
-        endPortugueseGame(
-            "wrong"
+        console.error(
+            "Erro ao enviar a resposta:",
+            error
         );
 
+        /*
+            Sem confirmação do servidor não dá para seguir
+            jogando: encerra pelo placar já confirmado.
+        */
+        portugueseEsperandoResposta = false;
+
+        endPortugueseGame("erro");
+
+        return;
+
     }
+
+
+    portugueseEsperandoResposta = false;
+
+
+    if (!veredito.correto) {
+
+        /*
+            A explicação só chega agora, junto do veredito —
+            antes ela vinha com o enunciado e entregava a
+            resposta.
+        */
+        portugueseCurrentQuestion = {
+            ...portugueseCurrentQuestion,
+            classe: veredito.revisao?.classe,
+            explicacao: veredito.revisao?.explicacao
+        };
+
+        portugueseResultadoServidor = veredito;
+
+        endPortugueseGame("wrong");
+
+        return;
+
+    }
+
+
+    const tempoResposta =
+        (
+            performance.now() -
+            portugueseQuestionStartedAt
+        ) / 1000;
+
+    // O placar do servidor manda; o local é só exibição.
+    portugueseScore =
+        Number(veredito.acertos) ||
+        portugueseScore + 1;
+
+    mostrarFeedbackRapido(
+        tempoResposta,
+        portugueseScore,
+        portugueseScoreElement
+    );
+
+    if (
+        portugueseScore % 10 === 0 &&
+        portugueseLevel < 8
+    ) {
+
+        portugueseLevel++;
+
+    }
+
+    updatePortugueseInterface();
+
+    generatePortugueseQuestion();
 
 }
 
@@ -4419,18 +4565,55 @@ function endPortugueseGame(reason) {
 
     }
 
-    // ======================================================
-    // ENVIAR RECORDE COMPETITIVO PARA A API
-    // ======================================================
+    /*
+        O recorde é gravado pelo servidor, que corrigiu cada
+        resposta. Se a partida terminou por erro, o
+        resultado já veio junto do veredito; se terminou por
+        tempo ou desistência, encerra agora.
+    */
+    const aplicarResultado = resultado => {
 
-    if (
-        portugueseStartingLevel === 3
-    ) {
+        if (!resultado) {
+            return;
+        }
 
-        salvarRecordeAPI(
-        "portugues",
-        portugueseScore
+        if (
+            Number(resultado.recorde) >
+            Number(portugueseRecordValue)
+        ) {
+
+            portugueseRecordValue =
+                Number(resultado.recorde);
+
+            localStorage.setItem(
+                "portugueseRecord",
+                portugueseRecordValue
+            );
+
+        }
+
+        updateRecordsOnScreen();
+        carregarMeusRecordes();
+
+    };
+
+
+    if (portugueseResultadoServidor) {
+
+        partidaEncerrada = true;
+
+        aplicarResultado(
+            portugueseResultadoServidor
         );
+
+        portugueseResultadoServidor = null;
+
+    }
+
+    else {
+
+        encerrarPartidaNoServidor()
+            .then(aplicarResultado);
 
     }
 
@@ -7563,6 +7746,9 @@ if (logoutButton) {
             clearInterval(
                 portugueseTimerInterval
             );
+
+
+            limparPartida();
 
 
             localStorage.removeItem(

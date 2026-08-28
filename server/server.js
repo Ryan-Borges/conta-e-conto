@@ -7,6 +7,7 @@ const crypto = require("crypto");
 require("dotenv").config();
 
 const pool = require("./database");
+const partidas = require("./jogos/partidas");
 
 const app = express();
 
@@ -225,6 +226,28 @@ const limitarPerfil =
         maximo: 30,
         mensagem:
             "Muitas alterações no perfil. Aguarde alguns minutos.",
+
+        obterChave: req =>
+            String(
+                req.usuario?.id ||
+                req.ip ||
+                "desconhecido"
+            )
+    });
+
+
+/*
+    Criar partida grava no banco. Sem limite, um cliente
+    poderia abrir partidas em sequência — e o Aiven é um
+    plano gratuito.
+*/
+const limitarPartida =
+    criarLimitador({
+        janelaMs:
+            10 * 60 * 1000,
+        maximo: 60,
+        mensagem:
+            "Muitas partidas iniciadas. Aguarde alguns minutos.",
 
         obterChave: req =>
             String(
@@ -2348,209 +2371,607 @@ app.post(
 
 
 // ==========================================
-// SALVAR / ATUALIZAR RECORDE
+// PARTIDAS
 // ==========================================
 
+/*
+    O placar deixou de vir pronto do navegador.
+
+    Antes, POST /api/records aceitava qualquer inteiro:
+    bastava o DevTools para liderar o ranking sem jogar. E
+    GET /api/questoes/portugues devolvia a classe correta
+    de cada questao junto com o enunciado.
+
+    Agora sao duas requisicoes por partida — e nao uma por
+    questao, que o plano gratuito do Render nao aguentaria
+    com timer de 20s.
+
+    1) POST /api/partidas
+       cria a partida e devolve as questoes SEM as respostas
+
+    2) POST /api/partidas/:id/encerrar
+       recebe as respostas, corrige no servidor e grava o
+       recorde a partir do placar que o servidor calculou
+*/
+
 app.post(
-    "/api/records",
+    "/api/partidas",
     autenticarToken,
+    limitarPartida,
     async (req, res) => {
 
         try {
 
-            const {
-                jogo,
-                modo,
-                recorde
-            } = req.body;
+            const jogo =
+                String(req.body.jogo || "");
 
-            const usuarioId =
-                req.usuario.id;
+            const modo =
+                String(req.body.modo || "");
+
+            const sobrevivencia =
+                Boolean(req.body.sobrevivencia);
+
+            const operacao =
+                req.body.operacao
+                    ? String(req.body.operacao)
+                    : null;
 
 
-            if (
-                !jogo ||
-                !modo ||
-                recorde === undefined
-            ) {
-
+            if (!partidas.jogoValido(jogo)) {
                 return res
                     .status(400)
-                    .json({
-                        message:
-                            "Jogo, modo e recorde são obrigatórios."
-                    });
+                    .json({ message: "Jogo inválido." });
+            }
 
+            if (!partidas.modoValido(modo)) {
+                return res
+                    .status(400)
+                    .json({ message: "Modo inválido." });
+            }
+
+            if (
+                jogo === "matematica" &&
+                !sobrevivencia &&
+                !partidas.operacaoValida(operacao)
+            ) {
+                return res
+                    .status(400)
+                    .json({ message: "Operação inválida." });
             }
 
 
-            if (
-                jogo !== "matematica" &&
-                jogo !== "portugues"
-            ) {
-
-                return res
-                    .status(400)
-                    .json({
-                        message:
-                            "Jogo inválido."
-                    });
-
-            }
+            const id = crypto.randomUUID();
 
 
-            if (
-                modo !== "tranquilo" &&
-                modo !== "velocidade" &&
-                modo !== "brutal"
-            ) {
-
-                return res
-                    .status(400)
-                    .json({
-                        message:
-                            "Modo inválido."
-                    });
-
-            }
+            /*
+                Mantem no maximo uma partida aberta por
+                usuario. Sem isso a tabela cresceria sem
+                limite, e o armazenamento do Aiven tambem
+                e limitado.
+            */
+            await pool.query(
+                `DELETE FROM partidas
+                  WHERE usuario_id = ?`,
+                [req.usuario.id]
+            );
 
 
-            if (
-                typeof recorde !==
-                    "number" ||
-                !Number.isFinite(
-                    recorde
-                ) ||
-                recorde < 0 ||
-                !Number.isInteger(
-                    recorde
-                ) ||
-                recorde > 100000
-            ) {
+            if (jogo === "matematica") {
 
-                return res
-                    .status(400)
-                    .json({
-                        message:
-                            "Recorde inválido."
-                    });
-
-            }
-
-
-            const [records] =
-                await pool.query(
-                    `SELECT recorde
-                     FROM records
-                     WHERE usuario_id = ?
-                     AND jogo = ?
-                     AND modo = ?`,
-                    [
-                        usuarioId,
-                        jogo,
-                        modo
-                    ]
-                );
-
-
-            if (
-                records.length === 0
-            ) {
+                const semente =
+                    partidas.novaSemente();
 
                 await pool.query(
-                    `INSERT INTO records
-                        (
-                            usuario_id,
-                            jogo,
-                            modo,
-                            recorde
-                        )
-                     VALUES (?, ?, ?, ?)`,
+                    `INSERT INTO partidas
+                        (id, usuario_id, jogo, modo,
+                         operacao, sobrevivencia, semente)
+                     VALUES (?, ?, ?, ?, ?, ?, ?)`,
                     [
-                        usuarioId,
+                        id,
+                        req.usuario.id,
                         jogo,
                         modo,
-                        recorde
+                        sobrevivencia ? null : operacao,
+                        sobrevivencia ? 1 : 0,
+                        semente
                     ]
                 );
 
+                return res.status(201).json({
+                    partidaId: id,
 
-                return res
-                    .status(201)
-                    .json({
-                        message:
-                            "Recorde criado com sucesso!",
-
-                        jogo,
-                        modo,
-                        recorde
-                    });
-
-            }
-
-
-            const recordeAtual =
-                Number(
-                    records[0]
-                        .recorde
-                );
-
-
-            if (
-                recorde >
-                recordeAtual
-            ) {
-
-                await pool.query(
-                    `UPDATE records
-                     SET recorde = ?
-                     WHERE usuario_id = ?
-                     AND jogo = ?
-                     AND modo = ?`,
-                    [
-                        recorde,
-                        usuarioId,
-                        jogo,
-                        modo
-                    ]
-                );
-
-
-                return res.json({
-                    message:
-                        "Novo recorde!",
-
-                    jogo,
-                    modo,
-                    recorde
+                    questoes:
+                        partidas.questoesMatematicaParaCliente({
+                            operacao: sobrevivencia ? null : operacao,
+                            sobrevivencia,
+                            semente
+                        })
                 });
 
             }
 
 
-            res.json({
-                message:
-                    "Recorde anterior continua maior.",
+            // ---------- Português ----------
 
-                jogo,
-                modo,
+            const nivelInicial =
+                partidas.nivelInicialPortugues(modo);
 
-                recorde:
-                    recordeAtual
+
+            const [disponiveis] =
+                await pool.query(
+                    `SELECT id, nivel
+                       FROM questoes_portugues
+                      WHERE nivel >= ?`,
+                    [nivelInicial]
+                );
+
+
+            if (disponiveis.length === 0) {
+                return res
+                    .status(503)
+                    .json({
+                        message:
+                            "Não há questões disponíveis no momento."
+                    });
+            }
+
+
+            const ids =
+                partidas.sortearQuestoesPortugues(
+                    disponiveis,
+                    nivelInicial
+                );
+
+
+            await pool.query(
+                `INSERT INTO partidas
+                    (id, usuario_id, jogo, modo, questoes, acertos)
+                 VALUES (?, ?, ?, ?, ?, 0)`,
+                [
+                    id,
+                    req.usuario.id,
+                    jogo,
+                    modo,
+                    JSON.stringify(ids)
+                ]
+            );
+
+
+            /*
+                O enunciado vai sem "classe" e sem
+                "explicacao": era exatamente o que permitia
+                ler o gabarito na aba Network.
+            */
+            const [questoes] =
+                await pool.query(
+                    `SELECT id, nivel, frase, palavra, alternativas
+                       FROM questoes_portugues
+                      WHERE id IN (?)`,
+                    [ids]
+                );
+
+
+            const porId = new Map(
+                questoes.map(q => [Number(q.id), q])
+            );
+
+
+            res.status(201).json({
+                partidaId: id,
+
+                questoes: ids.map(idQuestao => {
+
+                    const q = porId.get(Number(idQuestao));
+
+                    let alternativas = q.alternativas;
+
+                    if (typeof alternativas === "string") {
+                        try {
+                            alternativas = JSON.parse(alternativas);
+                        }
+                        catch (error) {
+                            alternativas = [];
+                        }
+                    }
+
+                    return {
+                        id: q.id,
+                        nivel: q.nivel,
+                        frase: q.frase,
+                        palavra: q.palavra,
+                        alternativas
+                    };
+
+                })
             });
 
         }
 
         catch (error) {
 
-            console.error(error);
+            console.error("Erro ao criar partida:", error);
 
             res
                 .status(500)
-                .json({
-                    message:
-                        "Erro interno do servidor."
+                .json({ message: "Erro interno do servidor." });
+
+        }
+
+    }
+);
+
+
+/*
+    Responder uma questão de Português.
+
+    Só existe porque, no jogo, errar encerra a partida na
+    hora — e o cliente não tem como saber se acertou sem o
+    gabarito, que é justamente o que deixamos de enviar.
+    Com quatro alternativas, qualquer esquema de hash seria
+    enumerável pelo próprio cliente.
+
+    O custo é aceitável: as respostas são espaçadas pelo
+    timer de 20s, cerca de uma requisição a cada 11
+    segundos, com a instância já quente. A hibernação do
+    Render só atinge a criação da partida.
+
+    Matemática não precisa disto: a conta é verificável no
+    próprio navegador, e o servidor reconfere tudo de uma
+    vez no encerramento.
+*/
+app.post(
+    "/api/partidas/:id/responder",
+    autenticarToken,
+    async (req, res) => {
+
+        try {
+
+            const [linhas] =
+                await pool.query(
+                    `SELECT id, usuario_id, jogo, modo, questoes,
+                            acertos, encerrada_em,
+                            TIMESTAMPDIFF(SECOND, iniciada_em, NOW())
+                                AS segundos
+                       FROM partidas
+                      WHERE id = ? AND usuario_id = ?`,
+                    [
+                        String(req.params.id),
+                        req.usuario.id
+                    ]
+                );
+
+
+            if (linhas.length === 0) {
+                return res
+                    .status(404)
+                    .json({ message: "Partida não encontrada." });
+            }
+
+
+            const partida = linhas[0];
+
+
+            if (partida.jogo !== "portugues") {
+                return res
+                    .status(400)
+                    .json({
+                        message:
+                            "Esta partida não responde questão a questão."
+                    });
+            }
+
+
+            if (partida.encerrada_em) {
+                return res
+                    .status(409)
+                    .json({ message: "Esta partida já foi encerrada." });
+            }
+
+
+            const ordem =
+                typeof partida.questoes === "string"
+                    ? JSON.parse(partida.questoes)
+                    : partida.questoes;
+
+            const indice = Number(partida.acertos) || 0;
+
+            const idEsperado = ordem[indice];
+
+
+            if (idEsperado === undefined) {
+                return res
+                    .status(409)
+                    .json({ message: "A partida já acabou." });
+            }
+
+
+            /*
+                O cliente informa qual questão respondeu. Se
+                não é a esperada, alguém pulou questões para
+                responder só as que sabia.
+            */
+            if (
+                Number(req.body.questaoId) !==
+                Number(idEsperado)
+            ) {
+                return res
+                    .status(400)
+                    .json({ message: "Questão fora de ordem." });
+            }
+
+
+            const [questoes] =
+                await pool.query(
+                    `SELECT id, classe, explicacao
+                       FROM questoes_portugues
+                      WHERE id = ?`,
+                    [idEsperado]
+                );
+
+
+            if (questoes.length === 0) {
+                return res
+                    .status(500)
+                    .json({ message: "Erro interno do servidor." });
+            }
+
+
+            const questao = questoes[0];
+
+            const acertou =
+                String(req.body.resposta) ===
+                String(questao.classe);
+
+
+            if (acertou) {
+
+                const acertos = indice + 1;
+
+                await pool.query(
+                    `UPDATE partidas SET acertos = ? WHERE id = ?`,
+                    [acertos, partida.id]
+                );
+
+                return res.json({
+                    correto: true,
+                    acertos
                 });
+
+            }
+
+
+            // Errou: encerra e grava o recorde.
+            const resultado =
+                await encerrarPartida(
+                    partida,
+                    indice,
+                    req.usuario.id
+                );
+
+
+            res.json({
+                correto: false,
+                acertos: indice,
+
+                revisao: {
+                    questaoId: questao.id,
+                    classe: questao.classe,
+                    explicacao: questao.explicacao
+                },
+
+                ...resultado
+            });
+
+        }
+
+        catch (error) {
+
+            console.error("Erro ao responder:", error);
+
+            res
+                .status(500)
+                .json({ message: "Erro interno do servidor." });
+
+        }
+
+    }
+);
+
+
+/*
+    Fecha a partida e atualiza o recorde a partir do placar
+    que o servidor calculou. Compartilhada por /responder e
+    /encerrar.
+*/
+async function encerrarPartida(partida, acertos, usuarioId) {
+
+    await pool.query(
+        `UPDATE partidas
+            SET encerrada_em = NOW(), acertos = ?
+          WHERE id = ?`,
+        [acertos, partida.id]
+    );
+
+
+    let recorde = acertos;
+    let novoRecorde = false;
+
+
+    const [existente] =
+        await pool.query(
+            `SELECT recorde
+               FROM records
+              WHERE usuario_id = ? AND jogo = ? AND modo = ?`,
+            [usuarioId, partida.jogo, partida.modo]
+        );
+
+
+    if (existente.length === 0) {
+
+        await pool.query(
+            `INSERT INTO records
+                (usuario_id, jogo, modo, recorde)
+             VALUES (?, ?, ?, ?)`,
+            [usuarioId, partida.jogo, partida.modo, acertos]
+        );
+
+        novoRecorde = acertos > 0;
+
+    }
+
+    else if (acertos > Number(existente[0].recorde)) {
+
+        await pool.query(
+            `UPDATE records
+                SET recorde = ?
+              WHERE usuario_id = ? AND jogo = ? AND modo = ?`,
+            [acertos, usuarioId, partida.jogo, partida.modo]
+        );
+
+        novoRecorde = true;
+
+    }
+
+    else {
+        recorde = Number(existente[0].recorde);
+    }
+
+
+    return { recorde, novoRecorde };
+
+}
+
+
+app.post(
+    "/api/partidas/:id/encerrar",
+    autenticarToken,
+    async (req, res) => {
+
+        try {
+
+            const respostas =
+                Array.isArray(req.body.respostas)
+                    ? req.body.respostas
+                    : [];
+
+
+            const [linhas] =
+                await pool.query(
+                    `SELECT id, usuario_id, jogo, modo, operacao,
+                            sobrevivencia, semente, questoes,
+                            encerrada_em,
+                            TIMESTAMPDIFF(SECOND, iniciada_em, NOW())
+                                AS segundos
+                       FROM partidas
+                      WHERE id = ? AND usuario_id = ?`,
+                    [
+                        String(req.params.id),
+                        req.usuario.id
+                    ]
+                );
+
+
+            if (linhas.length === 0) {
+                return res
+                    .status(404)
+                    .json({ message: "Partida não encontrada." });
+            }
+
+
+            const partida = linhas[0];
+
+
+            if (partida.encerrada_em) {
+                return res
+                    .status(409)
+                    .json({ message: "Esta partida já foi encerrada." });
+            }
+
+
+            let acertos;
+            let revisao = null;
+
+
+            if (partida.jogo === "matematica") {
+
+                /*
+                    Regera a sequencia a partir da semente e
+                    confere as respostas enviadas. O placar
+                    nunca vem do cliente.
+                */
+                acertos =
+                    partidas.corrigirMatematica(
+                        partida,
+                        respostas
+                    );
+
+            }
+
+            else {
+
+                /*
+                    Portugues ja foi corrigido questao a
+                    questao em /responder, entao aqui basta
+                    usar o placar acumulado. Este caminho
+                    cobre o fim por tempo esgotado ou por
+                    desistencia.
+                */
+                acertos = Number(partida.acertos) || 0;
+
+            }
+
+
+            /*
+                Placar impossivel no tempo decorrido nao
+                conta. Nao fecha a fraude na Matematica, em
+                que a resposta e derivavel, mas obriga o
+                fraudador a gastar o tempo de verdade.
+            */
+            if (
+                !partidas.placarPlausivel(
+                    acertos,
+                    Number(partida.segundos)
+                )
+            ) {
+
+                console.warn(
+                    "Placar implausivel descartado:",
+                    {
+                        usuario: req.usuario.id,
+                        acertos,
+                        segundos: partida.segundos
+                    }
+                );
+
+                acertos = 0;
+
+            }
+
+
+            const { recorde, novoRecorde } =
+                await encerrarPartida(
+                    partida,
+                    acertos,
+                    req.usuario.id
+                );
+
+
+            res.json({
+                acertos,
+                recorde,
+                novoRecorde,
+                revisao
+            });
+
+        }
+
+        catch (error) {
+
+            console.error("Erro ao encerrar partida:", error);
+
+            res
+                .status(500)
+                .json({ message: "Erro interno do servidor." });
 
         }
 
@@ -2615,119 +3036,6 @@ app.get(
 );
 
 
-// ==========================================
-// QUESTÕES DE PORTUGUÊS
-// ==========================================
-
-app.get(
-    "/api/questoes/portugues",
-    async (req, res) => {
-
-        try {
-
-            const [questoes] =
-                await pool.query(
-                    `SELECT
-                        id,
-                        nivel,
-                        frase,
-                        palavra,
-                        classe,
-                        alternativas,
-                        explicacao
-                     FROM questoes_portugues
-                     ORDER BY nivel, id`
-                );
-
-
-            const questoesFormatadas =
-                questoes.map(
-                    questao => {
-
-                        let alternativas =
-                            questao.alternativas;
-
-
-                        if (
-                            typeof alternativas ===
-                            "string"
-                        ) {
-
-                            try {
-
-                                alternativas =
-                                    JSON.parse(
-                                        alternativas
-                                    );
-
-                            }
-
-                            catch (error) {
-
-                                alternativas =
-                                    [];
-
-                            }
-
-                        }
-
-
-                        return {
-                            id:
-                                questao.id,
-
-                            nivel:
-                                questao.nivel,
-
-                            frase:
-                                questao.frase,
-
-                            palavra:
-                                questao.palavra,
-
-                            classe:
-                                questao.classe,
-
-                            alternativas,
-
-                            explicacao:
-                                questao.explicacao
-                        };
-
-                    }
-                );
-
-
-            res.json({
-                total:
-                    questoesFormatadas
-                        .length,
-
-                questoes:
-                    questoesFormatadas
-            });
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Erro ao buscar questões de Português:",
-                error
-            );
-
-
-            res
-                .status(500)
-                .json({
-                    message:
-                        "Erro interno do servidor."
-                });
-
-        }
-
-    }
-);
 
 
 // ==========================================
