@@ -245,3 +245,131 @@ test("o gerador devolve valores em [0, 1)", () => {
     }
 
 });
+
+
+// ------------------------------------------------------
+// Equilíbrio entre as operações
+// ------------------------------------------------------
+
+/*
+    As expressões de três termos usavam a mesma faixa de
+    valores das de dois termos, e isso descolava soma e
+    subtração das outras operações: no nível 10 dava para
+    receber "29498 - 9804 - 9728" enquanto uma
+    multiplicação no mesmo nível era "75 × 15".
+
+    Como a Sobrevivência sorteia a operação com peso igual,
+    o placar passava a depender de sorte no sorteio.
+*/
+
+const PLACAR_DO_NIVEL = { 7: 30, 8: 40, 9: 50, 10: 60 };
+
+
+function digitos(expressao) {
+    return expressao
+        .match(/\d+/g)
+        .reduce((total, n) => total + n.length, 0);
+}
+
+
+function amostrar(operacao, nivel, quantas = 400) {
+
+    const placar = PLACAR_DO_NIVEL[nivel];
+    const out = [];
+
+    for (let s = 0; s < quantas; s++) {
+        out.push(
+            gerarSequencia({
+                operacao,
+                semente: 271828 + s * 3607,
+                quantidade: placar + 1
+            })[placar]
+        );
+    }
+
+    return out;
+
+}
+
+
+function medianaDeDigitos(questoes, termos) {
+
+    const v = questoes
+        .filter(q => q.expressao.match(/\d+/g).length === termos)
+        .map(q => digitos(q.expressao))
+        .sort((a, b) => a - b);
+
+    return v[Math.floor(v.length / 2)];
+
+}
+
+
+test("tres termos nao custam mais que dois termos no mesmo nivel", () => {
+
+    for (const operacao of ["addition", "subtraction"]) {
+
+        for (const nivel of [7, 8, 9, 10]) {
+
+            const qs = amostrar(operacao, nivel);
+
+            const doisTermos = medianaDeDigitos(qs, 2);
+            const tresTermos = medianaDeDigitos(qs, 3);
+
+            /*
+                Uma folga de um dígito é aceitável: com três
+                parcelas nem sempre dá para bater exatamente
+                a contagem de dois números.
+            */
+            assert.ok(
+                tresTermos <= doisTermos + 1,
+                `${operacao} nivel ${nivel}: 3 termos usam ${tresTermos} digitos contra ${doisTermos} de 2 termos`
+            );
+
+        }
+
+    }
+
+});
+
+
+test("o pior caso de soma e subtracao nao explode no nivel 10", () => {
+
+    for (const operacao of ["addition", "subtraction"]) {
+
+        const qs = amostrar(operacao, 10, 1500);
+        const pior = Math.max(...qs.map(q => digitos(q.expressao)));
+
+        /*
+            Antes da correcao a subtracao chegava a 13
+            digitos ("29498 - 9804 - 9728").
+        */
+        assert.ok(
+            pior <= 11,
+            `${operacao}: pior caso com ${pior} digitos`
+        );
+
+    }
+
+});
+
+
+test("multiplicacao e divisao continuam sem tres termos", () => {
+
+    for (const operacao of ["multiplication", "division"]) {
+
+        for (const nivel of [7, 8, 9, 10]) {
+
+            const comTres = amostrar(operacao, nivel).filter(
+                q => q.expressao.match(/\d+/g).length > 2
+            );
+
+            assert.strictEqual(
+                comTres.length, 0,
+                `${operacao} recebeu tres termos no nivel ${nivel}`
+            );
+
+        }
+
+    }
+
+});

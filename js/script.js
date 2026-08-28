@@ -2929,6 +2929,46 @@ function updateMathInterface() {
 // MATEMÁTICA - GERADORES POR OPERAÇÃO
 // ======================================================
 
+/*
+    Com três termos, a faixa de valores recua alguns
+    níveis.
+
+    Sem isso, a soma e a subtração descolavam das outras
+    operações: no nível 10 dava para receber
+    "29498 - 9804 - 9728" enquanto uma multiplicação no
+    mesmo nível era "75 × 15".
+
+    A ideia é que a versão de três termos custe o mesmo que
+    a de dois no mesmo nível: mais parcelas, números
+    menores.
+
+    A subtração recua um nível a mais porque o minuendo é
+    montado como resultado + b + c, o que sempre lhe dá um
+    dígito a mais que as parcelas.
+
+    Precisa acompanhar server/jogos/matematica.js, que gera
+    as questões do modo Sobrevivência.
+*/
+const THREE_TERM_ADDITION_STEP_DOWN = 3;
+const THREE_TERM_SUBTRACTION_STEP_DOWN = 4;
+
+
+function rangeForTerms(
+    ranges,
+    difficulty,
+    stepDown
+) {
+
+    const level =
+        Math.min(difficulty, 10);
+
+    return ranges[
+        Math.max(1, level - stepDown) - 1
+    ];
+
+}
+
+
 function shouldUseThreeTerms(
     currentScore
 ) {
@@ -2964,13 +3004,19 @@ function getAdditionQuestion(
         [1500, 9999]
     ];
 
+    const threeTerms =
+        shouldUseThreeTerms(
+            currentScore
+        );
+
     const [min, max] =
-        ranges[
-            Math.min(
-                difficulty,
-                10
-            ) - 1
-        ];
+        rangeForTerms(
+            ranges,
+            difficulty,
+            threeTerms
+                ? THREE_TERM_ADDITION_STEP_DOWN
+                : 0
+        );
 
     const a =
         randomNumber(
@@ -2984,11 +3030,7 @@ function getAdditionQuestion(
             max
         );
 
-    if (
-        shouldUseThreeTerms(
-            currentScore
-        )
-    ) {
+    if (threeTerms) {
 
         const c =
             randomNumber(
@@ -3033,19 +3075,21 @@ function getSubtractionQuestion(
         [1500, 9999]
     ];
 
-    const [min, max] =
-        ranges[
-            Math.min(
-                difficulty,
-                10
-            ) - 1
-        ];
-
-    if (
+    const threeTerms =
         shouldUseThreeTerms(
             currentScore
-        )
-    ) {
+        );
+
+    const [min, max] =
+        rangeForTerms(
+            ranges,
+            difficulty,
+            threeTerms
+                ? THREE_TERM_SUBTRACTION_STEP_DOWN
+                : 0
+        );
+
+    if (threeTerms) {
 
         const b =
             randomNumber(

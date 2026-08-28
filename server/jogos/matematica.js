@@ -108,15 +108,62 @@ const FAIXAS_SOMA = [
 ];
 
 
+/*
+    Com três termos, a faixa de valores recua alguns níveis.
+
+    Sem isso, a soma e a subtração descolavam das outras
+    operações: no nível 10 o jogador podia receber
+    "29498 - 9804 - 9728" enquanto uma multiplicação no
+    mesmo nível era "75 × 15". Como o modo Sobrevivência
+    sorteia a operação com peso igual, o placar passava a
+    depender mais de sorte do que de habilidade.
+
+    O objetivo é que a versão de três termos custe o mesmo
+    que a de dois termos no mesmo nível: mais parcelas,
+    números menores.
+
+    A subtração recua um nível a mais porque o minuendo é
+    construído como resultado + b + c, o que sempre lhe
+    acrescenta um dígito a mais que as parcelas.
+
+    Multiplicação e divisão não têm três termos e não foram
+    tocadas.
+*/
+const RECUO_SOMA_TRES_TERMOS = 3;
+const RECUO_SUBTRACAO_TRES_TERMOS = 4;
+
+
+function faixaDeSoma(dificuldade, recuo) {
+
+    const nivel = Math.min(dificuldade, 10);
+
+    const indice =
+        Math.max(1, nivel - recuo) - 1;
+
+    return FAIXAS_SOMA[indice];
+
+}
+
+
 function questaoSoma(rng, dificuldade, placar) {
 
+    /*
+        Precisa vir antes do sorteio dos valores: a faixa
+        depende de haver ou não um terceiro termo.
+    */
+    const tresTermos =
+        usarTresTermos(rng, placar);
+
     const [min, max] =
-        FAIXAS_SOMA[Math.min(dificuldade, 10) - 1];
+        faixaDeSoma(
+            dificuldade,
+            tresTermos ? RECUO_SOMA_TRES_TERMOS : 0
+        );
 
     const a = inteiroEntre(rng, min, max);
     const b = inteiroEntre(rng, min, max);
 
-    if (usarTresTermos(rng, placar)) {
+    if (tresTermos) {
 
         const c = inteiroEntre(rng, min, max);
 
@@ -137,10 +184,13 @@ function questaoSoma(rng, dificuldade, placar) {
 
 function questaoSubtracao(rng, dificuldade, placar) {
 
-    const [min, max] =
-        FAIXAS_SOMA[Math.min(dificuldade, 10) - 1];
-
     if (usarTresTermos(rng, placar)) {
+
+        const [min, max] =
+            faixaDeSoma(
+                dificuldade,
+                RECUO_SUBTRACAO_TRES_TERMOS
+            );
 
         const b = inteiroEntre(rng, min, max);
         const c = inteiroEntre(rng, min, max);
@@ -152,6 +202,9 @@ function questaoSubtracao(rng, dificuldade, placar) {
         };
 
     }
+
+    const [min, max] =
+        faixaDeSoma(dificuldade, 0);
 
     let a = inteiroEntre(rng, min, max);
     let b = inteiroEntre(rng, min, max);
