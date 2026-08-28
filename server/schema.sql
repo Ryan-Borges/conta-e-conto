@@ -184,3 +184,63 @@ CREATE TABLE IF NOT EXISTS `migracoes` (
     PRIMARY KEY (`nome`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- ======================================================
+-- PARTIDAS
+-- ======================================================
+--
+-- O placar não vem do navegador. O servidor cria a
+-- partida, guarda como ela foi montada e recalcula o
+-- resultado a partir das respostas enviadas.
+--
+-- Não guardamos as respostas certas:
+--   * Matemática: guarda-se a semente, e a sequência é
+--     regerada no encerramento.
+--   * Português: guardam-se os ids das questões, e a
+--     classe correta vem da tabela de questões.
+--
+-- Ver migrations/003_partidas.sql
+
+CREATE TABLE IF NOT EXISTS `partidas` (
+
+    `id`            CHAR(36)    NOT NULL,
+
+    `usuario_id`    INT         NOT NULL,
+
+    -- 'matematica' ou 'portugues'
+    `jogo`          VARCHAR(50) NOT NULL,
+
+    -- 'tranquilo', 'velocidade' ou 'brutal'
+    `modo`          VARCHAR(50) NOT NULL,
+
+    -- Matemática: sempre NULL hoje, porque só a
+    -- Sobrevivência vale recorde e ela sorteia a operação
+    -- de cada questão.
+    `operacao`      VARCHAR(20) DEFAULT NULL,
+
+    `sobrevivencia` TINYINT(1)  NOT NULL DEFAULT 0,
+
+    -- Matemática: semente do gerador determinístico.
+    `semente`       INT UNSIGNED DEFAULT NULL,
+
+    -- Português: ids das questões, na ordem enviada.
+    `questoes`      JSON        DEFAULT NULL,
+
+    `iniciada_em`   DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    `encerrada_em`  DATETIME    DEFAULT NULL,
+
+    -- Placar calculado pelo servidor, nunca o do cliente.
+    `acertos`       INT         DEFAULT NULL,
+
+    PRIMARY KEY (`id`),
+
+    KEY `idx_partidas_usuario` (`usuario_id`, `iniciada_em`),
+
+    CONSTRAINT `fk_partidas_usuario`
+        FOREIGN KEY (`usuario_id`)
+        REFERENCES `usuarios` (`id`)
+        ON DELETE CASCADE
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

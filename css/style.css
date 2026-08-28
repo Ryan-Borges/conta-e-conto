@@ -289,6 +289,24 @@ main {
    BOAS-VINDAS
 ====================================================== */
 
+.welcome-avatar {
+    width: 28px;
+    height: 28px;
+
+    object-fit: contain;
+
+    background: var(--avatar-fundo);
+
+    border: 1px solid var(--avatar-borda);
+
+    border-radius: 50%;
+
+    vertical-align: middle;
+
+    margin-right: 4px;
+}
+
+
 .welcome-user {
     display: inline-block;
 

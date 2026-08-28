@@ -48,6 +48,11 @@ Além de competir com outros usuários, a plataforma incentiva o jogador a super
 O Conta & Conto possui:
 
 - 🔐 Cadastro de usuários
+- 🖼️ Foto de perfil (12 avatares)
+- 🌙 Tema claro e escuro
+- ✏️ Alteração de nome de usuário e e-mail
+- 🔁 Recuperação de senha por e-mail
+- ✉️ Fale conosco
 - 🔑 Sistema de login
 - 👤 Perfil individual
 - 🧮 Jogo de Matemática
@@ -141,6 +146,10 @@ Para calcular:
 ## 📖 Língua Portuguesa
 
 O jogo de Português utiliza questões armazenadas em banco de dados e trabalha principalmente com a identificação de classes gramaticais em frases.
+
+O banco possui **203 questões**, distribuídas pelos oito
+níveis, com mais questões nos níveis altos — é onde o
+jogador permanece depois de 70 acertos.
 
 O banco de questões pode ser ampliado sem alterar código.
 Os arquivos ficam em `server/seeds/` e são inseridos por
@@ -664,6 +673,7 @@ Possíveis melhorias futuras incluem:
 - sistema de conquistas;
 - estatísticas individuais;
 - histórico de partidas;
+- logo própria no lugar do texto do cabeçalho;
 - novas matérias.
 
 ---
@@ -689,7 +699,7 @@ O Conta & Conto possui atualmente:
 - armazenamento de recordes;
 - rankings;
 - jogos de Matemática e Português;
-- 80 questões de Língua Portuguesa;
+- 203 questões de Língua Portuguesa;
 - área educacional;
 - suporte para acesso em computadores e dispositivos móveis.
 

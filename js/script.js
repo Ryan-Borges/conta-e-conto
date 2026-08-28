@@ -2547,7 +2547,7 @@ if (backFromMathOperationModes) {
 
 const portugueseMenuBackButton =
     document.querySelector(
-        "#portugueseModes #backFromPortuguese"
+        "#backFromPortuguese"
     );
 
 
@@ -4556,7 +4556,7 @@ async function checkPortugueseAnswer(
 
 const portugueseGameBackButton =
     document.querySelector(
-        "#portugueseGame #backFromPortuguese"
+        "#backFromPortugueseGame"
     );
 
 
@@ -5202,7 +5202,19 @@ async function carregarRanking(jogo) {
                 );
 
 
-                if (index === 0) {
+                /*
+                    Empatados dividem a posição, então o
+                    pódio segue a posição e não a ordem da
+                    lista: três jogadores com o mesmo
+                    recorde recebem todos a medalha de
+                    ouro, não ouro, prata e bronze.
+                */
+                const posicao =
+                    Number(player.posicao) ||
+                    index + 1;
+
+
+                if (posicao === 1) {
 
                     item.classList.add(
                         "ranking-first"
@@ -5210,7 +5222,7 @@ async function carregarRanking(jogo) {
 
                 }
 
-                else if (index === 1) {
+                else if (posicao === 2) {
 
                     item.classList.add(
                         "ranking-second"
@@ -5218,7 +5230,7 @@ async function carregarRanking(jogo) {
 
                 }
 
-                else if (index === 2) {
+                else if (posicao === 3) {
 
                     item.classList.add(
                         "ranking-third"
@@ -5245,18 +5257,18 @@ async function carregarRanking(jogo) {
 
 
                 let position =
-                    `${player.posicao || index + 1}º`;
+                    `${posicao}º`;
 
 
-                if (index === 0) {
+                if (posicao === 1) {
                     position = "🥇";
                 }
 
-                else if (index === 1) {
+                else if (posicao === 2) {
                     position = "🥈";
                 }
 
-                else if (index === 2) {
+                else if (posicao === 3) {
                     position = "🥉";
                 }
 
@@ -7424,6 +7436,22 @@ function mostrarMenuPrincipal() {
 
             }
 
+
+            const welcomeAvatar =
+                document.getElementById(
+                    "welcomeAvatar"
+                );
+
+            if (welcomeAvatar) {
+
+                welcomeAvatar.src =
+                    avatarUrl(
+                        usuario.avatar_id,
+                        "sm"
+                    );
+
+            }
+
         }
 
         catch (error) {
@@ -7852,6 +7880,26 @@ function verificarLoginSalvo() {
 
 
     if (resetToken) {
+
+        /*
+            Remove o token da URL assim que ele é lido. Sem
+            isso ele fica no histórico do navegador e em
+            qualquer lugar onde o endereço seja colado.
+        */
+        try {
+
+            window.history.replaceState(
+                null,
+                "",
+                window.location.pathname
+            );
+
+        }
+
+        catch (error) {
+            // Navegador sem history API: segue o fluxo.
+        }
+
 
         if (app) {
 

@@ -343,6 +343,29 @@ function avatarValido(
 }
 
 
+/*
+    Posição no ranking com empate compartilhado: quantos
+    jogadores têm recorde maior, mais um.
+
+    A lista já vem ordenada por recorde, então basta achar
+    o primeiro com o mesmo valor.
+*/
+function posicaoDe(lista, jogador) {
+
+    const recorde =
+        Number(jogador.recorde);
+
+    const primeiroIgual =
+        lista.findIndex(
+            outro =>
+                Number(outro.recorde) === recorde
+        );
+
+    return primeiroIgual + 1;
+
+}
+
+
 function escaparHtml(
     valor
 ) {
@@ -2405,17 +2428,6 @@ app.post(
             const jogo =
                 String(req.body.jogo || "");
 
-            const modo =
-                String(req.body.modo || "");
-
-            const sobrevivencia =
-                Boolean(req.body.sobrevivencia);
-
-            const operacao =
-                req.body.operacao
-                    ? String(req.body.operacao)
-                    : null;
-
 
             if (!partidas.jogoValido(jogo)) {
                 return res
@@ -2423,20 +2435,37 @@ app.post(
                     .json({ message: "Jogo inválido." });
             }
 
+
+            /*
+                Em Matemática, a única partida que vale
+                recorde é a Sobrevivência — os modos por
+                operação são treino e guardam recorde apenas
+                no navegador.
+
+                Estes três valores não podem vir do cliente.
+                Aceitá-los permitia criar uma partida
+                marcada como "brutal" contendo só somas, que
+                é bem mais fácil que a Sobrevivência, e
+                gravar o resultado em matematica/brutal — a
+                mesma chave que alimenta o ranking.
+            */
+            const sobrevivencia =
+                jogo === "matematica"
+                    ? true
+                    : false;
+
+            const operacao = null;
+
+            const modo =
+                jogo === "matematica"
+                    ? "brutal"
+                    : String(req.body.modo || "");
+
+
             if (!partidas.modoValido(modo)) {
                 return res
                     .status(400)
                     .json({ message: "Modo inválido." });
-            }
-
-            if (
-                jogo === "matematica" &&
-                !sobrevivencia &&
-                !partidas.operacaoValida(operacao)
-            ) {
-                return res
-                    .status(400)
-                    .json({ message: "Operação inválida." });
             }
 
 
@@ -3120,8 +3149,25 @@ app.get(
                                     player.recorde
                                 ),
 
+                            /*
+                                Empatados dividem a posição.
+                                Antes a lista usava a ordem
+                                de exibição e o perfil
+                                contava quem tinha recorde
+                                maior, então dois jogadores
+                                com 50 apareciam como 1º e
+                                2º na lista e como 1º e 1º
+                                nos próprios perfis.
+
+                                Esta é a mesma regra do
+                                perfil: quantos têm recorde
+                                maior, mais um.
+                            */
                             posicao:
-                                index + 1
+                                posicaoDe(
+                                    ranking,
+                                    player
+                                )
                         })
                     )
             });

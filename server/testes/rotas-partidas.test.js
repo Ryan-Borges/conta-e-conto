@@ -300,21 +300,40 @@ test("portugues: o cliente recebe enunciados, nunca o gabarito", async () => {
 // O placar sai do servidor
 // ------------------------------------------------------
 
+/*
+    Resolve a expressao da esquerda para a direita, como o
+    navegador faz. Cada expressao usa um unico operador.
+*/
+function calcular(expressao) {
+
+    const partes = expressao.trim().split(/\s+/);
+    let total = Number(partes[0]);
+
+    for (let i = 1; i < partes.length; i += 2) {
+        const valor = Number(partes[i + 1]);
+        if (partes[i] === "+") total += valor;
+        else if (partes[i] === "-") total -= valor;
+        else if (partes[i] === "×") total *= valor;
+        else if (partes[i] === "÷") total /= valor;
+    }
+
+    return total;
+
+}
+
+
 test("matematica: jogar certo grava o recorde correto", async () => {
 
     await comServidor(async base => {
 
         const { dados } = await criarPartida(base, {
             jogo: "matematica",
-            modo: "brutal",
-            operacao: "addition"
+            modo: "brutal"
         });
 
-        // Resolve as expressoes de verdade.
-        const respostas = dados.questoes.slice(0, 12).map(q => {
-            const [a, b] = q.expressao.split(" + ").map(Number);
-            return { resposta: a + b };
-        });
+        const respostas = dados.questoes.slice(0, 12).map(q => ({
+            resposta: calcular(q.expressao)
+        }));
 
         const fim = await encerrar(base, dados.partidaId, respostas);
 
@@ -462,16 +481,83 @@ test("jogo e modo invalidos sao recusados", async () => {
             400
         );
 
+        /*
+            Em Matematica o modo e imposto pelo servidor,
+            entao o valor enviado nem chega a ser validado.
+            A validacao vale para Portugues.
+        */
         assert.strictEqual(
-            (await criarPartida(base, { jogo: "matematica", modo: "impossivel" })).status,
+            (await criarPartida(base, { jogo: "portugues", modo: "impossivel" })).status,
             400
         );
 
+    });
+
+});
+
+
+/*
+    O cliente conseguia criar uma partida marcada como
+    "brutal" mas contendo so somas, muito mais facil que a
+    Sobrevivencia, e gravar o resultado em matematica/brutal
+    — a mesma chave que alimenta o ranking.
+*/
+test("matematica ignora modo, operacao e sobrevivencia do cliente", async () => {
+
+    await comServidor(async base => {
+
+        const { status, dados } = await criarPartida(base, {
+            jogo: "matematica",
+            modo: "tranquilo",
+            sobrevivencia: false,
+            operacao: "addition"
+        });
+
+        assert.strictEqual(status, 201);
+
+        /*
+            Continua sendo Sobrevivencia: as quatro
+            operacoes. Expressoes de tres termos repetem o
+            operador, entao basta o primeiro.
+        */
+        const operacoes = new Set(
+            dados.questoes.slice(0, 80).map(q =>
+                q.expressao.replace(/[\d\s]/g, "").charAt(0)
+            )
+        );
+
         assert.strictEqual(
-            (await criarPartida(base, {
-                jogo: "matematica", modo: "brutal", operacao: "raiz"
-            })).status,
-            400
+            operacoes.size, 4,
+            "a partida deveria misturar as quatro operacoes"
+        );
+
+    });
+
+});
+
+
+test("uma partida forjada nao vira recorde mais facil", async () => {
+
+    await comServidor(async base => {
+
+        const { dados } = await criarPartida(base, {
+            jogo: "matematica",
+            modo: "brutal",
+            sobrevivencia: false,
+            operacao: "addition"
+        });
+
+        // Tenta resolver como se fossem so somas.
+        const comoSeFosseSoma = dados.questoes.slice(0, 40).map(q => {
+            const n = q.expressao.split(" + ").map(Number);
+            return { resposta: n.reduce((a, b) => a + b, 0) };
+        });
+
+        const fim = await encerrar(base, dados.partidaId, comoSeFosseSoma);
+
+        assert.ok(
+            fim.dados.acertos < 40,
+            `partida forjada aceitou ${fim.dados.acertos} acertos`
         );
 
     });
