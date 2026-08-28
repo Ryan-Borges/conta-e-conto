@@ -10,8 +10,71 @@
 
 const TEMPO_TOTAL = 20;
 
-const API_URL =
+/*
+    Em desenvolvimento (arquivo aberto pelo Live Server ou
+    por localhost) aponta para o backend local; em qualquer
+    outro host usa a API publicada.
+
+    Assim dá para testar uma alteração de backend sem
+    precisar publicar no Render antes.
+
+    Para forçar a API de produção mesmo rodando local,
+    execute no console do navegador:
+        localStorage.setItem("apiUrl", "https://conta-e-conto-api.onrender.com")
+*/
+const API_PRODUCAO =
     "https://conta-e-conto-api.onrender.com";
+
+const API_LOCAL =
+    "http://localhost:3000";
+
+
+function descobrirApiUrl() {
+
+    try {
+
+        const escolhido =
+            localStorage.getItem("apiUrl");
+
+        if (escolhido) {
+
+            // Remove barras finais para não gerar "//api/...".
+            let limpo = escolhido.trim();
+
+            while (limpo.endsWith("/")) {
+                limpo = limpo.slice(0, -1);
+            }
+
+            return limpo;
+
+        }
+
+    }
+
+    catch (error) {
+        // localStorage indisponível: segue no padrão.
+    }
+
+
+    const host =
+        location.hostname;
+
+
+    const ehLocal =
+        host === "localhost" ||
+        host === "127.0.0.1" ||
+        host === "";
+
+
+    return ehLocal
+        ? API_LOCAL
+        : API_PRODUCAO;
+
+}
+
+
+const API_URL =
+    descobrirApiUrl();
 
 
 // ======================================================
@@ -607,6 +670,41 @@ const loginBox =
 const registerBox =
     document.getElementById(
         "registerBox"
+    );
+
+const loginMessage =
+    document.getElementById(
+        "loginMessage"
+    );
+
+const registerMessage =
+    document.getElementById(
+        "registerMessage"
+    );
+
+const profileMessage =
+    document.getElementById(
+        "profileMessage"
+    );
+
+const loginForm =
+    document.getElementById(
+        "loginForm"
+    );
+
+const registerForm =
+    document.getElementById(
+        "registerForm"
+    );
+
+const forgotPasswordForm =
+    document.getElementById(
+        "forgotPasswordForm"
+    );
+
+const resetPasswordForm =
+    document.getElementById(
+        "resetPasswordForm"
     );
 
 const loginButton =
@@ -1494,12 +1592,7 @@ function renderizarGradeAvatares(
             String(id);
 
         botao.setAttribute(
-            "role",
-            "radio"
-        );
-
-        botao.setAttribute(
-            "aria-checked",
+            "aria-pressed",
             id === atual
                 ? "true"
                 : "false"
@@ -1594,7 +1687,7 @@ async function salvarAvatar(
             botao.disabled = true;
 
             botao.setAttribute(
-                "aria-checked",
+                "aria-pressed",
                 Number(
                     botao.dataset.avatarId
                 ) === novo
@@ -3803,41 +3896,74 @@ function showPortugueseQuestion() {
 
     if (portugueseQuestionElement) {
 
-        const escapedWord =
-            String(
-                question.palavra
-            ).replace(
-                /[.*+?^${}()|[\]\\]/g,
-                "\\$&"
-            );
-
-
-        const regex =
-            new RegExp(
-                `(${escapedWord})`,
-                "i"
-            );
-
-
-        const highlighted =
+        const frase =
             String(
                 question.frase
-            ).replace(
-                regex,
-                `<span class="highlight">$1</span>`
+            );
+
+        const palavra =
+            String(
+                question.palavra
             );
 
 
-        portugueseQuestionElement.innerHTML =
-            highlighted;
+        const inicio =
+            frase
+                .toLowerCase()
+                .indexOf(
+                    palavra.toLowerCase()
+                );
+
+
+        portugueseQuestionElement
+            .replaceChildren();
+
+
+        if (
+            inicio === -1 ||
+            !palavra
+        ) {
+
+            portugueseQuestionElement
+                .textContent = frase;
+
+        }
+
+        else {
+
+            const destaque =
+                document.createElement(
+                    "span"
+                );
+
+            destaque.className =
+                "highlight";
+
+            destaque.textContent =
+                frase.slice(
+                    inicio,
+                    inicio + palavra.length
+                );
+
+
+            portugueseQuestionElement
+                .append(
+                    frase.slice(0, inicio),
+                    destaque,
+                    frase.slice(
+                        inicio + palavra.length
+                    )
+                );
+
+        }
 
     }
 
 
     if (portugueseOptionsElement) {
 
-        portugueseOptionsElement.innerHTML =
-            "";
+        portugueseOptionsElement
+            .replaceChildren();
 
 
         const options =
@@ -4343,8 +4469,25 @@ if (menuToggle && mainNav) {
         "click",
         () => {
 
-            mainNav.classList.toggle(
-                "nav-open"
+            const aberto =
+                mainNav.classList.toggle(
+                    "nav-open"
+                );
+
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                aberto
+                    ? "true"
+                    : "false"
+            );
+
+
+            menuToggle.setAttribute(
+                "aria-label",
+                aberto
+                    ? "Fechar menu"
+                    : "Abrir menu"
             );
 
         }
@@ -4366,6 +4509,20 @@ if (mainNav) {
                     mainNav.classList.remove(
                         "nav-open"
                     );
+
+
+                    menuToggle
+                        ?.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+
+                    menuToggle
+                        ?.setAttribute(
+                            "aria-label",
+                            "Abrir menu"
+                        );
 
                 }
             );
@@ -5119,6 +5276,33 @@ async function showProfile(addToHistory = true) {
         );
     }
 
+    if (editAvatarPanel) {
+        editAvatarPanel.classList.add(
+            "hidden"
+        );
+    }
+
+
+    /*
+        Pinta o avatar salvo antes da chamada à API.
+        Sem isso o perfil mostra o avatar padrão até
+        a resposta chegar — que no plano gratuito do
+        Render pode demorar dezenas de segundos.
+    */
+    const avatarSalvo =
+        normalizarAvatarId(
+            getUsuarioSalvo()
+                ?.avatar_id
+        );
+
+    aplicarAvatarNoPerfil(
+        avatarSalvo
+    );
+
+    renderizarGradeAvatares(
+        avatarSalvo
+    );
+
 
     const token =
         localStorage.getItem(
@@ -5128,8 +5312,10 @@ async function showProfile(addToHistory = true) {
 
     if (!token) {
 
-        alert(
-            "Você precisa estar logado."
+        definirMensagem(
+            profileMessage,
+            "Você precisa estar logado.",
+            "error"
         );
 
         return;
@@ -5185,9 +5371,11 @@ async function showProfile(addToHistory = true) {
 
         if (!response.ok) {
 
-            alert(
+            definirMensagem(
+                profileMessage,
                 data.message ||
-                "Erro ao carregar perfil."
+                "Erro ao carregar perfil.",
+                "error"
             );
 
             return;
@@ -5417,8 +5605,10 @@ async function showProfile(addToHistory = true) {
         );
 
 
-        alert(
-            "Não foi possível conectar com o servidor."
+        definirMensagem(
+            profileMessage,
+            "Não foi possível conectar com o servidor.",
+            "error"
         );
 
     }
@@ -6332,12 +6522,14 @@ if (backToLoginFromReset) {
 }
 
 
-if (forgotPasswordButton) {
+if (forgotPasswordForm) {
 
-    forgotPasswordButton
+    forgotPasswordForm
         .addEventListener(
-            "click",
-            async () => {
+            "submit",
+            async event => {
+
+                event.preventDefault();
 
                 const identificador =
                     forgotPasswordIdentifier
@@ -6434,12 +6626,14 @@ if (forgotPasswordButton) {
 }
 
 
-if (resetPasswordButton) {
+if (resetPasswordForm) {
 
-    resetPasswordButton
+    resetPasswordForm
         .addEventListener(
-            "click",
-            async () => {
+            "submit",
+            async event => {
+
+                event.preventDefault();
 
                 const token =
                     obterResetToken();
@@ -6613,11 +6807,13 @@ if (resetPasswordButton) {
 // LOGIN
 // ======================================================
 
-if (loginButton) {
+if (loginForm) {
 
-    loginButton.addEventListener(
-        "click",
-        async () => {
+    loginForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
 
             const usernameInput =
                 document.getElementById(
@@ -6648,8 +6844,10 @@ if (loginButton) {
                 !senha
             ) {
 
-                alert(
-                    "Preencha usuário/e-mail e senha."
+                definirMensagem(
+                    loginMessage,
+                    "Preencha usuário/e-mail e senha.",
+                    "error"
                 );
 
                 return;
@@ -6658,6 +6856,17 @@ if (loginButton) {
 
 
             try {
+
+                /*
+                    Com o Enter enviando o formulário,
+                    apertar duas vezes rápido dispararia
+                    duas requisições e poderia esbarrar no
+                    limite de tentativas.
+                */
+                if (loginButton) {
+                    loginButton.disabled = true;
+                }
+
 
                 const response =
                     await fetch(
@@ -6686,9 +6895,11 @@ if (loginButton) {
 
                 if (!response.ok) {
 
-                    alert(
+                    definirMensagem(
+                        loginMessage,
                         data.message ||
-                        "Erro ao fazer login."
+                        "Erro ao fazer login.",
+                        "error"
                     );
 
                     return;
@@ -6719,9 +6930,19 @@ if (loginButton) {
                 console.error(error);
 
 
-                alert(
-                    "Não foi possível conectar com o servidor."
+                definirMensagem(
+                    loginMessage,
+                    "Não foi possível conectar com o servidor.",
+                    "error"
                 );
+
+            }
+
+            finally {
+
+                if (loginButton) {
+                    loginButton.disabled = false;
+                }
 
             }
 
@@ -6905,11 +7126,13 @@ if (showLoginButton) {
 // CADASTRO
 // ======================================================
 
-if (registerButton) {
+if (registerForm) {
 
-    registerButton.addEventListener(
-        "click",
-        async () => {
+    registerForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
 
             const usernameInput =
                 document.getElementById(
@@ -6965,8 +7188,10 @@ if (registerButton) {
                 !confirmacao
             ) {
 
-                alert(
-                    "Preencha todos os campos."
+                definirMensagem(
+                    registerMessage,
+                    "Preencha todos os campos.",
+                    "error"
                 );
 
                 return;
@@ -6979,8 +7204,10 @@ if (registerButton) {
                 confirmacao
             ) {
 
-                alert(
-                    "As senhas não são iguais."
+                definirMensagem(
+                    registerMessage,
+                    "As senhas não são iguais.",
+                    "error"
                 );
 
                 return;
@@ -6992,8 +7219,10 @@ if (registerButton) {
                 senha.length < 6
             ) {
 
-                alert(
-                    "A senha deve ter pelo menos 6 caracteres."
+                definirMensagem(
+                    registerMessage,
+                    "A senha deve ter pelo menos 6 caracteres.",
+                    "error"
                 );
 
                 return;
@@ -7011,6 +7240,10 @@ if (registerButton) {
 
                     Por isso usamos /api/usuarios aqui.
                 */
+
+                if (registerButton) {
+                    registerButton.disabled = true;
+                }
 
                 const response =
                     await fetch(
@@ -7040,9 +7273,11 @@ if (registerButton) {
 
                 if (!response.ok) {
 
-                    alert(
+                    definirMensagem(
+                        registerMessage,
                         data.message ||
-                        "Erro ao criar conta."
+                        "Erro ao criar conta.",
+                        "error"
                     );
 
                     return;
@@ -7050,8 +7285,10 @@ if (registerButton) {
                 }
 
 
-                alert(
-                    "Conta criada com sucesso!"
+                definirMensagem(
+                    registerMessage,
+                    "Conta criada com sucesso!",
+                    "success"
                 );
 
 
@@ -7096,9 +7333,19 @@ if (registerButton) {
                 console.error(error);
 
 
-                alert(
-                    "Não foi possível conectar com o servidor."
+                definirMensagem(
+                    registerMessage,
+                    "Não foi possível conectar com o servidor.",
+                    "error"
                 );
+
+            }
+
+            finally {
+
+                if (registerButton) {
+                    registerButton.disabled = false;
+                }
 
             }
 

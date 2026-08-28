@@ -12,6 +12,30 @@
 
     <title>Conta & Conto</title>
 
+    <meta
+        name="description"
+        content="Plataforma educacional gamificada de Matemática e Língua Portuguesa. Pratique cálculo mental e classes gramaticais, bata seus recordes e dispute o ranking do modo Brutal."
+    >
+
+    <meta name="theme-color" content="#1769d2">
+
+    <link
+        rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>"
+    >
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Conta &amp; Conto">
+    <meta property="og:title" content="Conta &amp; Conto">
+    <meta
+        property="og:description"
+        content="Pratique Matemática e Língua Portuguesa em desafios cronometrados e dispute o ranking do modo Brutal."
+    >
+    <meta property="og:url" content="https://conta-e-conto.vercel.app">
+    <meta property="og:locale" content="pt_BR">
+
+    <meta name="twitter:card" content="summary_large_image">
+
     <script>
         try {
             const savedTheme = localStorage.getItem("contaContoTheme");
@@ -63,33 +87,57 @@
         </p>
 
 
-        <input
-            type="text"
-            id="loginUsername"
-            placeholder="Usuário ou e-mail"
-            autocomplete="username"
+        <form
+            id="loginForm"
+            class="auth-form"
+            novalidate
         >
 
+            <label
+                class="sr-only"
+                for="loginUsername"
+            >
+                Usuário ou e-mail
+            </label>
 
-        <input
-            type="password"
-            id="loginPassword"
-            placeholder="Senha"
-            autocomplete="current-password"
-        >
+            <input
+                type="text"
+                id="loginUsername"
+                placeholder="Usuário ou e-mail"
+                autocomplete="username"
+            >
 
 
-        <button
-            type="button"
-            id="loginButton"
-        >
-            Entrar
-        </button>
+            <label
+                class="sr-only"
+                for="loginPassword"
+            >
+                Senha
+            </label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Senha"
+                autocomplete="current-password"
+            >
+
+
+            <button
+                type="submit"
+                id="loginButton"
+            >
+                Entrar
+            </button>
+
+        </form>
 
 
         <p
             id="loginMessage"
             class="auth-message"
+            role="status"
+            aria-live="polite"
         ></p>
 
         <button
@@ -136,53 +184,95 @@
         </p>
 
 
-        <input
-            type="text"
-            id="registerUsername"
-            placeholder="Usuário"
-            autocomplete="username"
+        <form
+            id="registerForm"
+            class="auth-form"
+            novalidate
         >
 
+            <label
+                class="sr-only"
+                for="registerUsername"
+            >
+                Usuário
+            </label>
 
-        <input
-            type="email"
-            id="registerEmail"
-            placeholder="E-mail (recomendado para recuperar senha)"
-            autocomplete="email"
-        >
-
-        <small class="auth-helper">
-            O e-mail é opcional, mas necessário para recuperar sua senha.
-        </small>
-
-
-        <input
-            type="password"
-            id="registerPassword"
-            placeholder="Senha"
-            autocomplete="new-password"
-        >
+            <input
+                type="text"
+                id="registerUsername"
+                placeholder="Usuário"
+                autocomplete="username"
+            >
 
 
-        <input
-            type="password"
-            id="registerPasswordConfirm"
-            placeholder="Confirmar senha"
-            autocomplete="new-password"
-        >
+            <label
+                class="sr-only"
+                for="registerEmail"
+            >
+                E-mail (opcional)
+            </label>
+
+            <input
+                type="email"
+                id="registerEmail"
+                placeholder="E-mail (recomendado para recuperar senha)"
+                autocomplete="email"
+                aria-describedby="registerEmailHelper"
+            >
+
+            <small
+                id="registerEmailHelper"
+                class="auth-helper"
+            >
+                O e-mail é opcional, mas necessário para recuperar sua senha.
+            </small>
 
 
-        <button
-            type="button"
-            id="registerButton"
-        >
-            Cadastrar
-        </button>
+            <label
+                class="sr-only"
+                for="registerPassword"
+            >
+                Senha
+            </label>
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Senha"
+                autocomplete="new-password"
+            >
+
+
+            <label
+                class="sr-only"
+                for="registerPasswordConfirm"
+            >
+                Confirmar senha
+            </label>
+
+            <input
+                type="password"
+                id="registerPasswordConfirm"
+                placeholder="Confirmar senha"
+                autocomplete="new-password"
+            >
+
+
+            <button
+                type="submit"
+                id="registerButton"
+            >
+                Cadastrar
+            </button>
+
+        </form>
 
 
         <p
             id="registerMessage"
             class="auth-message"
+            role="status"
+            aria-live="polite"
         ></p>
 
 
@@ -216,23 +306,40 @@
             Informe seu usuário ou o e-mail cadastrado.
         </p>
 
-        <input
-            type="text"
-            id="forgotPasswordIdentifier"
-            placeholder="Usuário ou e-mail"
-            autocomplete="username"
+        <form
+            id="forgotPasswordForm"
+            class="auth-form"
+            novalidate
         >
 
-        <button
-            type="button"
-            id="forgotPasswordButton"
-        >
-            Enviar link de recuperação
-        </button>
+            <label
+                class="sr-only"
+                for="forgotPasswordIdentifier"
+            >
+                Usuário ou e-mail
+            </label>
+
+            <input
+                type="text"
+                id="forgotPasswordIdentifier"
+                placeholder="Usuário ou e-mail"
+                autocomplete="username"
+            >
+
+            <button
+                type="submit"
+                id="forgotPasswordButton"
+            >
+                Enviar link de recuperação
+            </button>
+
+        </form>
 
         <p
             id="forgotPasswordMessage"
             class="auth-message"
+            role="status"
+            aria-live="polite"
         ></p>
 
         <p class="auth-switch">
@@ -260,30 +367,54 @@
             Escolha uma nova senha para sua conta.
         </p>
 
-        <input
-            type="password"
-            id="resetPassword"
-            placeholder="Nova senha"
-            autocomplete="new-password"
+        <form
+            id="resetPasswordForm"
+            class="auth-form"
+            novalidate
         >
 
-        <input
-            type="password"
-            id="resetPasswordConfirm"
-            placeholder="Confirmar nova senha"
-            autocomplete="new-password"
-        >
+            <label
+                class="sr-only"
+                for="resetPassword"
+            >
+                Nova senha
+            </label>
 
-        <button
-            type="button"
-            id="resetPasswordButton"
-        >
-            Atualizar senha
-        </button>
+            <input
+                type="password"
+                id="resetPassword"
+                placeholder="Nova senha"
+                autocomplete="new-password"
+            >
+
+            <label
+                class="sr-only"
+                for="resetPasswordConfirm"
+            >
+                Confirmar nova senha
+            </label>
+
+            <input
+                type="password"
+                id="resetPasswordConfirm"
+                placeholder="Confirmar nova senha"
+                autocomplete="new-password"
+            >
+
+            <button
+                type="submit"
+                id="resetPasswordButton"
+            >
+                Atualizar senha
+            </button>
+
+        </form>
 
         <p
             id="resetPasswordMessage"
             class="auth-message"
+            role="status"
+            aria-live="polite"
         ></p>
 
         <p class="auth-switch">
@@ -329,11 +460,13 @@
             class="menu-toggle"
             type="button"
             aria-label="Abrir menu"
->
+            aria-expanded="false"
+            aria-controls="mainNav"
+        >
             ☰
         </button>
 
-        <nav>
+        <nav id="mainNav">
 
             <a
                 href="#"
@@ -1157,15 +1290,27 @@
             class="profile profile-v2 hidden"
         >
 
+            <p
+                id="profileMessage"
+                class="profile-form-message"
+                role="status"
+                aria-live="polite"
+            ></p>
+
             <div class="profile-hero">
 
                 <div
                     id="profileAvatarSlot"
                     class="profile-avatar-placeholder"
                 >
+                    <!--
+                        O src é definido por JS a partir do avatar
+                        salvo, antes da resposta da API, para não
+                        piscar o avatar errado nem baixar um arquivo
+                        que será descartado.
+                    -->
                     <img
                         id="profileAvatarImage"
-                        src="avatars/01.webp"
                         width="92"
                         height="92"
                         alt="Avatar do usuário"
@@ -1282,7 +1427,7 @@
                 <div
                     id="avatarGrid"
                     class="avatar-grid"
-                    role="radiogroup"
+                    role="group"
                     aria-label="Avatares disponíveis"
                 >
                 </div>
