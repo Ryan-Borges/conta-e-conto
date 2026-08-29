@@ -1179,7 +1179,7 @@ button {
 
 
 .auth-box h1 {
-    color: #1565c0;
+    color: var(--titulo);
 
     margin-bottom: 10px;
 
@@ -1212,8 +1212,22 @@ html[data-theme="dark"] .auth-box .auth-logo {
 }
 
 
+/* Em tela baixa (celular deitado) a caixa de cadastro já
+   passa da altura da janela, então a logo cede espaço. */
+
+@media (max-height: 640px) {
+
+    .auth-box .auth-logo {
+        height: 52px;
+
+        margin-bottom: 12px;
+    }
+
+}
+
+
 .auth-box > p:not(.auth-switch):not(.auth-message) {
-    color: #555;
+    color: var(--texto-medio);
 
     margin-bottom: 10px;
 }
@@ -1290,7 +1304,7 @@ html[data-theme="dark"] .auth-box .auth-logo {
 .auth-switch {
     margin-top: 10px;
 
-    color: #555;
+    color: var(--texto-medio);
 
     font-size: 14px;
 }
@@ -1303,7 +1317,7 @@ html[data-theme="dark"] .auth-box .auth-logo {
 
     background: none;
 
-    color: #1976d2;
+    color: var(--link-texto);
 
     font-weight: bold;
 
@@ -2334,22 +2348,36 @@ footer {
 }
 
 
-@media (max-width: 700px) {
+/* A barra precisa de uns 1050px para caber ao lado da
+   logo: são dez itens. Abaixo disso ela vira o botão, ou
+   a página ganha rolagem lateral.
+
+   O botão fica preso ao topo, alinhado com a logo. Preso
+   ao meio do cabeçalho ele descia junto quando o menu
+   abria, e ia parar no meio da lista. */
+
+@media (max-width: 1050px) {
 
     header {
         position: relative;
+
+        flex-direction: column;
+
+        gap: 15px;
     }
 
 
     .menu-toggle {
-        display: block;
+        display: flex;
+
+        align-items: center;
 
         position: absolute;
 
-        top: 50%;
+        top: 18px;
         right: 18px;
 
-        transform: translateY(-50%);
+        height: 56px;
 
         color: white;
     }
@@ -2384,6 +2412,21 @@ footer {
         padding: 10px;
 
         border-radius: 8px;
+    }
+
+}
+
+
+/* Precisa vir depois do bloco acima: no celular o
+   cabeçalho tem menos recuo e a logo é menor, então o
+   botão acompanha para continuar alinhado com ela. */
+
+@media (max-width: 600px) {
+
+    .menu-toggle {
+        top: 15px;
+
+        height: 42px;
     }
 
 }
