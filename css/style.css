@@ -210,6 +210,18 @@ header {
 }
 
 
+/* O cabeçalho é azul nos dois temas, então a logo usada
+   aqui é sempre a versão branca. */
+
+.logo h1 img {
+    display: block;
+
+    height: 56px;
+
+    width: auto;
+}
+
+
 nav {
     display: flex;
 
@@ -1175,6 +1187,31 @@ button {
 }
 
 
+/* A caixa é branca no tema claro e escura no tema
+   escuro, então a logo troca de versão junto: os
+   vazados da versão colorida (o +, o × e o livro) são
+   transparentes e sumiriam no fundo escuro. */
+
+.auth-box .auth-logo {
+    height: 72px;
+
+    margin: 0 auto 18px;
+
+    background-image: url("../assets/logo.webp");
+
+    background-repeat: no-repeat;
+
+    background-position: center;
+
+    background-size: contain;
+}
+
+
+html[data-theme="dark"] .auth-box .auth-logo {
+    background-image: url("../assets/logo-branca.webp");
+}
+
+
 .auth-box > p:not(.auth-switch):not(.auth-message) {
     color: #555;
 
@@ -1384,6 +1421,11 @@ footer {
 
     .logo h1 {
         font-size: 24px;
+    }
+
+
+    .logo h1 img {
+        height: 42px;
     }
 
 

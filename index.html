@@ -21,7 +21,27 @@
 
     <link
         rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>"
+        href="assets/favicon.ico"
+        sizes="any"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="assets/favicon-32.png"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="assets/favicon-16.png"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="assets/apple-touch-icon.png"
     >
 
     <meta property="og:type" content="website">
@@ -33,6 +53,13 @@
     >
     <meta property="og:url" content="https://conta-e-conto.vercel.app">
     <meta property="og:locale" content="pt_BR">
+    <meta
+        property="og:image"
+        content="https://conta-e-conto.vercel.app/assets/og-image.png"
+    >
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Logotipo do Conta &amp; Conto">
 
     <meta name="twitter:card" content="summary_large_image">
 
@@ -78,8 +105,12 @@
         class="auth-box"
     >
 
-        <h1>
-            Conta & Conto
+        <h1 class="auth-logo">
+
+            <span class="sr-only">
+                Conta &amp; Conto
+            </span>
+
         </h1>
 
         <p>
@@ -174,6 +205,12 @@
         id="registerBox"
         class="auth-box hidden"
     >
+
+        <div
+            class="auth-logo"
+            role="img"
+            aria-label="Conta &amp; Conto"
+        ></div>
 
         <h1>
             Criar conta
@@ -300,6 +337,12 @@
         id="forgotPasswordBox"
         class="auth-box hidden"
     >
+        <div
+            class="auth-logo"
+            role="img"
+            aria-label="Conta &amp; Conto"
+        ></div>
+
         <h1>Recuperar senha</h1>
 
         <p>
@@ -361,6 +404,12 @@
         id="resetPasswordBox"
         class="auth-box hidden"
     >
+        <div
+            class="auth-logo"
+            role="img"
+            aria-label="Conta &amp; Conto"
+        ></div>
+
         <h1>Nova senha</h1>
 
         <p>
@@ -450,7 +499,14 @@
         <div class="logo">
 
             <h1>
-                Conta & Conto
+
+                <img
+                    src="assets/logo-branca.webp"
+                    alt="Conta &amp; Conto"
+                    width="244"
+                    height="176"
+                >
+
             </h1>
 
         </div>
